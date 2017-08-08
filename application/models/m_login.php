@@ -37,7 +37,11 @@ Class m_login extends CI_Model {
 		// if ($dataStatus[0]['STATUS'] == 0) {
 		// 	return false;
 		// }
-
+$dataStatus=$query->result_array();
+  if($dataStatus[0]['STATUS'] == 0)
+  {
+   return false;
+  }
 		if ($query->num_rows() == 1) {
 			return true;
 		} else {
