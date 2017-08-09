@@ -35,6 +35,18 @@ class c_admin extends CI_Controller{
 		$this->load->view('v_admin_pegawai');
 		// $this->load->view('v_admin_non');
 	}
+	
+	
+	function rapat(){
+		$this->load->view('v_admin_rapat');
+		
+	}
+
+	function presensi(){
+		$this->load->view('v_admin_presensi');
+		
+	}
+
 
 	function user(){
 		// $data1['dataPegawai']= $this->m_admin->get_pegawai();
