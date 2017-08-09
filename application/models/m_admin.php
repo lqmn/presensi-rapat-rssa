@@ -4,7 +4,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class m_admin extends CI_Model{
 
 	function get_pegawai($nip=null){
-		$result = $this->db->query("select * from pegawai");
+		$sql ='SELECT ID_PEGAWAI,NIP,NAMA,NAMA_SATKER,p.STATUS as STATUS
+				FROM pegawai p JOIN satuan_kerja s ON p.id_satker = s.id_satker';
+		$result = $this->db->query($sql);
+		// var_dump($result->num_rows);
 		if ($result->num_rows()==1) {
 			return $result->row();
 		}else{
@@ -26,7 +29,7 @@ class m_admin extends CI_Model{
 			return $data;
 		}
 	}
-function get_non($nip=null){
+	function get_non($nip=null){
 		$result = $this->db->query("select * from non_pegawai");
 		if ($result->num_rows()==1) {
 			return $result->row();
@@ -91,21 +94,21 @@ function get_non($nip=null){
 	function update_pegawai($data){
 	// $var_dump($data);
 		$this->db->where('ID_PEGAWAI',$data['ID_PEGAWAI']);
-	    $this->db->update('pegawai',$data);
+		$this->db->update('pegawai',$data);
 		$result="nice";
 		return $result;
 	}
 	function update_user($data){
 	// $var_dump($data);
 		$this->db->where('ID_USER',$data['ID_USER']);
-	    $this->db->update('user',$data);
+		$this->db->update('user',$data);
 		$result="nice";
 		return $result;
 	}
 	function update_non($data){
 	// $var_dump($data);
 		$this->db->where('ID',$data['ID']);
-	    $this->db->update('non_pegawai',$data);
+		$this->db->update('non_pegawai',$data);
 		$result="nice";
 		return $result;
 	}

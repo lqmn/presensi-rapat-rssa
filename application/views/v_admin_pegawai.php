@@ -89,8 +89,8 @@
 					<table id="tablePegawai" class="table table-striped table-bordered" cellspacing="0" width="100%">
 						<thead>
 							<tr><th><input name="select_all" value="1" id="select-all" type="checkbox" /></th>
-								<th>NIP</th>
 								<th>Nama</th>
+								<th>NIP</th>
 								<th>Satker</th>
 								<th>Status</th>
 								<th>Panel</th>

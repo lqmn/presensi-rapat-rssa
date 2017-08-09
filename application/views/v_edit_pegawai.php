@@ -29,6 +29,7 @@
 								<?php echo 'selected';?>
 						<?php endif ?>
 						><?php echo $value->NAMA_SATKER?></option>
+						
 					<?php endforeach ?>          
 				</select>
 			</div>

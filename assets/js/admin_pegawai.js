@@ -7,9 +7,9 @@ $(document).ready(function() {
 		},
 		"columns": [
 		{ "data": "ID_PEGAWAI" },
-		{ "data": "NIP" },
 		{ "data": "NAMA" },
-		{ "data": "ID_SATKER" },
+		{ "data": "NIP" },
+		{ "data": "NAMA_SATKER" },
 		{ "data": "STATUS" },
 		{ "data": "ID_PEGAWAI" }
 		],'columnDefs':[{
@@ -18,7 +18,7 @@ $(document).ready(function() {
 			'orderable':false,
 			'className': 'dt-body-center',
 			'render': function (data){
-				return '<button type="button" class="editButton btn btn-info" data-toggle="modal" data-target="#myModal" value="'+data+'">Edit</button>';
+				return '<button type="button" class="editButton btn btn-info" data-toggle="modal" data-target="#myModal" value="'+data+'"><span class="glyphicon glyphicon-edit"></span> Edit</button>';
 			}
 		},{
 			'targets': 0,
