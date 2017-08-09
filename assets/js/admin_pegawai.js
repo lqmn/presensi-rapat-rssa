@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	// table
-	var tabel_pegawai = $('#tablePegawai').DataTable({
+	var tabel_pegawai = $('#tabel').DataTable({
 		"ajax": {
 			"url": BASE_URL+"c_admin/get_table_pegawai",
 			"dataSrc": ""
@@ -32,7 +32,7 @@ $(document).ready(function() {
 		'order': [1, 'asc']
 	});
 
-	$("#tablePegawai").on('click','#select-all', function(){
+	$("#tabel").on('click','#select-all', function(){
 		// var rows = tabel_pegawai.table().node();
 		// console.log(rows);
 		var rows = tabel_pegawai.rows().nodes();
@@ -44,7 +44,7 @@ $(document).ready(function() {
 	});
 
 	// insert
-	$(document).on('click','#tambahPegawai',function(event){
+	$(document).on('click','#tambah',function(event){
 		var requrl = BASE_URL+'c_admin/form_pegawai';
 		$.ajax({
 			url:requrl,
@@ -100,7 +100,7 @@ $(document).ready(function() {
 			var value = $(this).val();
 			data[name] = value;
 		});
-		
+
 		$.ajax({
 			url:requrl,
 			type:'post',
@@ -112,7 +112,7 @@ $(document).ready(function() {
 	});
 
 	// delete
-	$(document).on('click','#deletePegawai',function(event){
+	$(document).on('click','#hapus',function(event){
 		var requrl = BASE_URL+'c_admin/form_delete_pegawai';
 		$.ajax({
 			url:requrl,
@@ -124,7 +124,7 @@ $(document).ready(function() {
 
 	$('#modalContent').on('click','#delete', function(){
 		var selected = [];
-		$('#tablePegawai input:checked').each(function() {
+		$('#tabel input:checked').each(function() {
 			selected.push($(this).attr('value'));
 		});
 		var requrl = BASE_URL+'c_admin/delete_pegawai';
@@ -138,12 +138,4 @@ $(document).ready(function() {
 			}
 		});
 	});
-
-
-
-
-	
-	
-	
-
 });

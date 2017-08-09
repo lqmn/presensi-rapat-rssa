@@ -124,6 +124,26 @@ class m_admin extends CI_Model{
 			// $result=$this->db->query("DELETE FROM pegawai WHERE ID_PEGAWAI = ".$value->ID_PEGAWAI);
 		}
 	}
+	function delete_user($data){
+		// var_dump($data);	
+		foreach ($data as $key => $value) {
+			$sql = "DELETE FROM user WHERE ID_USER=".$value;
+			$result = $this->db->query($sql);
+			// var_dump($sql);
+			// $result = $this->db->query()
+			// $result=$this->db->query("DELETE FROM pegawai WHERE ID_PEGAWAI = ".$value->ID_PEGAWAI);
+		}
+	}
+	function delete_non($data){
+		// var_dump($data);	
+		foreach ($data as $key => $value) {
+			$sql = "DELETE FROM non_pegawai WHERE ID=".$value;
+			$result = $this->db->query($sql);
+			// var_dump($sql);
+			// $result = $this->db->query()
+			// $result=$this->db->query("DELETE FROM pegawai WHERE ID_PEGAWAI = ".$value->ID_PEGAWAI);
+		}
+	}
 
 
 }

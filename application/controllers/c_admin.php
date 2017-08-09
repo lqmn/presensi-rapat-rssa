@@ -54,6 +54,14 @@ class c_admin extends CI_Controller{
 		$this->load->view('v_delete_pegawai');
 	}
 
+	function form_delete_user(){
+		$this->load->view('v_delete_user');
+	}
+
+	function form_delete_non(){
+		$this->load->view('v_delete_non');
+	}
+
 	function insert_pegawai(){
 		$data['NIP'] = $this->input->post('nomor');
 		$data['NAMA'] = $this->input->post('nama');
@@ -153,6 +161,21 @@ class c_admin extends CI_Controller{
 		// }else{
 		// 	echo "Error";
 		// }
+	}
+
+	function delete_user(){
+		$array_del = $this->input->post('array_del');
+		// var_dump($array_del);
+		$this->m_admin->delete_user($array_del);
+		$this->load->view('v_sukses_modal');
+
+	}
+
+	function delete_non(){
+		$array_del = $this->input->post('array_del');
+		$this->m_admin->delete_non($array_del);
+		$this->load->view('v_sukses_modal');
+
 	}
 
 	function edit_form_pegawai(){

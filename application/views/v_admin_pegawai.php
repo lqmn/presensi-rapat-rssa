@@ -86,7 +86,7 @@
 						</select>
 					</div><h4>Pegawai</h4>
 					<br>
-					<table id="tablePegawai" class="table table-striped table-bordered" cellspacing="0" width="100%">
+					<table id="tabel" class="table table-striped table-bordered" cellspacing="0" width="100%">
 						<thead>
 							<tr><th><input id="select-all" type="checkbox" /></th>
 								<th>Nama</th>
@@ -108,9 +108,9 @@
 							<?php endforeach ?> -->
 						</tbody>
 					</table>
-					<button id="tambahPegawai" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Tambah</button>
+					<button id="tambah" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Tambah</button>
 					<!-- <button id="editPegawai" type="button" class="btn btn-info" data-target="#myModal">Edit</button> -->
-					<button id="deletePegawai" type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Delete</button>
+					<button id="hapus" type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Delete</button>
 				</div>
 			</div>
 

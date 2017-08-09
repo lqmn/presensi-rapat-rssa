@@ -87,7 +87,7 @@
 						</select>
 					</div><h4>Non Pegawai</h4>
 					<br>
-					<table id="tableNon" class="table table-striped table-bordered" cellspacing="0" width="100%">
+					<table id="tabel" class="table table-striped table-bordered" cellspacing="0" width="100%">
 						<thead>
 							<tr><th><input name="select_all" value="1" id="select-all" type="checkbox" /></th>
 								<th>Nama</th>
@@ -107,9 +107,9 @@
 							<?php endforeach ?> -->
 						</tbody>
 					</table>
-					<button id="tambahNon" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Tambah</button>
+					<button id="tambah" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Tambah</button>
 					
-					<button id="deleteNon" type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Delete</button>
+					<button id="hapus" type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Delete</button>
 				</div>
 			</div>
 

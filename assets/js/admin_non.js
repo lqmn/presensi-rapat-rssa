@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	// table
-	var tabel_non = $('#tableNon').DataTable( {
+	var tabel_non = $('#tabel').DataTable( {
 		"ajax": {
 			"url": BASE_URL+"c_admin/get_table_non",
 			"dataSrc": ""
@@ -30,7 +30,7 @@ $(document).ready(function() {
 		'order': [1, 'asc']
 	});
 
-	$("#tableNon").on('click','#select-all', function(){
+	$("#tabel").on('click','#select-all', function(){
 		// var rows = tabel_pegawai.table().node();
 		// console.log(rows);
 		var rows = tabel_non.rows().nodes();
@@ -42,7 +42,7 @@ $(document).ready(function() {
 	});
 	
 	// insert
-	$(document).on('click','#tambahNon',function(event){
+	$(document).on('click','#tambah',function(event){
 		var requrl = BASE_URL+'c_admin/form_non';
 		$.ajax({
 			url:requrl,
@@ -139,6 +139,33 @@ $(document).ready(function() {
 			// }
 		// });
 	// })
+
+	// delete
+	$(document).on('click','#hapus',function(event){
+		var requrl = BASE_URL+'c_admin/form_delete_non';
+		$.ajax({
+			url:requrl,
+			success:function(data){
+				$('#modalContent').html(data);
+			}
+		});
+	})
+	$('#modalContent').on('click','#delete', function(){
+		var selected = [];
+		$('#tabel input:checked').each(function() {
+			selected.push($(this).attr('value'));
+		});
+		var requrl = BASE_URL+'c_admin/delete_non';
+		console.log(selected);
+		$.ajax({
+			url:requrl,
+			type:'post',
+			data: {"array_del": selected} ,
+			success:function(data){
+				$('#modalContent').html(data);
+			}
+		});
+	});
 
 
 	

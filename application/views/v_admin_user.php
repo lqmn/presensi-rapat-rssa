@@ -35,7 +35,7 @@
 		<div class="modal-dialog">
 
 			<div id="modalContent" class="modal-content">
-				//content from ajax loaded here modal 1
+				//content from ajax loaded here modal
 			</div>
 
 		</div>
@@ -87,7 +87,7 @@
 						</select>
 					</div><h4>User</h4>
 					<br>
-					<table id="tableUser" class="table table-striped table-bordered" cellspacing="0" width="100%">
+					<table id="tabel" class="table table-striped table-bordered" cellspacing="0" width="100%">
 						<thead>
 							<tr><th><input name="select_all" value="1" id="select-all" type="checkbox" /></th>
 								<th>NIP</th>
@@ -110,9 +110,9 @@
 							<?php endforeach ?> -->
 						</tbody>
 					</table>
-					<button id="tambahUser" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Tambah</button>
+					<button id="tambah" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Tambah</button>
 					
-					<button id="deleteUser" type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Delete</button>
+					<button id="hapus" type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Delete</button>
 				</div>
 			</div>
 
