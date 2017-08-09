@@ -146,11 +146,11 @@ class c_admin extends CI_Controller{
 	function delete_pegawai(){
 		// $array_del = filter_input(INPUT_POST, 'array_del', FILTER_SANITIZE_STRING);
 		$array_del = $this->input->post('array_del');
-		var_dump($array_del);
-		$res = $this->m_admin->delete_pegawai($array_del);
+		// var_dump($array_del);
+		$this->m_admin->delete_pegawai($array_del);
 		// var_dump($data);
 		// if ($res) {
-		// 	$this->load->view('v_sukses_modal');
+		$this->load->view('v_sukses_modal');
 		// }else{
 		// 	echo "Error";
 		// }

@@ -112,18 +112,13 @@ function get_non($nip=null){
 
 	function delete_pegawai($data){
 		// var_dump($data);	
-		// foreach ($data as $key => $value) {
-		// 	$sql = "DELETE FROM pegawai WHERE ID_PEGAWAI=".$value;
-		// 	$result = $this->db->query($sql);
+		foreach ($data as $key => $value) {
+			$sql = "DELETE FROM pegawai WHERE ID_PEGAWAI=".$value;
+			$result = $this->db->query($sql);
 			// var_dump($sql);
 			// $result = $this->db->query()
 			// $result=$this->db->query("DELETE FROM pegawai WHERE ID_PEGAWAI = ".$value->ID_PEGAWAI);
-		// }
-		$sql = "DELETE FROM pegawai WHERE ID_PEGAWAI='wow'";
-		$this->db->query($sql);
-		$result = $this->db->affected_rows();
-		var_dump($result);
-		return $result;
+		}
 	}
 
 
