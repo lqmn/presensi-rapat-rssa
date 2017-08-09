@@ -22,13 +22,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/i18n/defaults-*.min.js"></script>
 
 
-	<!-- Custom CSS & JS -->
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/admin.css" type="text/css">
-	<script src="<?php echo base_url(); ?>assets/js/admin_user.js"></script>
-	<script src="<?php echo base_url(); ?>assets/js/admin.js"></script>
-	<script type="text/javascript">
-		var BASE_URL = "<?php echo base_url();?>";
-	</script>
+	
 </head>
 <body>
 <?php if ($this->session->userdata('otoritas')!=1) {
@@ -133,4 +127,11 @@
 
 
 </body>
+<!-- Custom CSS & JS -->
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/admin.css" type="text/css">
+	<script src="<?php echo base_url(); ?>assets/js/admin_user.js"></script>
+	<script src="<?php echo base_url(); ?>assets/js/admin.js"></script>
+	<script type="text/javascript">
+		var BASE_URL = "<?php echo base_url();?>";
+	</script>
 </html>
