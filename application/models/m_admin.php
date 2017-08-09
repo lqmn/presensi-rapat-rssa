@@ -9,7 +9,8 @@ class m_admin extends CI_Model{
 		WHEN p.status=0      THEN "Tidak aktif"
 		WHEN p.status=1      THEN "Aktif"
 		END) as STATUS
-		FROM pegawai p JOIN satuan_kerja s ON p.id_satker = s.id_satker';
+		FROM pegawai p JOIN satuan_kerja s ON p.id_satker = s.id_satker
+		ORDER BY p.date_modified DESC';
 		$result = $this->db->query($sql);
 		// var_dump($result->num_rows);
 		if ($result->num_rows()==1) {
@@ -32,7 +33,8 @@ class m_admin extends CI_Model{
 		WHEN OTORITAS=1      THEN "Admin"
 		WHEN OTORITAS=2      THEN "Verifikator"
 		WHEN OTORITAS=3      THEN "User"
-		END) as OTORITAS, NIP_PEGAWAI FROM user';
+		END) as OTORITAS, NIP_PEGAWAI FROM user
+		ORDER BY p.date_modified DESC';
 
 		$result = $this->db->query($sql);
 		if ($result->num_rows()==1) {
