@@ -40,7 +40,7 @@
 				<img src="<?php echo base_url();?>assets/img/logo.png" width="200px" height="200px"></img>
 				<ul class="nav nav-pills nav-stacked" >
 
-					<li class="active"><a href="<?php echo base_url();?>c_admin/pegawai">Admin</a></li>
+					<li ><a href="<?php echo base_url();?>c_admin/pegawai">Admin</a></li>
 					<li><a href="#">Presensi</a></li>
 					<li><a href="#">Rapat</a></li>
 					<li><a href="<?php echo base_url();?>c_admin/logout">Logout</a></li>

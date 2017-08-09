@@ -38,6 +38,7 @@ class c_admin extends CI_Controller{
 	
 	
 	function rapat(){
+		$this->load->view('v_header_rapat');
 		$this->load->view('v_admin_rapat');
 		
 	}
@@ -70,6 +71,11 @@ class c_admin extends CI_Controller{
 	function form_non(){
 		$this->load->view('v_form_non');
 	}
+	
+	function form_rapat(){
+		$data['ruang'] = $this->m_admin->get_ruang();
+		$this->load->view('v_form_rapat',$data);
+	}
 
 	function form_delete_pegawai(){
 		$this->load->view('v_delete_pegawai');
@@ -90,6 +96,31 @@ class c_admin extends CI_Controller{
 		$data['STATUS'] = 1;
 		$res = $this->m_admin->insert_pegawai($data);
 		// var_dump($data);
+		if ($res) {
+			$this->load->view('v_sukses_modal_insert');
+		}else{
+			echo "Error";
+		}
+	}
+	
+	function insert_rapat(){
+		$date = $this->input->post('tanggal');
+		$data['WAKTU_RAPAT'] =date('Y-m-d H:i',strtotime($date));
+		// $data['WAKTU_RAPAT'] = DateTime::createFromFormat('d/m/Y H:i', $date);
+		 // var_dump($data['WAKTU_RAPAT']);
+		$data['ID_RUANG'] = $this->input->post('ruang');
+		$data['ID_USER_INPUT']= $this->session->userdata('id_user');
+		
+		//BELUM BISA GANTI STATUS OTOMATIS
+		$data['STATUS']= 1;
+		
+		// Belum bisa nambah peserta. konfigurasi ulang database untuk nambah peserta pegawai maupun non pegawai
+		// $data['PESERTA_RAPAT'] = $this->input->post('peserta');
+		// $res2= $this->m_admin->insert_peserta($data);
+		
+		
+		// var_dump($data);
+		$res = $this->m_admin->insert_rapat($data);
 		if ($res) {
 			$this->load->view('v_sukses_modal_insert');
 		}else{
@@ -222,6 +253,8 @@ class c_admin extends CI_Controller{
 		
 		$this->load->view('v_edit_non', $data);
 	}
+	
+	
 	function get_table_pegawai(){
 		$data= $this->m_admin->get_pegawai();
 
@@ -238,5 +271,12 @@ class c_admin extends CI_Controller{
 		$data= $this->m_admin->get_non();
 		
 		echo json_encode($data);
+	}
+	
+	function get_table_rapat(){
+		$data= $this->m_admin->get_rapat();
+		
+		echo json_encode($data);
+		
 	}
 }

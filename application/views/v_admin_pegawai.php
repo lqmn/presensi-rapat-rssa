@@ -38,8 +38,7 @@
 		</div>
 	</div>
 
-	<div class="container-fluid">
-		<div class="row content">
+	
 		<div class="col-sm-3 sidenav hidden-xs" style="position:fixed">
 				<img src="<?php echo base_url();?>assets/img/logo.png" width="200px" height="200px"></img>
 				<ul class="nav nav-pills nav-stacked" >
@@ -97,9 +96,6 @@
 					<button id="hapus" type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Delete</button>
 				</div>
 			</div>
-
-		</div>
-	</div>
 
 
 </body>

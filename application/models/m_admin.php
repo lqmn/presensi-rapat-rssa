@@ -22,6 +22,7 @@ class m_admin extends CI_Model{
 			return $data;
 		}
 	}
+	
 
 	function get_user($nip=null){
 		$sql='SELECT ID_USER, NAMA_USER, PASSWORD, 
@@ -57,6 +58,33 @@ class m_admin extends CI_Model{
 			}
 			return $data;
 		}
+	}
+	
+	function get_rapat(){
+		$sql ='SELECT P.ID_RAPAT,P.WAKTU_RAPAT,R.NAMA_RUANG,U.NAMA_USER,
+		(CASE 
+		WHEN P.status=0      THEN "Tidak aktif"
+		WHEN P.status=1      THEN "Aktif"
+		END) as STATUS
+		FROM rapat P JOIN ruang_rapat R JOIN user U ON P.id_ruang = R.id_ruang AND P.ID_USER_INPUT = U.ID_USER';
+		
+		$result = $this->db->query($sql);
+			foreach ($result->result() as $row) {
+				$data[] = $row;
+			}
+			return $data;
+		
+	}
+	
+		function get_ruang(){
+		$sql ='SELECT * FROM RUANG_RAPAT';
+		
+		$result = $this->db->query($sql);
+			foreach ($result->result() as $row) {
+				$data[] = $row;
+			}
+			return $data;
+		
 	}
 
 	function get_one_pegawai($id){
@@ -95,6 +123,11 @@ class m_admin extends CI_Model{
 		return $data;
 	}
 
+	function insert_rapat($data){
+		// var_dump($data);
+		$result = $this->db->insert('rapat',$data);
+		return $result;
+	}
 	function insert_pegawai($data){
 		$result = $this->db->insert('pegawai',$data);
 		return $result;
