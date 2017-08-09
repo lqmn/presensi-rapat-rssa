@@ -36,19 +36,27 @@
 
 	<div class="container-fluid">
 		<div class="row content">
-			<div class="col-sm-3 sidenav hidden-xs" style="height:100%;">
-				<h2>Logo</h2>
-				<ul class="nav nav-pills nav-stacked">
+			<div class="col-sm-3 sidenav hidden-xs" style="position:fixed">
+				<img src="<?php echo base_url();?>assets/img/logo.png" width="200px" height="200px"></img>
+				<ul class="nav nav-pills nav-stacked" >
 
-					<li><a href="<?php echo base_url();?>c_admin/pegawai/">Admin</a></li>
+					<li class="active"><a href="<?php echo base_url();?>c_admin/pegawai">Admin</a></li>
 					<li><a href="#">Presensi</a></li>
 					<li><a href="#">Rapat</a></li>
+					<li><a href="<?php echo base_url();?>c_admin/logout">Logout</a></li>
+					<li style="margin-top:55%">Logged in : <?php echo $this->session->userdata('nama_user'); ?> as administrator</li>
+					<li >NIP: <?php echo $this->session->userdata('nip_pegawai');            ?> </li>
+					
+					
+				
+				
+					
 
 				</ul><br>
 			</div>
 			<br>
 
-			<div class="col-sm-9">
+			<div class="col-sm-9" style="margin-left:25%">
 				<div class="well">
 					<h4>Dashboard</h4>
 					<p>Some text..</p>

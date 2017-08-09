@@ -15,9 +15,18 @@ class c_admin extends CI_Controller{
 		// Load database
 		$this->load->model('m_admin');
 	}
+	
+	function error_authority(){
+		$this->load->view('v_error_access');
+	}
 
 	function index() {
 		$this->load->view('v_admin_home');
+	}
+	
+	function logout(){
+		$this->session->sess_destroy();
+		redirect('c_login','refresh');
 	}
 
 	function pegawai(){
