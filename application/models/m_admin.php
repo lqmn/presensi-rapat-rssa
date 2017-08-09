@@ -87,6 +87,7 @@ class m_admin extends CI_Model{
 	}
 	
 	function insert_non($data){
+		// var_dump($data);
 		$result = $this->db->insert('non_pegawai',$data);
 		return $result;
 	}

@@ -1,5 +1,6 @@
 $(document).ready(function() {
-	var tabel_user = $('#tableUser').DataTable( {
+	// table
+	var tabel_user = $('#tableUser').DataTable({
 		"ajax": {
 			"url": BASE_URL+"c_admin/get_table_user",
 			"dataSrc": ""
@@ -8,40 +9,107 @@ $(document).ready(function() {
 		{ "data": "ID_USER" },
 		{ "data": "NIP_PEGAWAI" },
 		{ "data": "NAMA_USER" },
+		{ "data": "PASSWORD" },
 		{ "data": "STATUS" },
-		{ "data": "OTORITAS" }
-		],'columnDefs': [{
+		{ "data": "OTORITAS" },
+		{ "data": "ID_USER" },
+		],'columnDefs':[{
+			'targets': 6,
+			'searchable':false,
+			'orderable':false,
+			'className': 'dt-body-center',
+			'render': function (data){
+				return '<button type="button" class="editButton btn btn-info" data-toggle="modal" data-target="#myModal" value="'+data+'"><span class="glyphicon glyphicon-edit"></span> Edit</button>';
+			}
+		},{
 			'targets': 0,
 			'searchable':false,
 			'orderable':false,
 			'className': 'dt-body-center',
-			'render': function (data, type, full, meta){
-				return '<input type="checkbox" class="select" name="id[]" value="' 
-				+ $('<div/>').text(data).html() + '">';
-			}
-		}],
-		"columns": [
-		{ "data": "ID_USER" },
-		{ "data": "NIP_PEGAWAI" },
-		{ "data": "NAMA_USER" },
-		{ "data": "STATUS" },
-		{ "data": "OTORITAS" },
-		{ "data": "ID_USER" }
-		],'columnDefs': [{
-			'targets': 5,
-			'searchable':false,
-			'orderable':false,
-			'className': 'dt-body-center',
-			'render': function (data, type, full, meta){
-				return '<button type="button" class="editButton btn btn-info" data-toggle="modal" data-target="#myModal2" value="'+$('<div/>').text(data).html() +'">Edit </button>';
+			'render': function (data){
+				return '<input type="checkbox" class="select" value="'+data+'">';
 			}
 		}],
 		'order': [1, 'asc']
 	});
 
-	$('#select-all').on('click', function(){
-		var rows = tabel_user.rows({ 'search': 'applied' }).nodes();
+	$("#tableUser").on('click','#select-all', function(){
+		// var rows = tabel_pegawai.table().node();
+		console.log(rows);
+		var rows = tabel_user.rows().nodes();
 		$('input[type="checkbox"]', rows).prop('checked', this.checked);
+	});
+
+	$('#myModal').on('hidden.bs.modal', function() {
+		tabel_user.ajax.reload();
+	});
+
+	// insert
+	$(document).on('click','#tambahUser',function(event){
+		var requrl = BASE_URL+'c_admin/form_user';
+		$.ajax({
+			url:requrl,
+			success:function(data){
+				$('#modalContent').html(data);
+			}
+		});
+	})
+
+	$('#modalContent').on('click','#insert', function(){
+		var requrl = BASE_URL+'c_admin/insert_user/';
+		var data = {};
+
+		$('#modalContent').find('[name]').each(function(index, value){
+			var name = $(this).attr('name');
+			var value = $(this).val();
+			data[name] = value;
+		});
+
+		$.ajax({
+			url:requrl,
+			type:'post',
+			data:data,
+			success: function(data){
+				$('#modalContent').html(data);
+			}
+		});
+	});
+	
+	// edit
+	$(document).on('click','.editButton',function(event){
+		var data = $(this).val();
+		// console.log(data);
+		var requrl = BASE_URL+'c_admin/edit_form_user';
+		
+		// console.log(data);
+		$.ajax({
+			url:requrl,
+			type:'post',
+			data:{'id_edit':data},
+			success:function(data){
+				$('#modalContent').html(data);
+			}
+		});
+	})
+
+	$('#modalContent').on('click','#edit', function(){
+		var requrl = BASE_URL+'c_admin/update_user/';
+		var data = {};
+
+		$('#modalContent').find('[name]').each(function(index, value){
+			var name = $(this).attr('name');
+			var value = $(this).val();
+			data[name] = value;
+		});
+		console.log(data);
+		$.ajax({
+			url:requrl,
+			type:'post',
+			data:data,
+			success: function(data){
+				$('#modalContent').html(data);
+			}
+		});
 	});
 
 	// $('#modalContent').on('click','#insert', function(){
@@ -62,21 +130,6 @@ $(document).ready(function() {
 	// });
 
 
-	$(document).on('click','.editButton',function(event){
-		var data = $(this).val();
-		 console.log(data);
-		var requrl = BASE_URL+'c_admin/edit_form_user';
-		
-		$.ajax({
-			url:requrl,
-			type:'post',
-			data:{'id_edit':data},
-			success:function(data){
-				$('#modalContent2').html(data);
-			}
-		});
-
-	})
 	
 	
 
@@ -90,80 +143,13 @@ $(document).ready(function() {
 		// });
 	// })
 
-	$(document).on('click','#tambahUser',function(event){
-		var requrl = BASE_URL+'c_admin/form_user';
-		$.ajax({
-			url:requrl,
-			success:function(data){
-				$('#modalContent').html(data);
-			}
-		});
-	})
-
-	$('#modalContent').on('submit','#formModal', function(){
-		var requrl = BASE_URL+'c_admin/insert_user/';
-		var data = {};
-       
-		// get data
-
-		$(this).find('[name]').each(function(index, value){
-
-			var name = $(this).attr('name');
-			var value = $(this).val();
-			data[name] = value;
-		});
-// alert(data);
-		
-		$.ajax({
-			url:requrl,
-			type:'post',
-			data:data,
-			success: function(data){
-				$('#modalContent').html(data);
-			}
-		});
-
-		// handle redirect maybe?
-		return false;
-	});
-	
-	
-	$('#modalContent2').on('submit','#formModal', function(){
-		var requrl = BASE_URL+'c_admin/update_user/';
-		var data = {};
-       
-		// get data
-
-		$(this).find('[name]').each(function(index, value){
-
-			var name = $(this).attr('name');
-			var value = $(this).val();
-			data[name] = value;
-		});
-// alert(data);
-		
-		$.ajax({
-			url:requrl,
-			type:'post',
-			data:data,
-			success: function(data){
-				$('#modalContent2').html(data);
-			}
-		});
-
-		// handle redirect maybe?
-		return false;
-	});
 
 
 	
 
-	$('#myModal').on('hidden.bs.modal', function() {
-		tabel_user.ajax.reload();
-	});
+
 	
-	$('#myModal2').on('hidden.bs.modal', function() {
-		tabel_user.ajax.reload();
-	});
+
+	
 
 });

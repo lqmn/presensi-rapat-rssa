@@ -47,7 +47,6 @@ class c_admin extends CI_Controller{
 		$this->load->view('v_form_user');
 	}
 	function form_non(){
-		
 		$this->load->view('v_form_non');
 	}
 

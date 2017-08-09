@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	// table
-	var tabel_pegawai = $('#tablePegawai').DataTable( {
+	var tabel_pegawai = $('#tablePegawai').DataTable({
 		"ajax": {
 			"url": BASE_URL+"c_admin/get_table_pegawai",
 			"dataSrc": ""
@@ -26,22 +26,20 @@ $(document).ready(function() {
 			'orderable':false,
 			'className': 'dt-body-center',
 			'render': function (data){
-				return '<input type="checkbox" class="select" value="'+data+'">';
+				return '<input type="checkbox" class="select" value="' + data + '">';
 			}
 		}],
 		'order': [1, 'asc']
 	});
 
-	$('#select-all').on('click', function(){
-		var rows = tabel_user.rows({ 'search': 'applied' }).nodes();
+	$("#tablePegawai").on('click','#select-all', function(){
+		// var rows = tabel_pegawai.table().node();
+		// console.log(rows);
+		var rows = tabel_pegawai.rows().nodes();
 		$('input[type="checkbox"]', rows).prop('checked', this.checked);
 	});
 
 	$('#myModal').on('hidden.bs.modal', function() {
-		tabel_pegawai.ajax.reload();
-	});
-	
-	$('#myModal2').on('hidden.bs.modal', function() {
 		tabel_pegawai.ajax.reload();
 	});
 
@@ -97,13 +95,12 @@ $(document).ready(function() {
 		var requrl = BASE_URL+'c_admin/update_pegawai/';
 		var data = {};
 
-		// get data
 		$('#modalContent').find('[name]').each(function(index, value){
 			var name = $(this).attr('name');
 			var value = $(this).val();
 			data[name] = value;
 		});
-		// console.log(data);
+		
 		$.ajax({
 			url:requrl,
 			type:'post',
