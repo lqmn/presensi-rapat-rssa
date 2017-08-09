@@ -89,11 +89,11 @@ function get_non($nip=null){
 	}
 	
 	function update_pegawai($data){
-	var_dump($data);
-		// $this->db->where('ID_PEGAWAI',$data['ID_PEGAWAI']);
-	 //    $this->db->update('pegawai',$data);
-		// $result="nice";
-		// return $result;
+	// $var_dump($data);
+		$this->db->where('ID_PEGAWAI',$data['ID_PEGAWAI']);
+	    $this->db->update('pegawai',$data);
+		$result="nice";
+		return $result;
 	}
 	function update_user($data){
 	// $var_dump($data);
@@ -113,16 +113,17 @@ function get_non($nip=null){
 	function delete_pegawai($data){
 		// var_dump($data);	
 		// foreach ($data as $key => $value) {
-		$this->db->where('ID_PEGAWAI',$data);
-		$this->db->delete('pegawai');
-		echo "sip";
-			// $sql = "DELETE FROM pegawai WHERE ID_PEGAWAI=".(int)$data;
-			// $result = $this->db->query($sql);
-			// var_dump($result);
+		// 	$sql = "DELETE FROM pegawai WHERE ID_PEGAWAI=".$value;
+		// 	$result = $this->db->query($sql);
+			// var_dump($sql);
 			// $result = $this->db->query()
 			// $result=$this->db->query("DELETE FROM pegawai WHERE ID_PEGAWAI = ".$value->ID_PEGAWAI);
 		// }
-		// return $result;
+		$sql = "DELETE FROM pegawai WHERE ID_PEGAWAI='wow'";
+		$this->db->query($sql);
+		$result = $this->db->affected_rows();
+		var_dump($result);
+		return $result;
 	}
 
 

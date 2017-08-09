@@ -7,13 +7,12 @@
 
 	<form id="formModalDelete"class="form-horizontal" action="">
 		
-			<h3> Apakah anda yakin ingin menghapus data ? </h3>
+		<h3> Apakah anda yakin ingin menghapus data ? </h3>
 		
-	
-</div>
-<div class="modal-footer">
-<button id="insert" type="submit" class="btn btn-primary">Ya</button>
-	<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+	</div>
+	<div class="modal-footer">
+		<button id="delete" type="submit" class="btn btn-primary">Ya</button>
+		<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 	</form>
 
 </div>
