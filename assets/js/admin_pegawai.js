@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	// table
-	var tabel_pegawai = $('#tabel').DataTable({
+	var tabel = $('#tabel').DataTable({
 		"ajax": {
 			"url": BASE_URL+"c_admin/get_table_pegawai",
 			"dataSrc": ""
@@ -33,14 +33,14 @@ $(document).ready(function() {
 	});
 
 	$("#tabel").on('click','#select-all', function(){
-		// var rows = tabel_pegawai.table().node();
+		// var rows = tabel.table().node();
 		// console.log(rows);
-		var rows = tabel_pegawai.rows().nodes();
+		var rows = tabel.rows().nodes();
 		$('input[type="checkbox"]', rows).prop('checked', this.checked);
 	});
 
 	$('#myModal').on('hidden.bs.modal', function() {
-		tabel_pegawai.ajax.reload();
+		tabel.ajax.reload();
 	});
 
 	// insert
@@ -138,4 +138,8 @@ $(document).ready(function() {
 			}
 		});
 	});
+	
+	setInterval(function() {
+		tabel.ajax.reload();
+	}, 300000 );
 });

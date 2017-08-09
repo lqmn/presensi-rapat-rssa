@@ -24,8 +24,8 @@
 
 	<!-- Custom CSS & JS -->
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/admin.css" type="text/css">
-	<script src="<?php echo base_url(); ?>assets/js/admin.js"></script>
 	<script src="<?php echo base_url(); ?>assets/js/admin_non.js"></script>
+	<script src="<?php echo base_url(); ?>assets/js/admin.js"></script>
 	<script type="text/javascript">
 		var BASE_URL = "<?php echo base_url();?>";
 	</script>

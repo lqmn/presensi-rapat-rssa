@@ -66,7 +66,7 @@ $(document).ready(function() {
 	// 	var data = $(this).val();
 	// 	// console.log(data);
 	// 	var requrl = BASE_URL+'c_admin/edit_form_pegawai';
-		
+
 	// 	$.ajax({
 	// 		url:requrl,
 	// 		type:'post',
@@ -109,7 +109,7 @@ $(document).ready(function() {
 	// 		data[name] = value;
 	// 	});
 
-		
+
 	// 	$.ajax({
 	// 		url:requrl,
 	// 		type:'post',
@@ -134,14 +134,14 @@ $(document).ready(function() {
 		console.log(x);
 		switch(parseInt(x)){
 			case 1:
-				window.location.href =  BASE_URL+'c_admin/pegawai';
-				break;
+			window.location.href =  BASE_URL+'c_admin/pegawai';
+			break;
 			case 2:	
-				window.location.href =  BASE_URL+'c_admin/user';
-				break;
+			window.location.href =  BASE_URL+'c_admin/user';
+			break;
 			case 3:	
-				window.location.href =  BASE_URL+'c_admin/non_pegawai';
-				break;
+			window.location.href =  BASE_URL+'c_admin/non_pegawai';
+			break;
 			default:
 		}
 	});

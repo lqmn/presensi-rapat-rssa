@@ -109,21 +109,21 @@ class m_admin extends CI_Model{
 	}
 	
 	function update_pegawai($data){
-	// $var_dump($data);
+		// $var_dump($data);
 		$this->db->where('ID_PEGAWAI',$data['ID_PEGAWAI']);
 		$this->db->update('pegawai',$data);
 		$result="nice";
 		return $result;
 	}
 	function update_user($data){
-	// $var_dump($data);
+		// $var_dump($data);
 		$this->db->where('ID_USER',$data['ID_USER']);
 		$this->db->update('user',$data);
 		$result="nice";
 		return $result;
 	}
 	function update_non($data){
-	// $var_dump($data);
+		// $var_dump($data);
 		$this->db->where('ID',$data['ID']);
 		$this->db->update('non_pegawai',$data);
 		$result="nice";
@@ -133,21 +133,21 @@ class m_admin extends CI_Model{
 	function delete_pegawai($data){
 		// var_dump($data);	
 		foreach ($data as $key => $value) {
-			$sql = "DELETE FROM pegawai WHERE ID_PEGAWAI=".$value;
+			$sql = "UPDATE pegawai
+			SET status = 0
+			WHERE ID_PEGAWAI=".$value;
+			// $sql = "DELETE FROM pegawai WHERE ID_PEGAWAI=".$value;
 			$result = $this->db->query($sql);
-			// var_dump($sql);
-			// $result = $this->db->query()
-			// $result=$this->db->query("DELETE FROM pegawai WHERE ID_PEGAWAI = ".$value->ID_PEGAWAI);
 		}
 	}
 	function delete_user($data){
 		// var_dump($data);	
 		foreach ($data as $key => $value) {
-			$sql = "DELETE FROM user WHERE ID_USER=".$value;
+			$sql = "UPDATE user
+			SET status = 0
+			WHERE ID_USER=".$value;
+			// $sql = "DELETE FROM user WHERE ID_USER=".$value;
 			$result = $this->db->query($sql);
-			// var_dump($sql);
-			// $result = $this->db->query()
-			// $result=$this->db->query("DELETE FROM pegawai WHERE ID_PEGAWAI = ".$value->ID_PEGAWAI);
 		}
 	}
 	function delete_non($data){
@@ -155,9 +155,6 @@ class m_admin extends CI_Model{
 		foreach ($data as $key => $value) {
 			$sql = "DELETE FROM non_pegawai WHERE ID=".$value;
 			$result = $this->db->query($sql);
-			// var_dump($sql);
-			// $result = $this->db->query()
-			// $result=$this->db->query("DELETE FROM pegawai WHERE ID_PEGAWAI = ".$value->ID_PEGAWAI);
 		}
 	}
 
