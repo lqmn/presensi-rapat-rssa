@@ -28,8 +28,7 @@ $(document).ready(function() {
 			'render': function (data){
 				return '<input type="checkbox" class="select" value="' + data + '">';
 			}
-		}],
-		'order': [1, 'asc']
+		}]
 	});
 
 	$("#tabel").on('click','#select-all', function(){
@@ -138,7 +137,7 @@ $(document).ready(function() {
 			}
 		});
 	});
-	
+
 	setInterval(function() {
 		tabel.ajax.reload();
 	}, 300000 );

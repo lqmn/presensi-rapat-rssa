@@ -34,7 +34,7 @@ class m_admin extends CI_Model{
 		WHEN OTORITAS=2      THEN "Verifikator"
 		WHEN OTORITAS=3      THEN "User"
 		END) as OTORITAS, NIP_PEGAWAI FROM user
-		ORDER BY p.date_modified DESC';
+		ORDER BY date_modified DESC';
 
 		$result = $this->db->query($sql);
 		if ($result->num_rows()==1) {
@@ -47,7 +47,8 @@ class m_admin extends CI_Model{
 		}
 	}
 	function get_non($nip=null){
-		$result = $this->db->query("select * from non_pegawai");
+		$sql = 'SELECT * FROM non_pegawai ORDER BY date_modified DESC';
+		$result = $this->db->query($sql);
 		if ($result->num_rows()==1) {
 			return $result->row();
 		}else{
