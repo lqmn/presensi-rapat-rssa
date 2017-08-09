@@ -207,18 +207,8 @@ class c_admin extends CI_Controller{
 		echo json_encode($data);
 	}
 
-
-	function get_table_pegawai_test(){
-		$data= $this->m_admin->get_pegawai();
-		$data->check_box = '<input type="checkbox" class="select" name="id[]" value="$data->ID_PEGAWAI">';
-		var_dump($data);
-		// echo json_encode($data);
-	}
-
 	function get_table_user(){
 		$data= $this->m_admin->get_user();
-		
-		
 
 		echo json_encode($data);
 	}
@@ -226,8 +216,6 @@ class c_admin extends CI_Controller{
 	function get_table_non(){
 		$data= $this->m_admin->get_non();
 		
-		
-
 		echo json_encode($data);
 	}
 }

@@ -4,8 +4,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class m_admin extends CI_Model{
 
 	function get_pegawai($nip=null){
-		$sql ='SELECT ID_PEGAWAI,NIP,NAMA,NAMA_SATKER,p.STATUS as STATUS
-				FROM pegawai p JOIN satuan_kerja s ON p.id_satker = s.id_satker';
+		$sql ='SELECT ID_PEGAWAI,NIP,NAMA,NAMA_SATKER,
+		(CASE 
+		WHEN p.status=0      THEN "Tidak aktif"
+		WHEN p.status=1      THEN "Aktif"
+		END) as STATUS
+		FROM pegawai p JOIN satuan_kerja s ON p.id_satker = s.id_satker';
 		$result = $this->db->query($sql);
 		// var_dump($result->num_rows);
 		if ($result->num_rows()==1) {
@@ -19,7 +23,18 @@ class m_admin extends CI_Model{
 	}
 
 	function get_user($nip=null){
-		$result = $this->db->query("select * from user");
+		$sql='SELECT ID_USER, NAMA_USER, PASSWORD, 
+		(CASE 
+		WHEN STATUS=0      THEN "Tidak aktif"
+		WHEN STATUS=1      THEN "Aktif"
+		END) as STATUS, 
+		(CASE 
+		WHEN OTORITAS=1      THEN "Admin"
+		WHEN OTORITAS=2      THEN "Verifikator"
+		WHEN OTORITAS=3      THEN "User"
+		END) as OTORITAS, NIP_PEGAWAI FROM user';
+
+		$result = $this->db->query($sql);
 		if ($result->num_rows()==1) {
 			return $result->row();
 		}else{
@@ -68,6 +83,7 @@ class m_admin extends CI_Model{
 		$data = $result->row();
 		return $data;
 	}
+
 	function get_sk(){
 		$result = $this->db->query("select * from satuan_kerja");
 		foreach ($result->result() as $row) {
