@@ -9,7 +9,7 @@
 		
 			<label class="control-label col-sm-3" >Tanggal & waktu rapat :</label>
 			<div class='input-group date' id='datetimepicker1' >
-                    <input type='text' class="form-control" name="tanggal" placeholder="<?php echo $waktu;?>"/>
+                    <input type='text' class="form-control" name="tanggal" placeholder="<?php echo $rapat->WAKTU_RAPAT;?>"/>
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>

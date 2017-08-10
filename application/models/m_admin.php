@@ -63,8 +63,8 @@ class m_admin extends CI_Model{
 	function get_rapat(){
 		$sql ='SELECT P.ID_RAPAT,P.WAKTU_RAPAT,R.NAMA_RUANG,U.NAMA_USER,
 		(CASE 
-		WHEN P.status=0      THEN "Tidak aktif"
-		WHEN P.status=1      THEN "Aktif"
+		WHEN P.status=0      THEN "Belum diverifikasi"
+		WHEN P.status=1      THEN "Terverifikasi"
 		END) as STATUS
 		FROM rapat P JOIN ruang_rapat R JOIN user U ON P.id_ruang = R.id_ruang AND P.ID_USER_INPUT = U.ID_USER';
 		

@@ -258,8 +258,6 @@ class c_admin extends CI_Controller{
 		$id_rapat = $this->input->post('id_edit');
 		$data['rapat'] = $this->m_admin->get_one_rapat($id_rapat);
 		$data['ruang']= $this->m_admin->get_ruang();
-		$date = new DateTime($data['rapat']->WAKTU_RAPAT);
-        $data['waktu'] = $date->format('Y-m-d H:i:s');
 		
 		//mengambil list seluruh peserta rapat
 		//still work in progress
