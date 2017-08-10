@@ -22,13 +22,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/i18n/defaults-*.min.js"></script>
 
 
-	<!-- Custom CSS & JS -->
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/admin.css" type="text/css">
-	<script src="<?php echo base_url(); ?>assets/js/admin_user.js"></script>
-	<script src="<?php echo base_url(); ?>assets/js/admin.js"></script>
-	<script type="text/javascript">
-		var BASE_URL = "<?php echo base_url();?>";
-	</script>
+	
 </head>
 <body>
 <?php if ($this->session->userdata('otoritas')!=1) {
@@ -45,27 +39,6 @@
 		</div>
 	</div>
 
-	<nav class="navbar navbar-inverse visible-xs">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>                        
-				</button>
-				<a class="navbar-brand" href="#">Logo</a>
-			</div>
-			<div class="collapse navbar-collapse" id="myNavbar">
-				<ul class="nav navbar-nav">
-
-					<li class="active"><a href="#">Admin</a></li>
-					<li><a href="#">Presensi</a></li>
-					<li><a href="#">Rapat</a></li>
-
-				</ul>
-			</div>
-		</div>
-	</nav>
 
 	<div class="container-fluid">
 		<div class="row content">
@@ -73,9 +46,9 @@
 				<img src="<?php echo base_url();?>assets/img/logo.png" width="200px" height="200px"></img>
 				<ul class="nav nav-pills nav-stacked" >
 
-					<li class="active"><a href="<?php echo base_url();?>c_admin/pegawai">Admin</a></li>
-					<li><a href="#">Presensi</a></li>
-					<li><a href="#">Rapat</a></li>
+				<li class="active"><a href="<?php echo base_url();?>c_admin/pegawai">Admin</a></li>
+					<li><a href="<?php echo base_url();?>c_admin/presensi">Presensi</a></li>
+					<li><a href="<?php echo base_url();?>c_admin/rapat">Rapat</a></li>
 					<li><a href="<?php echo base_url();?>c_admin/logout">Logout</a></li>
 					<li style="margin-top:55%">Logged in : <?php echo $this->session->userdata('nama_user'); ?> as administrator</li>
 					<li >NIP: <?php echo $this->session->userdata('nip_pegawai');            ?> </li>
@@ -133,4 +106,11 @@
 
 
 </body>
+<!-- Custom CSS & JS -->
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/admin.css" type="text/css">
+	<script src="<?php echo base_url(); ?>assets/js/admin_user.js"></script>
+	<script src="<?php echo base_url(); ?>assets/js/admin.js"></script>
+	<script type="text/javascript">
+		var BASE_URL = "<?php echo base_url();?>";
+	</script>
 </html>
