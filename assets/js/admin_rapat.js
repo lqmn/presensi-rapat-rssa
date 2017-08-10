@@ -89,7 +89,7 @@ $(document).ready(function() {
 	$(document).on('click','.editButton',function(event){
 		var data = $(this).val();
 		// console.log(data);
-		var requrl = BASE_URL+'c_admin/edit_form_pegawai';
+		var requrl = BASE_URL+'c_admin/edit_form_rapat';
 		
 		$.ajax({
 			url:requrl,

@@ -115,6 +115,13 @@ class m_admin extends CI_Model{
 		return $data;
 	}
 
+	function get_one_rapat($id){
+		$sql = "SELECT * FROM rapat WHERE ID_RAPAT = ".$id;
+		$result = $this->db->query($sql);
+		$data = $result->row();
+		return $data;
+	}
+	
 	function get_sk(){
 		$result = $this->db->query("select * from satuan_kerja");
 		foreach ($result->result() as $row) {

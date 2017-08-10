@@ -254,6 +254,22 @@ class c_admin extends CI_Controller{
 		$this->load->view('v_edit_non', $data);
 	}
 	
+	function edit_form_rapat(){
+		$id_rapat = $this->input->post('id_edit');
+		$data['rapat'] = $this->m_admin->get_one_rapat($id_rapat);
+		$data['ruang']= $this->m_admin->get_ruang();
+		$date = new DateTime($data['rapat']->WAKTU_RAPAT);
+        $data['waktu'] = $date->format('Y-m-d H:i:s');
+		
+		//mengambil list seluruh peserta rapat
+		//still work in progress
+		// $data['rapat'] = $this->m_admin->get_peserta_rapat_by_id_rapat($id_rapat);
+		
+		
+		// var_dump($data);
+		$this->load->view('v_edit_rapat', $data);
+	}
+
 	
 	function get_table_pegawai(){
 		$data= $this->m_admin->get_pegawai();
