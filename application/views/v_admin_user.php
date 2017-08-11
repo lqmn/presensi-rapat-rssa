@@ -78,7 +78,6 @@
 								<th>NIP</th>
 								<th>Nama</th>
 								<th>Password</th>
-								<th>Status</th>
 								<th>Otoritas</th>
 								<th>Panel</th>
 							</tr>

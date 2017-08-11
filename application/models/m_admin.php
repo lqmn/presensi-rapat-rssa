@@ -4,12 +4,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class m_admin extends CI_Model{
 
 	function get_pegawai($nip=null){
-		$sql ='SELECT ID_PEGAWAI,NIP,NAMA,NAMA_SATKER,
-		(CASE 
-		WHEN p.status=0      THEN "Tidak aktif"
-		WHEN p.status=1      THEN "Aktif"
-		END) as STATUS
+		$sql ='SELECT ID_PEGAWAI,NIP,NAMA,NAMA_SATKER
 		FROM pegawai p JOIN satuan_kerja s ON p.id_satker = s.id_satker
+		WHERE p.status=1
 		ORDER BY p.date_modified DESC';
 		$result = $this->db->query($sql);
 		// var_dump($result->num_rows);
@@ -25,16 +22,13 @@ class m_admin extends CI_Model{
 	
 
 	function get_user($nip=null){
-		$sql='SELECT ID_USER, NAMA_USER, PASSWORD, 
-		(CASE 
-		WHEN STATUS=0      THEN "Tidak aktif"
-		WHEN STATUS=1      THEN "Aktif"
-		END) as STATUS, 
+		$sql='SELECT ID_USER, NAMA_USER, PASSWORD,
 		(CASE 
 		WHEN OTORITAS=1      THEN "Admin"
 		WHEN OTORITAS=2      THEN "Verifikator"
 		WHEN OTORITAS=3      THEN "User"
 		END) as OTORITAS, NIP_PEGAWAI FROM user
+		WHERE STATUS=1
 		ORDER BY date_modified DESC';
 
 		$result = $this->db->query($sql);
@@ -192,6 +186,7 @@ class m_admin extends CI_Model{
 			// $sql = "DELETE FROM user WHERE ID_USER=".$value;
 			$result = $this->db->query($sql);
 		}
+		return $this->db->affected_rows();
 	}
 	function delete_non($data){
 		// var_dump($data);	

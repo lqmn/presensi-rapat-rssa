@@ -38,8 +38,7 @@ $(document).ready(function() {
 			'render': function (data){
 				return '<button type="button" class="pesertaButton btn btn-info" data-toggle="modal" data-target="#myModal" value="'+data+'">Lihat Peserta</button>';
 			}
-		}
-		]
+		}],"order": []
 	});
 
 	$("#tabel").on('click','#select-all', function(){
@@ -134,7 +133,7 @@ $(document).ready(function() {
 
 	$('#modalContent').on('click','#delete', function(){
 		var selected = [];
-		$('#tabel input:checked').each(function() {
+		$('.select:checked').each(function() {
 			selected.push($(this).attr('value'));
 		});
 		var requrl = BASE_URL+'c_admin/delete_pegawai';
