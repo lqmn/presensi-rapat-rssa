@@ -88,6 +88,10 @@ class c_admin extends CI_Controller{
 	function form_delete_non(){
 		$this->load->view('v_delete_non');
 	}
+	
+	function form_delete_rapat(){
+		$this->load->view('v_delete_rapat');
+	}
 
 	function insert_pegawai(){
 		$data['NIP'] = $this->input->post('nomor');
@@ -104,10 +108,15 @@ class c_admin extends CI_Controller{
 	}
 	
 	function insert_rapat(){
-		$date = $this->input->post('tanggal');
+		$tanggal = $this->input->post('tanggal');
+		$waktu = $this->input->post('waktu');
+		$date=$tanggal." ".$waktu;
+		
 		$data['WAKTU_RAPAT'] =date('Y-m-d H:i',strtotime($date));
+		// $data['WAKTU_RAPAT'] = DateTime::createFromFormat('d-m-Y H:i', $date)->format('d-m-Y H:i');
 		// $data['WAKTU_RAPAT'] = DateTime::createFromFormat('d/m/Y H:i', $date);
 		 // var_dump($data['WAKTU_RAPAT']);
+		 $data['JUDUL_RAPAT']=$this->input->post('judul');
 		$data['ID_RUANG'] = $this->input->post('ruang');
 		$data['ID_USER_INPUT']= $this->session->userdata('id_user');
 		
@@ -163,6 +172,21 @@ class c_admin extends CI_Controller{
 		$data['NAMA'] = $this->input->post('nama');
 		$data['INSTITUSI'] = $this->input->post('institusi');
 		$res = $this->m_admin->update_non($data);
+		// var_dump($data);
+		if ($res) {
+			$this->load->view('v_sukses_modal_insert');
+		}else{
+			echo "Error";
+		}
+	}
+	
+	function update_rapat(){
+		$data['ID_RAPAT'] = $this->input->post('id');
+		$data['JUDUL_RAPAT'] = $this->input->post('judul');
+		$date=$this->input->post('tanggal')." ".$this->input->post('waktu');
+		$data['WAKTU_RAPAT'] =date('Y-m-d H:i',strtotime($date));
+		$data['ID_RUANG'] = $this->input->post('ruang');
+		$res = $this->m_admin->update_rapat($data);
 		// var_dump($data);
 		if ($res) {
 			$this->load->view('v_sukses_modal_insert');
@@ -229,6 +253,12 @@ class c_admin extends CI_Controller{
 		$this->load->view('v_sukses_modal');
 
 	}
+	
+	function delete_rapat(){
+			$array_del = $this->input->post('array_del');
+		$this->m_admin->delete_rapat($array_del);
+		$this->load->view('v_sukses_modal');
+	}
 
 	function edit_form_pegawai(){
 		$id_pegawai = $this->input->post('id_edit');
@@ -289,7 +319,11 @@ class c_admin extends CI_Controller{
 	
 	function get_table_rapat(){
 		$data= $this->m_admin->get_rapat();
-		
+		//cara edit data untuk JS ke PHP, edit di url yang dipanggil ajax
+//		foreach($data as $key=>$value){
+			// $value->NAMA_RUANG="RUANG ".$value->NAMA_RUANG;
+		// }
+		// var_dump($data);
 		echo json_encode($data);
 		
 	}

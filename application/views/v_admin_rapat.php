@@ -9,6 +9,7 @@
 					<table id="tabel" class="table table-striped table-bordered" cellspacing="0" width="100%">
 						<thead>
 							<tr><th><input id="select-all" type="checkbox" /></th>
+							    <th>Judul Rapat</th>
 								<th>Waktu Rapat</th>
 								<th>Nama Ruang</th>
 								<th>User Pembuat</th>

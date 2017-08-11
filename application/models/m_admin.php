@@ -61,7 +61,7 @@ class m_admin extends CI_Model{
 	}
 	
 	function get_rapat(){
-		$sql ='SELECT P.ID_RAPAT,P.WAKTU_RAPAT,R.NAMA_RUANG,U.NAMA_USER,
+		$sql ='SELECT P.ID_RAPAT,P.JUDUL_RAPAT,P.WAKTU_RAPAT,R.NAMA_RUANG,U.NAMA_USER,
 		(CASE 
 		WHEN P.status=0      THEN "Belum diverifikasi"
 		WHEN P.status=1      THEN "Terverifikasi"
@@ -172,6 +172,14 @@ class m_admin extends CI_Model{
 		$result="nice";
 		return $result;
 	}
+	
+	function update_rapat($data){
+		// $var_dump($data);
+		$this->db->where('ID_RAPAT',$data['ID_RAPAT']);
+		$this->db->update('rapat',$data);
+		$result="nice";
+		return $result;
+	}
 
 	function delete_pegawai($data){
 		// var_dump($data);	
@@ -197,6 +205,14 @@ class m_admin extends CI_Model{
 		// var_dump($data);	
 		foreach ($data as $key => $value) {
 			$sql = "DELETE FROM non_pegawai WHERE ID=".$value;
+			$result = $this->db->query($sql);
+		}
+	}
+	
+		function delete_rapat($data){
+		// var_dump($data);	
+		foreach ($data as $key => $value) {
+			$sql = "DELETE FROM rapat WHERE ID_RAPAT=".$value;
 			$result = $this->db->query($sql);
 		}
 	}
