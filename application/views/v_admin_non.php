@@ -25,10 +25,10 @@
 	
 </head>
 <body>
-<?php if ($this->session->userdata('otoritas')!=1) {
+	<?php if ($this->session->userdata('otoritas')!=1) {
 			// echo "admin";
-			redirect('c_admin/error_authority', 'refresh');
-		} ?>
+		redirect('c_admin/error_authority', 'refresh');
+	} ?>
 	<div id="myModal" class="modal fade" role="dialog">
 		<div class="modal-dialog">
 
@@ -53,11 +53,6 @@
 					<li><a href="<?php echo base_url();?>c_admin/logout">Logout</a></li>
 					<li style="margin-top:55%">Logged in : <?php echo $this->session->userdata('nama'); ?> as administrator</li>
 					<li >NIP: <?php echo $this->session->userdata('username'); ?> </li>
-					
-				
-				
-					
-
 				</ul><br>
 			</div>
 			<br>
@@ -72,29 +67,16 @@
 						</select>
 					</div><h4>Non Pegawai</h4>
 					<br>
-					<table id="tabel" class="table table-striped table-bordered" cellspacing="0" width="100%">
+					<table id="tabel" class="table table-striped" cellspacing="0" width="100%">
 						<thead>
-							<tr><th><input name="select_all" value="1" id="select-all" type="checkbox" /></th>
+							<tr>
+								<th><input name="select_all" value="1" id="select-all" type="checkbox" /></th>
 								<th>Nama</th>
 								<th>Institusi</th>
 								<th>Panel</th>
 							</tr>
 						</thead>
-						<tbody>
-							<!-- <?php foreach ($dataUser as $key => $value): ?>
-								<tr>
-									<td><?php echo $value->ID_PEGAWAI; ?></td>
-									<td><?php echo $value->NIP; ?></td>
-									<td><?php echo $value->NAMA; ?></td>
-									<td><?php echo $value->ID_SATKER; ?></td>
-									<td><?php echo $value->STATUS; ?></td>
-								</tr>
-							<?php endforeach ?> -->
-						</tbody>
 					</table>
-					<button id="tambah" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Tambah</button>
-					
-					<button id="hapus" type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal" disabled>Delete</button>
 				</div>
 			</div>
 
@@ -104,10 +86,10 @@
 
 </body>
 <!-- Custom CSS & JS -->
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/admin.css" type="text/css">
-	<script src="<?php echo base_url(); ?>assets/js/admin_non.js"></script>
-	<script src="<?php echo base_url(); ?>assets/js/admin.js"></script>
-	<script type="text/javascript">
-		var BASE_URL = "<?php echo base_url();?>";
-	</script>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/admin.css" type="text/css">
+<script src="<?php echo base_url(); ?>assets/js/admin_non.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/admin.js"></script>
+<script type="text/javascript">
+	var BASE_URL = "<?php echo base_url();?>";
+</script>
 </html>

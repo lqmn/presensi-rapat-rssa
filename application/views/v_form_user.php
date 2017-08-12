@@ -23,7 +23,7 @@
 		<div class="form-group">
 			<label class="control-label col-sm-3" for="pwd">Password:</label>
 			<div class="col-sm-9">
-				<input type="password" class="form-control" id="nama" placeholder="password" name="password" required>
+				<input type="password" class="form-control" id="nama" placeholder="password" name="password" minlength=5 required>
 			</div>
 		</div>
 		<div class="form-group">

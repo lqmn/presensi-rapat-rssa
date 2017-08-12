@@ -46,12 +46,6 @@
 					<li><a href="<?php echo base_url();?>c_admin/logout">Logout</a></li>
 					<li style="margin-top:55%">Logged in : <?php echo $this->session->userdata('nama'); ?> as administrator</li>
 					<li >NIP: <?php echo $this->session->userdata('username'); ?> </li>
-					
-					
-				
-				
-					
-
 				</ul><br>
 			</div>
 			<br>

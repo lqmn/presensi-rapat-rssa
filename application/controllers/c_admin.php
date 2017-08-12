@@ -228,7 +228,7 @@ class c_admin extends CI_Controller{
 		// var_dump($data);
 		$res = $this->m_admin->insert_user($data);
 		// var_dump($res);
-		if ($res>1) {
+		if ($res>0) {
 			$this->load->view('v_sukses_modal_insert');
 		}else{
 			echo "Error";
@@ -252,7 +252,7 @@ class c_admin extends CI_Controller{
 		// $array_del = filter_input(INPUT_POST, 'array_del', FILTER_SANITIZE_STRING);
 		$array_del = $this->input->post('array_del');
 		// var_dump($array_del);
-		$this->m_admin->delete_pegawai($array_del);
+		$res = $this->m_admin->delete_pegawai($array_del);
 
 		// var_dump($data);
 		if ($res>0) {

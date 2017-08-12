@@ -66,7 +66,7 @@
 						</select>
 					</div><h4>User</h4>
 					<br>
-					<table id="tabel" class="table table-striped table-bordered" cellspacing="0" width="100%">
+					<table id="tabel" class="table table-striped" cellspacing="0" width="100%">
 						<thead>
 							<tr>
 								<th><input name="select_all" value="1" id="select-all" type="checkbox" /></th>
@@ -75,21 +75,7 @@
 								<th>Panel</th>
 							</tr>
 						</thead>
-						<tbody>
-							<!-- <?php foreach ($dataUser as $key => $value): ?>
-								<tr>
-									<td><?php echo $value->ID_PEGAWAI; ?></td>
-									<td><?php echo $value->NIP; ?></td>
-									<td><?php echo $value->NAMA; ?></td>
-									<td><?php echo $value->ID_SATKER; ?></td>
-									<td><?php echo $value->STATUS; ?></td>
-								</tr>
-							<?php endforeach ?> -->
-						</tbody>
 					</table>
-					<button id="tambah" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Tambah</button>
-					
-					<button id="hapus" type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal" disabled>Delete</button>
 				</div>
 			</div>
 

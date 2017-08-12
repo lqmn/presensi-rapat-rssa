@@ -61,7 +61,7 @@
 				</select>
 			</div><h4>Pegawai</h4>
 			<br>
-			<table id="tabel" class="table table-striped table-bordered" cellspacing="0" width="100%">
+			<table id="tabel" class="table table-striped" cellspacing="0" width="100%">
 				<thead>
 					<tr><th><input id="select-all" type="checkbox" /></th>
 						<th>Nama</th>
@@ -71,8 +71,8 @@
 					</tr>
 				</thead>
 			</table>
-			<button id="tambah" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Tambah</button>
-			<button id="hapus" type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal" disabled>Delete</button>
+			<!-- <button id="tambah" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Tambah</button>
+			<button id="hapus" type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal" disabled>Delete</button> -->
 		</div>
 	</div>
 
