@@ -4,7 +4,7 @@
 </div>
 
 <div class="modal-body">
-	<form id="formModal"class="form-horizontal" action="">
+	<form id="formEdit"class="form-horizontal" action="">
 		<div class="form-group">
 			<label class="control-label col-sm-3" for="email">Nama:</label>
 			<div class="col-sm-9">
@@ -23,7 +23,7 @@
 		
 		<div class="form-group">
 			<div class="col-sm-offset-3 col-sm-9">
-				<button id="edit" type="button" class="btn btn-primary">Submit</button>
+				<button id="edit" type="submit" class="btn btn-primary">Submit</button>
 			</div>
 		</div>
 	</form>

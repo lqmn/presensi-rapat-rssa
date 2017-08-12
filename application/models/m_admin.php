@@ -3,61 +3,52 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class m_admin extends CI_Model{
 
-	function get_pegawai($nip=null){
-		$sql ='SELECT ID_PEGAWAI,NIP,NAMA,NAMA_SATKER,
-		(CASE 
-		WHEN p.status=0      THEN "Tidak aktif"
-		WHEN p.status=1      THEN "Aktif"
-		END) as STATUS
+	function get_pegawai(){
+		$sql ='SELECT ID_PEGAWAI,NIP,NAMA,NAMA_SATKER
 		FROM pegawai p JOIN satuan_kerja s ON p.id_satker = s.id_satker
+		WHERE p.status=1
 		ORDER BY p.date_modified DESC';
 		$result = $this->db->query($sql);
 		// var_dump($result->num_rows);
-		if ($result->num_rows()==1) {
-			return $result->row();
-		}else{
-			foreach ($result->result() as $row) {
-				$data[] = $row;
-			}
-			return $data;
+		foreach ($result->result() as $row) {
+			$data[] = $row;
 		}
+		return $data;
+		
 	}
 	
 
-	function get_user($nip=null){
-		$sql='SELECT ID_USER, NAMA_USER, PASSWORD, 
-		(CASE 
-		WHEN STATUS=0      THEN "Tidak aktif"
-		WHEN STATUS=1      THEN "Aktif"
-		END) as STATUS, 
+	function get_user(){
+		$sql='SELECT ID_USER, USERNAME,
 		(CASE 
 		WHEN OTORITAS=1      THEN "Admin"
 		WHEN OTORITAS=2      THEN "Verifikator"
 		WHEN OTORITAS=3      THEN "User"
-		END) as OTORITAS, NIP_PEGAWAI FROM user
+		END) as OTORITAS FROM user
+		WHERE STATUS=1
 		ORDER BY date_modified DESC';
 
 		$result = $this->db->query($sql);
-		if ($result->num_rows()==1) {
-			return $result->row();
-		}else{
-			foreach ($result->result() as $row) {
-				$data[] = $row;
-			}
-			return $data;
+		// if ($result->num_rows()==1) {
+		// 	return $result->row();
+		// }else{
+		foreach ($result->result() as $row) {
+			$data[] = $row;
 		}
+		return $data;
+		// }
 	}
 	function get_non($nip=null){
 		$sql = 'SELECT * FROM non_pegawai ORDER BY date_modified DESC';
 		$result = $this->db->query($sql);
-		if ($result->num_rows()==1) {
-			return $result->row();
-		}else{
-			foreach ($result->result() as $row) {
-				$data[] = $row;
-			}
-			return $data;
+		// if ($result->num_rows()==1) {
+		// 	return $result->row();
+		// }else{
+		foreach ($result->result() as $row) {
+			$data[] = $row;
 		}
+		return $data;
+		// }
 	}
 	
 	function get_rapat(){
@@ -69,10 +60,10 @@ class m_admin extends CI_Model{
 		FROM rapat P JOIN ruang_rapat R JOIN user U ON P.id_ruang = R.id_ruang AND P.ID_USER_INPUT = U.ID_USER';
 		
 		$result = $this->db->query($sql);
-			foreach ($result->result() as $row) {
-				$data[] = $row;
-			}
-			return $data;
+		foreach ($result->result() as $row) {
+			$data[] = $row;
+		}
+		return $data;
 		
 	}
 	
@@ -118,14 +109,15 @@ class m_admin extends CI_Model{
 			return $data;
 	}
 	
-		function get_ruang(){
+  
+	function get_ruang(){
 		$sql ='SELECT * FROM RUANG_RAPAT';
 		
 		$result = $this->db->query($sql);
-			foreach ($result->result() as $row) {
-				$data[] = $row;
-			}
-			return $data;
+		foreach ($result->result() as $row) {
+			$data[] = $row;
+		}
+		return $data;
 		
 	}
 
@@ -184,7 +176,7 @@ class m_admin extends CI_Model{
 
 	function insert_user($data){
 		$result = $this->db->insert('user',$data);
-		return $result;
+		return $this->db->affected_rows();
 	}
 	
 	function insert_non($data){
@@ -208,16 +200,18 @@ class m_admin extends CI_Model{
 		// $var_dump($data);
 		$this->db->where('ID_PEGAWAI',$data['ID_PEGAWAI']);
 		$this->db->update('pegawai',$data);
-		$result="nice";
-		return $result;
+
+		return $this->db->affected_rows();
 	}
+
 	function update_user($data){
-		// $var_dump($data);
+
 		$this->db->where('ID_USER',$data['ID_USER']);
-		$this->db->update('user',$data);
-		$result="nice";
-		return $result;
+		$res = $this->db->update('user',$data);
+
+		return $this->db->affected_rows();
 	}
+
 	function update_non($data){
 		// $var_dump($data);
 		$this->db->where('ID',$data['ID']);
@@ -253,6 +247,7 @@ class m_admin extends CI_Model{
 			// $sql = "DELETE FROM user WHERE ID_USER=".$value;
 			$result = $this->db->query($sql);
 		}
+		return $this->db->affected_rows();
 	}
 	function delete_non($data){
 		// var_dump($data);	

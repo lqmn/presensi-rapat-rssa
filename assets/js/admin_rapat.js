@@ -40,6 +40,7 @@ $(document).ready(function() {
 			'render': function (data){
 				return '<a href="'+BASE_URL+'c_admin/peserta/'+data+'"><button type="button" class="pesertaButton btn btn-info" value="'+data+'">Tambah Peserta</button></a>';
 			}
+
 		}
 		,{
 			'targets': 6,
@@ -51,6 +52,9 @@ $(document).ready(function() {
 			}
 		}
 		]
+
+		}],"order": []
+
 	});
 
 	$("#tabel").on('click','#select-all', function(){
@@ -145,7 +149,7 @@ $(document).ready(function() {
 
 	$('#modalContent').on('click','#delete', function(){
 		var selected = [];
-		$('#tabel input:checked').each(function() {
+		$('.select:checked').each(function() {
 			selected.push($(this).attr('value'));
 		});
 		var requrl = BASE_URL+'c_admin/delete_rapat';
