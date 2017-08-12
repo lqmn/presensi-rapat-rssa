@@ -51,8 +51,8 @@
 					<li><a href="<?php echo base_url();?>c_admin/presensi">Presensi</a></li>
 					<li><a href="<?php echo base_url();?>c_admin/rapat">Rapat</a></li>
 					<li><a href="<?php echo base_url();?>c_admin/logout">Logout</a></li>
-					<li style="margin-top:55%">Logged in : <?php echo $this->session->userdata('nama_user'); ?> as administrator</li>
-					<li >NIP: <?php echo $this->session->userdata('nip_pegawai');            ?> </li>
+					<li style="margin-top:55%">Logged in : <?php echo $this->session->userdata('nama'); ?> as administrator</li>
+					<li >NIP: <?php echo $this->session->userdata('username'); ?> </li>
 					
 				
 				
@@ -94,7 +94,7 @@
 					</table>
 					<button id="tambah" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Tambah</button>
 					
-					<button id="hapus" type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Delete</button>
+					<button id="hapus" type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal" disabled>Delete</button>
 				</div>
 			</div>
 

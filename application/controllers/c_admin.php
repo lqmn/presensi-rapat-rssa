@@ -70,6 +70,7 @@ class c_admin extends CI_Controller{
 	function form_insert_rapat(){
 		$this->load->view('v_form_insert_rapat');
 	}
+
 	function form_pegawai(){
 		$data['satker'] = $this->m_admin->get_sk();
 		$this->load->view('v_form_pegawai', $data);
@@ -112,7 +113,7 @@ class c_admin extends CI_Controller{
 		$data['STATUS'] = 1;
 		$res = $this->m_admin->insert_pegawai($data);
 		// var_dump($data);
-		if ($res) {
+		if ($res>0) {
 			$this->load->view('v_sukses_modal_insert');
 		}else{
 			echo "Error";
@@ -128,7 +129,7 @@ class c_admin extends CI_Controller{
 		// $data['WAKTU_RAPAT'] = DateTime::createFromFormat('d-m-Y H:i', $date)->format('d-m-Y H:i');
 		// $data['WAKTU_RAPAT'] = DateTime::createFromFormat('d/m/Y H:i', $date);
 		 // var_dump($data['WAKTU_RAPAT']);
-		 $data['JUDUL_RAPAT']=$this->input->post('judul');
+		$data['JUDUL_RAPAT']=$this->input->post('judul');
 		$data['ID_RUANG'] = $this->input->post('ruang');
 		$data['ID_USER_INPUT']= $this->session->userdata('id_user');
 		
@@ -150,10 +151,10 @@ class c_admin extends CI_Controller{
 	}
 	
 	function insert_peserta(){
-	$id_peserta=$this->input->post('array_del');
-	$id_rapat=$this->input->post('id_rapat');
+		$id_peserta=$this->input->post('array_del');
+		$id_rapat=$this->input->post('id_rapat');
 		$res=$this->m_admin->insert_peserta($id_peserta,$id_rapat);
-	if ($res) {
+		if ($res>0) {
 			$this->load->view('v_sukses_modal_insert');
 		}else{
 			echo "Error";
@@ -168,7 +169,7 @@ class c_admin extends CI_Controller{
 		$data['OTORITAS'] = $this->input->post('otoritas');
 		$res = $this->m_admin->update_user($data);
 		// var_dump($data);
-		if ($res==1) {
+		if ($res>0) {
 			$this->load->view('v_sukses_modal_insert');
 		}else{
 			echo "Error";
@@ -182,7 +183,7 @@ class c_admin extends CI_Controller{
 		$data['ID_SATKER'] = $this->input->post('satker');
 		$res = $this->m_admin->update_pegawai($data);
 		// var_dump($data);
-		if ($res==1) {
+		if ($res>0) {
 			$this->load->view('v_sukses_modal_insert');
 		}else{
 			echo "Error";
@@ -195,7 +196,7 @@ class c_admin extends CI_Controller{
 		$data['INSTITUSI'] = $this->input->post('institusi');
 		$res = $this->m_admin->update_non($data);
 		// var_dump($data);
-		if ($res) {
+		if ($res>0) {
 			$this->load->view('v_sukses_modal_insert');
 		}else{
 			echo "Error";
@@ -227,7 +228,7 @@ class c_admin extends CI_Controller{
 		// var_dump($data);
 		$res = $this->m_admin->insert_user($data);
 		// var_dump($res);
-		if ($res==1) {
+		if ($res>1) {
 			$this->load->view('v_sukses_modal_insert');
 		}else{
 			echo "Error";
@@ -240,7 +241,7 @@ class c_admin extends CI_Controller{
 		$data['INSTITUSI'] = $this->input->post('institusi');
 		// var_dump($hasil);
 		$res = $this->m_admin->insert_non($data);
-		if ($res) {
+		if ($res>0) {
 			$this->load->view('v_sukses_modal_insert');
 		}else{
 			echo "Error";
@@ -254,30 +255,39 @@ class c_admin extends CI_Controller{
 		$this->m_admin->delete_pegawai($array_del);
 
 		// var_dump($data);
-		// if ($res) {
-		$this->load->view('v_sukses_modal');
-		// }else{
-		// 	echo "Error";
-		// }
+		if ($res>0) {
+			$this->load->view('v_sukses_modal');
+		}else{
+			echo "Error";
+		}
 	}
 
 	function delete_user(){
 		$array_del = $this->input->post('array_del');
 		// var_dump($array_del);
-		$this->m_admin->delete_user($array_del);
-		// $this->load->view('v_sukses_modal');
+		$res = $this->m_admin->delete_user($array_del);
+		if ($res>0) {
+			$this->load->view('v_sukses_modal');
+		}else{
+			echo 'error';
+		}
 
 	}
 
 	function delete_non(){
 		$array_del = $this->input->post('array_del');
-		$this->m_admin->delete_non($array_del);
-		$this->load->view('v_sukses_modal');
+		$res = $this->m_admin->delete_non($array_del);
+		if ($res>0) {
+			$this->load->view('v_sukses_modal');
+		}else{
+			echo 'error';
+		}
+
 
 	}
 	
 	function delete_rapat(){
-			$array_del = $this->input->post('array_del');
+		$array_del = $this->input->post('array_del');
 		$this->m_admin->delete_rapat($array_del);
 		$this->load->view('v_sukses_modal');
 	}

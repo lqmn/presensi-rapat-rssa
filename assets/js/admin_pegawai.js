@@ -1,6 +1,8 @@
 $(document).ready(function() {
 	// table
+	// alert('awdojawod');
 	var tabel = $('#tabel').DataTable({
+        // "dom": '<"toolbar">frtip',
 		"ajax": {
 			"url": BASE_URL+"c_admin/get_table_pegawai",
 			"dataSrc": ""
@@ -39,6 +41,7 @@ $(document).ready(function() {
 
 	$('#myModal').on('hidden.bs.modal', function() {
 		tabel.ajax.reload();
+		$('#hapus').prop('disabled',true);
 	});
 
 	// insert
@@ -142,7 +145,20 @@ $(document).ready(function() {
 		});
 	});
 
+	$('#tabel').on('change','input:checkbox',function(){
+		var selected = 0;
+		$('.select:checked').each(function() {
+			selected++;
+		});
+		if (selected>0) {
+			$('#hapus').prop('disabled',false);
+		}else{
+			$('#hapus').prop('disabled',true);
+		}
+	})
+
 	setInterval(function() {
 		tabel.ajax.reload();
+		$('#hapus').prop('disabled',true);
 	}, 300000 );
 });

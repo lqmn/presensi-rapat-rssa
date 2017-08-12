@@ -38,6 +38,7 @@ $(document).ready(function() {
 
 	$('#myModal').on('hidden.bs.modal', function() {
 		tabel.ajax.reload();
+		$('#hapus').prop('disabled',true);
 	});
 	
 	// insert
@@ -141,7 +142,20 @@ $(document).ready(function() {
 		});
 	});
 
+	$('#tabel').on('change','input:checkbox',function(){
+		var selected = 0;
+		$('.select:checked').each(function() {
+			selected++;
+		});
+		if (selected>0) {
+			$('#hapus').prop('disabled',false);
+		}else{
+			$('#hapus').prop('disabled',true);
+		}
+	})
+
 	setInterval(function() {
 		tabel.ajax.reload();
+		$('#hapus').prop('disabled',true);
 	}, 300000 );
 });

@@ -75,13 +75,13 @@ class m_admin extends CI_Model{
 		INSTITUSI AS SATKER,"NON-PEGAWAI" AS ASAL FROM non_pegawai';
 		//mengembalikan ID,NAMA,SATKER,ASAL
 		$result = $this->db->query($sql);
-			foreach ($result->result() as $row) {
-				$data[] = $row;
-			}
-			return $data;
+		foreach ($result->result() as $row) {
+			$data[] = $row;
+		}
+		return $data;
 	}
 	
-  
+
 	function get_ruang(){
 		$sql ='SELECT * FROM RUANG_RAPAT';
 		
@@ -143,7 +143,7 @@ class m_admin extends CI_Model{
 	}
 	function insert_pegawai($data){
 		$result = $this->db->insert('pegawai',$data);
-		return $result;
+		return $this->db->affected_rows();
 	}
 
 	function insert_user($data){
@@ -154,7 +154,7 @@ class m_admin extends CI_Model{
 	function insert_non($data){
 		// var_dump($data);
 		$result = $this->db->insert('non_pegawai',$data);
-		return $result;
+		return $this->db->affected_rows();
 	}
 	
 	function insert_peserta($id_peserta,$id_rapat){
@@ -163,9 +163,9 @@ class m_admin extends CI_Model{
 			$sql = "INSERT INTO peserta_rapat (ID_USER,ID_RAPAT)
 			VALUES (".$value.",".$id_rapat." )" ;
 			// $sql = "DELETE FROM pegawai WHERE ID_PEGAWAI=".$value;
-			$result = $this->db->query($sql);
+			$this->db->query($sql);
 		}
-		return $result;
+		return $this->db->affected_rows();
 	}
 	
 	function update_pegawai($data){
@@ -188,8 +188,7 @@ class m_admin extends CI_Model{
 		// $var_dump($data);
 		$this->db->where('ID',$data['ID']);
 		$this->db->update('non_pegawai',$data);
-		$result="nice";
-		return $result;
+		return $this->db->affected_rows();
 	}
 	
 	function update_rapat($data){
@@ -207,9 +206,11 @@ class m_admin extends CI_Model{
 			SET status = 0
 			WHERE ID_PEGAWAI=".$value;
 			// $sql = "DELETE FROM pegawai WHERE ID_PEGAWAI=".$value;
-			$result = $this->db->query($sql);
+			$this->db->query($sql);
 		}
+		return $this->db->affected_rows();
 	}
+
 	function delete_user($data){
 		// var_dump($data);	
 		foreach ($data as $key => $value) {
@@ -221,15 +222,17 @@ class m_admin extends CI_Model{
 		}
 		return $this->db->affected_rows();
 	}
+
 	function delete_non($data){
 		// var_dump($data);	
 		foreach ($data as $key => $value) {
 			$sql = "DELETE FROM non_pegawai WHERE ID=".$value;
 			$result = $this->db->query($sql);
 		}
+		return $this->db->affected_rows();
 	}
 	
-		function delete_rapat($data){
+	function delete_rapat($data){
 		// var_dump($data);	
 		foreach ($data as $key => $value) {
 			$sql = "DELETE FROM rapat WHERE ID_RAPAT=".$value;
