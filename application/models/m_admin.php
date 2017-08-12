@@ -76,13 +76,41 @@ class m_admin extends CI_Model{
 		
 	}
 	
-	function get_all_entitas(){
-		$sql='SELECT p.ID_PEGAWAI AS ID ,P.NAMA,S.NAMA_SATKER as SATKER,"PEGAWAI" AS ASAL  from pegawai P,satuan_kerja S
-		WHERE P.ID_SATKER=S.ID_SATKER  
+	function get_all_entitas($id_rapat){
+		$sql='SELECT P.NIP AS ID ,P.NAMA,S.NAMA_SATKER as SATKER,"PEGAWAI" AS ASAL  from pegawai P,satuan_kerja S,peserta_rapat R 
+		WHERE 
+		P.ID_SATKER=S.ID_SATKER AND
+		P.NIP NOT IN
+		(SELECT ID_USER   
+		from peserta_rapat 
+		WHERE ID_RAPAT = "'.$id_rapat.'" )
+
 		UNION 
 		SELECT ID,NAMA , 
-		INSTITUSI AS SATKER,"NON-PEGAWAI" AS ASAL FROM non_pegawai';
-		//mengembalikan ID,NAMA,SATKER,ASAL
+		INSTITUSI AS SATKER,"NON-PEGAWAI" AS ASAL FROM non_pegawai
+		WHERE ID NOT IN
+		(SELECT ID_USER   
+		from peserta_rapat 
+		WHERE ID_RAPAT = "'.$id_rapat.'" )';
+		// mengembalikan ID,NAMA,SATKER,ASAL
+		$result = $this->db->query($sql);
+			foreach ($result->result() as $row) {
+				$data[] = $row;
+			}
+			return $data;
+	}
+	
+	function get_detail_peserta($id_rapat){
+		$sql='SELECT P.NIP AS ID ,P.NAMA,S.NAMA_SATKER as SATKER,"PEGAWAI" AS ASAL  from pegawai P,satuan_kerja S,peserta_rapat R 
+		WHERE 
+		P.ID_SATKER=S.ID_SATKER AND
+		P.NIP = R.ID_USER AND R.ID_RAPAT="'.$id_rapat.'"
+
+		UNION 
+		SELECT ID,NAMA , 
+		INSTITUSI AS SATKER,"NON-PEGAWAI" AS ASAL FROM non_pegawai,peserta_rapat R
+		WHERE ID = R.ID_USER AND R.ID_RAPAT="'.$id_rapat.'"';
+		// mengembalikan ID,NAMA,SATKER,ASAL
 		$result = $this->db->query($sql);
 			foreach ($result->result() as $row) {
 				$data[] = $row;

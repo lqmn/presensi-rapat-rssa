@@ -44,7 +44,7 @@
 
 		</div>
 	</div>
-		<div class="col-sm-3 sidenav hidden-xs" style="position:fixed">
+		<div class="col-sm-3 sidenav hidden-xs" style="position:fixed ; <!--background-color:#7CFC00;"-->>
 				<img src="<?php echo base_url();?>assets/img/logo.png" width="200px" height="200px"></img>
 				<ul class="nav nav-pills nav-stacked" >
 
