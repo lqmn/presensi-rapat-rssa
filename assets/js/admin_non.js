@@ -51,7 +51,8 @@ $(document).ready(function() {
 		});
 	})
 
-	$('#modalContent').on('click','#insert', function(){
+	$('#modalContent').on('submit','#insertForm', function(){
+		$('#insert').button('loading');
 		var requrl = BASE_URL+'c_admin/insert_non/';
 		var data = {};
 
@@ -70,12 +71,13 @@ $(document).ready(function() {
 				$('#modalContent').html(data);
 			}
 		});
+		return false;
 	});
 
 	// edit
 	$(document).on('click','.editButton',function(event){
 		var data = $(this).val();
-		 console.log(data);
+		console.log(data);
 		var requrl = BASE_URL+'c_admin/edit_form_non';
 		
 		$.ajax({
@@ -88,7 +90,8 @@ $(document).ready(function() {
 		});
 	})
 	
-	$('#modalContent').on('click','#edit', function(){
+	$('#modalContent').on('submit','#formEdit', function(){
+		$('#edit').button('loading');
 		var requrl = BASE_URL+'c_admin/update_non/';
 		var data = {};
 
@@ -106,6 +109,7 @@ $(document).ready(function() {
 				$('#modalContent').html(data);
 			}
 		});
+		return false;
 	});
 
 	// delete
@@ -118,7 +122,9 @@ $(document).ready(function() {
 			}
 		});
 	})
+
 	$('#modalContent').on('click','#delete', function(){
+		$('#delete').button('loading');
 		var selected = [];
 		$('.select:checked').each(function() {
 			selected.push($(this).attr('value'));
