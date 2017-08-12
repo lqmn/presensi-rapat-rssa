@@ -13,9 +13,10 @@ $(document).ready(function() {
 		{ "data": "NAMA_USER" },
 		{ "data": "STATUS" },
 		{ "data": "ID_RAPAT" },
+		{ "data": "ID_RAPAT" },
 		{ "data": "ID_RAPAT" }
 		],'columnDefs':[{
-			'targets': 7,
+			'targets': 8,
 			'searchable':false,
 			'orderable':false,
 			'className': 'dt-body-center',
@@ -32,14 +33,28 @@ $(document).ready(function() {
 			}
 		}
 		,{
-			'targets': 6,
+			'targets': 7,
 			'searchable':false,
 			'orderable':false,
 			'className': 'dt-body-center',
 			'render': function (data){
 				return '<a href="'+BASE_URL+'c_admin/peserta/'+data+'"><button type="button" class="pesertaButton btn btn-info" value="'+data+'">Tambah Peserta</button></a>';
 			}
+
+		}
+		,{
+			'targets': 6,
+			'searchable':false,
+			'orderable':false,
+			'className': 'dt-body-center',
+			'render': function (data){
+				return '<a href="'+BASE_URL+'c_admin/lihatPeserta/'+data+'"><button type="button" class="lihatPesertaButton btn btn-info" value="'+data+'">Lihat Peserta</button></a>';
+			}
+		}
+		]
+
 		}],"order": []
+
 	});
 
 	$("#tabel").on('click','#select-all', function(){

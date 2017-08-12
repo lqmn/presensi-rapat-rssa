@@ -7,7 +7,7 @@ class c_admin extends CI_Controller{
 		$this->load->helper('url');
 
 		// Load form validation library
-		// $this->load->library('form_validation');
+		// $this->load->lxibraryibrary('form_validation');
 
 		// Load session library
 		// $this->load->library('session');
@@ -47,6 +47,13 @@ class c_admin extends CI_Controller{
 		$data['rapat']=$this->m_admin->get_one_rapat($id_rapat);
 		$this->load->view('v_header_rapat');
 		$this->load->view('v_admin_peserta_rapat',$data);
+		
+	}
+	
+	function lihatPeserta($id_rapat){
+		$data['rapat']=$this->m_admin->get_one_rapat($id_rapat);
+		$this->load->view('v_header_rapat');
+		$this->load->view('v_admin_detail_peserta',$data);
 		
 	}
 	function presensi(){
@@ -360,8 +367,13 @@ class c_admin extends CI_Controller{
 		
 	}
 	
-	function get_table_all_entitas(){
-		$data= $this->m_admin->get_all_entitas();
+	function get_table_all_entitas($id_rapat){
+		$data= $this->m_admin->get_all_entitas($id_rapat);
+		echo json_encode($data);
+	}
+	
+	function get_table_detail_peserta($id_rapat){
+		$data= $this->m_admin->get_detail_peserta($id_rapat);
 		echo json_encode($data);
 	}
 }

@@ -4,31 +4,6 @@ $(document).ready(function() {
 	var tabel = $('#tabel').DataTable({
 		
 		"ajax": {
-			"url": BASE_URL+"c_admin/get_table_all_entitas/"+id_rapat_global,
-			"dataSrc": ""
-		},
-	
-		"columns": [
-		{ "data": "ID" },
-		{ "data": "NAMA" },
-		{ "data": "SATKER" },
-		{ "data": "ASAL" }
-		],'columnDefs':[{
-			'targets': 0,
-			'searchable':false,
-			'orderable':false,
-			'className': 'dt-body-center',
-			'render': function (data){
-				return '<input type="checkbox" class="select" value="' + data + '">';
-			}
-		}
-		
-		]
-	});
-	
-	var tabel2 = $('#tabel2').DataTable({
-		
-		"ajax": {
 			"url": BASE_URL+"c_admin/get_table_detail_peserta/"+id_rapat_global,
 			"dataSrc": ""
 		},
@@ -62,9 +37,6 @@ $(document).ready(function() {
 
 	$('#myModal').on('hidden.bs.modal', function() {
 		tabel.ajax.reload();
-	});
-	$('#myModal').on('hidden.bs.modal', function() {
-		tabel2.ajax.reload();
 	});
 
 	// insert
