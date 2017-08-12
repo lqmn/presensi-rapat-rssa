@@ -7,6 +7,7 @@ $(document).ready(function() {
 		},
 		"columns": [
 		{ "data": "ID_RAPAT" },
+		{ "data": "JUDUL_RAPAT" },
 		{ "data": "WAKTU_RAPAT" },
 		{ "data": "NAMA_RUANG" },
 		{ "data": "NAMA_USER" },
@@ -14,7 +15,7 @@ $(document).ready(function() {
 		{ "data": "ID_RAPAT" },
 		{ "data": "ID_RAPAT" }
 		],'columnDefs':[{
-			'targets': 6,
+			'targets': 7,
 			'searchable':false,
 			'orderable':false,
 			'className': 'dt-body-center',
@@ -31,12 +32,12 @@ $(document).ready(function() {
 			}
 		}
 		,{
-			'targets': 5,
+			'targets': 6,
 			'searchable':false,
 			'orderable':false,
 			'className': 'dt-body-center',
 			'render': function (data){
-				return '<button type="button" class="pesertaButton btn btn-info" data-toggle="modal" data-target="#myModal" value="'+data+'">Lihat Peserta</button>';
+				return '<a href="'+BASE_URL+'c_admin/peserta/'+data+'"><button type="button" class="pesertaButton btn btn-info" value="'+data+'">Tambah Peserta</button></a>';
 			}
 		}],"order": []
 	});
@@ -100,8 +101,8 @@ $(document).ready(function() {
 		});
 	})
 
-	$('#modalContent').on('click','#edit', function(){
-		var requrl = BASE_URL+'c_admin/update_pegawai/';
+	$('#modalContent').on('click','#updateRapat', function(){
+		var requrl = BASE_URL+'c_admin/update_rapat/';
 		var data = {};
 
 		$('#modalContent').find('[name]').each(function(index, value){
@@ -122,7 +123,7 @@ $(document).ready(function() {
 
 	// delete
 	$(document).on('click','#hapus',function(event){
-		var requrl = BASE_URL+'c_admin/form_delete_pegawai';
+		var requrl = BASE_URL+'c_admin/form_delete_rapat';
 		$.ajax({
 			url:requrl,
 			success:function(data){
@@ -136,7 +137,7 @@ $(document).ready(function() {
 		$('.select:checked').each(function() {
 			selected.push($(this).attr('value'));
 		});
-		var requrl = BASE_URL+'c_admin/delete_pegawai';
+		var requrl = BASE_URL+'c_admin/delete_rapat';
 		console.log(selected);
 		$.ajax({
 			url:requrl,

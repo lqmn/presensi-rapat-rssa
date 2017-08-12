@@ -27,7 +27,7 @@
 
 					<li><a href="<?php echo base_url();?>/c_admin/pegawai/">Admin</a></li>
 					<li><a href="#">Presensi</a></li>
-					<li><a href="#">Rapat</a></li>
+					<li><a href="<?php echo base_url();?>/c_admin/rapat/">Rapat</a></li>
 
 				</ul>
 			</div>
@@ -42,7 +42,7 @@
 
 					<li ><a href="<?php echo base_url();?>c_admin/pegawai">Admin</a></li>
 					<li><a href="#">Presensi</a></li>
-					<li><a href="#">Rapat</a></li>
+					<li><a href="<?php echo base_url();?>/c_admin/rapat/">Rapat</a></li>
 					<li><a href="<?php echo base_url();?>c_admin/logout">Logout</a></li>
 					<li style="margin-top:55%">Logged in : <?php echo $this->session->userdata('nama_user'); ?> as administrator</li>
 					<li >NIP: <?php echo $this->session->userdata('nip_pegawai');            ?> </li>

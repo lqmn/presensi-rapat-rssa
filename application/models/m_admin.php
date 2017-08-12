@@ -52,7 +52,7 @@ class m_admin extends CI_Model{
 	}
 	
 	function get_rapat(){
-		$sql ='SELECT P.ID_RAPAT,P.WAKTU_RAPAT,R.NAMA_RUANG,U.NAMA_USER,
+		$sql ='SELECT P.ID_RAPAT,P.JUDUL_RAPAT,P.WAKTU_RAPAT,R.NAMA_RUANG,U.NAMA_USER,
 		(CASE 
 		WHEN P.status=0      THEN "Belum diverifikasi"
 		WHEN P.status=1      THEN "Terverifikasi"
@@ -67,6 +67,21 @@ class m_admin extends CI_Model{
 		
 	}
 	
+	function get_all_entitas(){
+		$sql='SELECT p.ID_PEGAWAI AS ID ,P.NAMA,S.NAMA_SATKER as SATKER,"PEGAWAI" AS ASAL  from pegawai P,satuan_kerja S
+		WHERE P.ID_SATKER=S.ID_SATKER  
+		UNION 
+		SELECT ID,NAMA , 
+		INSTITUSI AS SATKER,"NON-PEGAWAI" AS ASAL FROM non_pegawai';
+		//mengembalikan ID,NAMA,SATKER,ASAL
+		$result = $this->db->query($sql);
+			foreach ($result->result() as $row) {
+				$data[] = $row;
+			}
+			return $data;
+	}
+	
+  
 	function get_ruang(){
 		$sql ='SELECT * FROM RUANG_RAPAT';
 		
@@ -142,6 +157,17 @@ class m_admin extends CI_Model{
 		return $result;
 	}
 	
+	function insert_peserta($id_peserta,$id_rapat){
+		// var_dump($data);	
+		foreach ($id_peserta as $key => $value) {
+			$sql = "INSERT INTO peserta_rapat (ID_USER,ID_RAPAT)
+			VALUES (".$value.",".$id_rapat." )" ;
+			// $sql = "DELETE FROM pegawai WHERE ID_PEGAWAI=".$value;
+			$result = $this->db->query($sql);
+		}
+		return $result;
+	}
+	
 	function update_pegawai($data){
 		// $var_dump($data);
 		$this->db->where('ID_PEGAWAI',$data['ID_PEGAWAI']);
@@ -162,6 +188,14 @@ class m_admin extends CI_Model{
 		// $var_dump($data);
 		$this->db->where('ID',$data['ID']);
 		$this->db->update('non_pegawai',$data);
+		$result="nice";
+		return $result;
+	}
+	
+	function update_rapat($data){
+		// $var_dump($data);
+		$this->db->where('ID_RAPAT',$data['ID_RAPAT']);
+		$this->db->update('rapat',$data);
 		$result="nice";
 		return $result;
 	}
@@ -191,6 +225,14 @@ class m_admin extends CI_Model{
 		// var_dump($data);	
 		foreach ($data as $key => $value) {
 			$sql = "DELETE FROM non_pegawai WHERE ID=".$value;
+			$result = $this->db->query($sql);
+		}
+	}
+	
+		function delete_rapat($data){
+		// var_dump($data);	
+		foreach ($data as $key => $value) {
+			$sql = "DELETE FROM rapat WHERE ID_RAPAT=".$value;
 			$result = $this->db->query($sql);
 		}
 	}
