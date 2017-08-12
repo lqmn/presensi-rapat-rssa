@@ -20,70 +20,93 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/i18n/defaults-*.min.js"></script>
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-
+	<!-- Custom CSS & JS -->
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/admin.css" type="text/css">
+	<script src="<?php echo base_url(); ?>assets/js/admin_pegawai.js"></script>
+	<script src="<?php echo base_url(); ?>assets/js/admin.js"></script>
+	<script type="text/javascript">
+		var BASE_URL = "<?php echo base_url();?>";
+		var tabel;
+	</script>
 </head>
 <body>
 	<?php if ($this->session->userdata('otoritas')!=1) {
-			// echo "admin";
 		redirect('c_admin/error_authority', 'refresh');
 	} ?>
+
 	<div id="myModal" class="modal fade" role="dialog">
 		<div class="modal-dialog">
-
 			<div id="modalContent" class="modal-content">
 				//content from ajax loaded here
 			</div>
-
 		</div>
 	</div>
-	<div class="col-sm-3 sidenav hidden-xs" style="position:fixed">
-		<img src="<?php echo base_url();?>assets/img/logo.png" width="200px" height="200px"></img>
-		<ul class="nav nav-pills nav-stacked" >
 
-			<li class="active"><a href="<?php echo base_url();?>c_admin/pegawai">Admin</a></li>
-			<li><a href="<?php echo base_url();?>c_admin/presensi">Presensi</a></li>
-			<li><a href="<?php echo base_url();?>c_admin/rapat">Rapat</a></li>
-			<li><a href="<?php echo base_url();?>c_admin/logout">Logout</a></li>
-			<li style="margin-top:55%">Logged in : <?php echo $this->session->userdata('nama'); ?> as administrator</li>
-			<li >NIP: <?php echo $this->session->userdata('username'); ?> </li>
-		</ul><br>
-	</div>
-	<br>
+	<nav class="navbar navbar-inverse visible-xs">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>                        
+				</button>
+				<a class="navbar-brand" href="#">
+					<img src="<?php echo base_url();?>assets/img/logo.png" width="25px"></img>
+				</a>
+			</div>
+			<div class="collapse navbar-collapse" id="myNavbar">
+				<p class="navbar-text">Logged in : <?php echo $this->session->userdata('nama'); ?> as administrator<br>NIP: <?php echo $this->session->userdata('username'); ?></p>
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="<?php echo base_url();?>c_admin/pegawai">Admin</a></li>
+					<li><a href="<?php echo base_url();?>c_admin/presensi">Presensi</a></li>
+					<li><a href="<?php echo base_url();?>c_admin/rapat">Rapat</a></li>
+					<li><a href="<?php echo base_url();?>c_admin/logout">Logout</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
 
-	<div class="col-sm-9" style="margin-left:25%">
-		<div class="well">
-			<div width=100% style="float:right;">
-				<select id="page" class="selectpicker" name="tabel">
-					<option value="1" selected>Pegawai</option>
-					<option value="2">User</option>
-					<option value="3">Non Pegawai</option>
-				</select>
-			</div><h4>Pegawai</h4>
+	<div class="container-fluid">
+		<div class="row content">
+			<div class="col-sm-3 sidenav hidden-xs affix">
+				<img src="<?php echo base_url();?>assets/img/logo.png" width="200px" height="200px"></img>
+				<ul class="nav nav-pills nav-stacked">
+					<li class="active"><a href="<?php echo base_url();?>c_admin/pegawai">Admin</a></li>
+					<li><a href="<?php echo base_url();?>c_admin/presensi">Presensi</a></li>
+					<li><a href="<?php echo base_url();?>c_admin/rapat">Rapat</a></li>
+					<li><a href="<?php echo base_url();?>c_admin/logout">Logout</a></li>
+				</ul><br>
+				<p class="navbar-text">Logged in : <?php echo $this->session->userdata('nama'); ?> as administrator<br>NIP: <?php echo $this->session->userdata('username'); ?></p>
+			</div>
 			<br>
-			<table id="tabel" class="table table-striped" cellspacing="0" width="100%">
-				<thead>
-					<tr><th><input id="select-all" type="checkbox" /></th>
-						<th>Nama</th>
-						<th>NIP</th>
-						<th>Satker</th>
-						<th>Panel</th>
-					</tr>
-				</thead>
-			</table>
-			<!-- <button id="tambah" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Tambah</button>
-			<button id="hapus" type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal" disabled>Delete</button> -->
+			<div class="col-sm-3 hidden-xs"></div>
+
+			<div class="col-sm-9">
+				<div class="well">
+					<!-- content -->
+					<div style="float:right;">
+						<select id="page" class="selectpicker" name="tabel">
+							<option value="1" selected>Pegawai</option>
+							<option value="2">User</option>
+							<option value="3">Non Pegawai</option>
+						</select>
+					</div><h4>Pegawai</h4>
+					<br>
+					<table id="tabel" class="table table-striped" cellspacing="0" width="100%">
+						<thead>
+							<tr><th><input id="select-all" type="checkbox"/></th>
+								<th>Nama</th>
+								<th>NIP</th>
+								<th>Satker</th>
+								<th>Panel</th>
+							</tr>
+						</thead>
+					</table>
+
+				</div>
+			</div>
 		</div>
 	</div>
 
 </body>
-<!-- Custom CSS & JS -->
-<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/admin.css" type="text/css">
-<script src="<?php echo base_url(); ?>assets/js/admin_pegawai.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/admin.js"></script>
-<script type="text/javascript">
-	var BASE_URL = "<?php echo base_url();?>";
-	var tabel;
-</script>
 </html>
-
