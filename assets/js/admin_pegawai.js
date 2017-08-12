@@ -52,7 +52,8 @@ $(document).ready(function() {
 		});
 	})
 
-	$('#modalContent').on('click','#insert', function(){
+	$('#modalContent').on('submit','#insertForm', function(e){
+		$('#insert').button('loading');
 		var requrl = BASE_URL+'c_admin/insert_pegawai/';
 		var data = {};
 
@@ -71,6 +72,7 @@ $(document).ready(function() {
 				$('#modalContent').html(data);
 			}
 		});
+		return false;
 	});
 
 	// edit
@@ -89,7 +91,8 @@ $(document).ready(function() {
 		});
 	})
 
-	$('#modalContent').on('click','#edit', function(){
+	$('#modalContent').on('submit','#editForm', function(){
+		$('#edit').button('loading');
 		var requrl = BASE_URL+'c_admin/update_pegawai/';
 		var data = {};
 
@@ -107,6 +110,7 @@ $(document).ready(function() {
 				$('#modalContent').html(data);
 			}
 		});
+		return false;
 	});
 
 	// delete
@@ -121,6 +125,7 @@ $(document).ready(function() {
 	})
 
 	$('#modalContent').on('click','#delete', function(){
+		$('#delete').button('loading');
 		var selected = [];
 		$('.select:checked').each(function() {
 			selected.push($(this).attr('value'));

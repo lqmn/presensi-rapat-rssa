@@ -70,25 +70,26 @@ Class c_login extends CI_Controller {
 			}
 		} else {
 			$data = array(
-				'NIP_PEGAWAI' => $this->input->post('username'),
+				'USERNAME' => $this->input->post('username'),
 				'PASSWORD' => $this->input->post('password')
 				);
 			$result = $this->m_login->login($data);
 
-			if ($result == TRUE) {
-				$username = $this->input->post('username');
-				$result = $this->m_login->read_user_information($username);
+			if ($result!=false) {
+				$result = $this->m_login->read_user_information($result);
+				// var_dump($result);
 				
 				if ($result != false) {
 					// var_dump($result);
 					$session_data = array(
-						'id_user' => $result[0]->ID_USER,
-						'nama_user' => $result[0]->NAMA_USER,
-						'status' => $result[0]->STATUS,
-						'otoritas' => $result[0]->OTORITAS,
-						'nip_pegawai' => $result[0]->NIP_PEGAWAI
+						'id_user' => $result->ID_USER,
+						'id_pegawai' => $result->ID_PEGAWAI,
+						'username' => $result->USERNAME,
+						'otoritas' => $result->OTORITAS,
+						'nama' => $result->NAMA,
+						'nama_satker' => $result->NAMA_SATKER
 						);
-					// var_dump($session_data['otoritas']);
+					// var_dump($session_data);
 
 					// Add user data in session
 					$this->session->set_userdata($session_data);
@@ -113,7 +114,6 @@ Class c_login extends CI_Controller {
 		}elseif ($this->session->userdata('otoritas')==3) {
 			echo "user";
 		}
-
 	}
 
 	// Logout from admin page

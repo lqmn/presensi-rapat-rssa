@@ -4,11 +4,11 @@
 </div>
 
 <div class="modal-body">
-	<form id="formModal"class="form-horizontal" action="">
+	<form id="editForm"class="form-horizontal" action="">
 		<div class="form-group">
 			<label class="control-label col-sm-3" for="email">Nomor pegawai:</label>
 			<div class="col-sm-9">
-			<input type="hidden" class="form-control" placeholder="Nomor pegawai" name="id" value="<?php echo $pegawai->ID_PEGAWAI;?>" required>
+			<input type="hidden" name="id" value="<?php echo $pegawai->ID_PEGAWAI;?>" required>
 				<input type="text" class="form-control" placeholder="Nomor pegawai" name="nomor" value="<?php echo $pegawai->NIP; ?>" required>
 			</div>
 		</div>
@@ -27,23 +27,23 @@
 						<option value="<?php echo $value->ID_SATKER?>" data-tokens="<?php echo $value->NAMA_SATKER?>"
 							<?php if ($pegawai->ID_SATKER==($value->ID_SATKER)): ?>
 								<?php echo 'selected';?>
-						<?php endif ?>
-						><?php echo $value->NAMA_SATKER?></option>
-						
-					<?php endforeach ?>          
-				</select>
+							<?php endif ?>
+							><?php echo $value->NAMA_SATKER?></option>
+
+						<?php endforeach ?>          
+					</select>
+				</div>
 			</div>
-		</div>
-		<div class="form-group">
-			<div class="col-sm-offset-3 col-sm-9">
-				<button id="edit" type="button" class="btn btn-primary">Submit</button>
+			<div class="form-group">
+				<div class="col-sm-offset-3 col-sm-9">
+					<button id="edit" type="submit" class="btn btn-primary">Submit</button>
+				</div>
 			</div>
-		</div>
-	</form>
-</div>
-<div class="modal-footer">
-	<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
-</div>
-<script type="text/javascript">
-	$('.selectpicker').selectpicker('refresh');
-</script>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+	</div>
+	<script type="text/javascript">
+		$('.selectpicker').selectpicker('refresh');
+	</script>

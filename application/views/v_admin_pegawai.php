@@ -79,7 +79,6 @@
 		</div>
 	</div>
 
-
 </body>
 <!-- Custom CSS & JS -->
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/admin.css" type="text/css">

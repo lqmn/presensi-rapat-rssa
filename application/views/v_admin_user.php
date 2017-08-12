@@ -74,10 +74,9 @@
 					<br>
 					<table id="tabel" class="table table-striped table-bordered" cellspacing="0" width="100%">
 						<thead>
-							<tr><th><input name="select_all" value="1" id="select-all" type="checkbox" /></th>
-								<th>NIP</th>
-								<th>Nama</th>
-								<th>Password</th>
+							<tr>
+								<th><input name="select_all" value="1" id="select-all" type="checkbox" /></th>
+								<th>Username</th>
 								<th>Otoritas</th>
 								<th>Panel</th>
 							</tr>

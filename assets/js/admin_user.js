@@ -7,13 +7,11 @@ $(document).ready(function() {
 		},
 		"columns": [
 		{ "data": "ID_USER" },
-		{ "data": "NIP_PEGAWAI" },
-		{ "data": "NAMA_USER" },
-		{ "data": "PASSWORD" },
+		{ "data": "USERNAME" },
 		{ "data": "OTORITAS" },
 		{ "data": "ID_USER" },
 		],'columnDefs':[{
-			'targets': 5,
+			'targets': 3,
 			'searchable':false,
 			'orderable':false,
 			'className': 'dt-body-center',
@@ -53,7 +51,8 @@ $(document).ready(function() {
 		});
 	})
 
-	$('#modalContent').on('click','#insert', function(){
+	$('#modalContent').on('submit','#insertForm', function(){
+		$('#insert').button('loading');
 		var requrl = BASE_URL+'c_admin/insert_user/';
 		var data = {};
 
@@ -62,6 +61,7 @@ $(document).ready(function() {
 			var value = $(this).val();
 			data[name] = value;
 		});
+		// console.log(data);
 
 		$.ajax({
 			url:requrl,
@@ -71,6 +71,7 @@ $(document).ready(function() {
 				$('#modalContent').html(data);
 			}
 		});
+		return false;
 	});
 	
 	// edit
@@ -90,7 +91,8 @@ $(document).ready(function() {
 		});
 	})
 
-	$('#modalContent').on('click','#edit', function(){
+	$('#modalContent').on('submit','#editForm', function(){
+		$('#edit').button('loading');
 		var requrl = BASE_URL+'c_admin/update_user/';
 		var data = {};
 
@@ -108,6 +110,7 @@ $(document).ready(function() {
 				$('#modalContent').html(data);
 			}
 		});
+		return false;
 	});
 
 	// delete

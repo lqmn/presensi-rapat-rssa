@@ -26,38 +26,50 @@ Class m_login extends CI_Model {
 
 	// Read data using username and password
 	public function login($data) {
-		$condition = "NIP_PEGAWAI =" . "'" . $data['NIP_PEGAWAI'] . "' AND " . "PASSWORD =" . "'" . $data['PASSWORD'] . "'";
+		$condition = "USERNAME =" . "'" . $data['USERNAME'] . "' AND " . "PASSWORD =" . "'" . $data['PASSWORD'] . "'";
 		$this->db->select('*');
 		$this->db->from('user');
 		$this->db->where($condition);
 		$this->db->limit(1);
 		$query = $this->db->get();
-		
-		// $dataStatus =$query->result_array();
-		// if ($dataStatus[0]['STATUS'] == 0) {
-		// 	return false;
-		// }
-		$dataStatus=$query->result_array();
-  if($dataStatus[0]['STATUS'] == 0)
-  {
-   return false;
-  }
+
 		if ($query->num_rows() == 1) {
-			return true;
+
+			$data=$query->result_array();
+			if($data[0]['STATUS'] == 0){
+				return false;
+			}
+			// var_dump($data);
+			return $data[0]['ID_USER'];
 		} else {
 			return false;
 		}
 	}
 
 	// Read data from database to show data in admin page
-	public function read_user_information($username) {
+	public function read_user_information($data) {
+		$sql ='SELECT ID_USER,pegawai.ID_PEGAWAI AS ID_PEGAWAI,USERNAME,OTORITAS,NAMA,NAMA_SATKER
+		FROM user JOIN pegawai ON user.ID_PEGAWAI=pegawai.ID_PEGAWAI
+		JOIN satuan_kerja ON pegawai.ID_SATKER = satuan_kerja.ID_SATKER
+		WHERE ID_USER ='.$data;
 
-		$condition = "NIP_PEGAWAI =" . "'" . $username . "'";
-		$this->db->select('*');
-		$this->db->from('user');
-		$this->db->where($condition);
-		$this->db->limit(1);
-		$query = $this->db->get();
+		$result = $this->db->query($sql);
+		// var_dump($result->num_rows);
+		if ($result->num_rows()==1) {
+			return $result->row();
+		}else{
+			foreach ($result->result() as $row) {
+				$data[] = $row;
+			}
+			return $data;
+		}
+
+		// $condition = "USERNAME =" . "'" . $username . "'";
+		// $this->db->select('*');
+		// $this->db->from('user');
+		// $this->db->where($condition);
+		// $this->db->limit(1);
+		// $query = $this->db->get();
 
 		if ($query->num_rows() == 1) {
 			return $query->result();
