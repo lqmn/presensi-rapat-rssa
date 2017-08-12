@@ -10,10 +10,9 @@ $(document).ready(function() {
 		{ "data": "NAMA" },
 		{ "data": "NIP" },
 		{ "data": "NAMA_SATKER" },
-		{ "data": "STATUS" },
 		{ "data": "ID_PEGAWAI" }
 		],'columnDefs':[{
-			'targets': 5,
+			'targets': 4,
 			'searchable':false,
 			'orderable':false,
 			'className': 'dt-body-center',
@@ -28,7 +27,7 @@ $(document).ready(function() {
 			'render': function (data){
 				return '<input type="checkbox" class="select" value="' + data + '">';
 			}
-		}]
+		}],"order": []
 	});
 
 	$("#tabel").on('click','#select-all', function(){
@@ -53,7 +52,8 @@ $(document).ready(function() {
 		});
 	})
 
-	$('#modalContent').on('click','#insert', function(){
+	$('#modalContent').on('submit','#insertForm', function(e){
+		$('#insert').button('loading');
 		var requrl = BASE_URL+'c_admin/insert_pegawai/';
 		var data = {};
 
@@ -72,6 +72,7 @@ $(document).ready(function() {
 				$('#modalContent').html(data);
 			}
 		});
+		return false;
 	});
 
 	// edit
@@ -90,7 +91,8 @@ $(document).ready(function() {
 		});
 	})
 
-	$('#modalContent').on('click','#edit', function(){
+	$('#modalContent').on('submit','#editForm', function(){
+		$('#edit').button('loading');
 		var requrl = BASE_URL+'c_admin/update_pegawai/';
 		var data = {};
 
@@ -108,6 +110,7 @@ $(document).ready(function() {
 				$('#modalContent').html(data);
 			}
 		});
+		return false;
 	});
 
 	// delete
@@ -122,8 +125,9 @@ $(document).ready(function() {
 	})
 
 	$('#modalContent').on('click','#delete', function(){
+		$('#delete').button('loading');
 		var selected = [];
-		$('#tabel input:checked').each(function() {
+		$('.select:checked').each(function() {
 			selected.push($(this).attr('value'));
 		});
 		var requrl = BASE_URL+'c_admin/delete_pegawai';

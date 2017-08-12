@@ -76,7 +76,9 @@ class c_admin extends CI_Controller{
 	}
 
 	function form_user(){
-		$this->load->view('v_form_user');
+		$data['pegawai']= $this->m_admin->get_pegawai();
+		// var_dump($data);
+		$this->load->view('v_form_user', $data);
 	}
 	function form_non(){
 		$this->load->view('v_form_non');
@@ -160,15 +162,13 @@ class c_admin extends CI_Controller{
 	}
 
 	function update_user(){
-		$data['ID_USER'] = $this->input->post('id');
-		$data['NIP_PEGAWAI'] = $this->input->post('nip');
-		$data['NAMA_USER'] = $this->input->post('nama');
+		$data['ID_USER'] = $this->input->post('id_user');
+		// $data['ID_PEGAWAI'] = $this->input->post('pegawai');
 		$data['PASSWORD'] = $this->input->post('password');
 		$data['OTORITAS'] = $this->input->post('otoritas');
-		$data['STATUS'] = $this->input->post('status');
 		$res = $this->m_admin->update_user($data);
 		// var_dump($data);
-		if ($res) {
+		if ($res==1) {
 			$this->load->view('v_sukses_modal_insert');
 		}else{
 			echo "Error";
@@ -182,7 +182,7 @@ class c_admin extends CI_Controller{
 		$data['ID_SATKER'] = $this->input->post('satker');
 		$res = $this->m_admin->update_pegawai($data);
 		// var_dump($data);
-		if ($res) {
+		if ($res==1) {
 			$this->load->view('v_sukses_modal_insert');
 		}else{
 			echo "Error";
@@ -218,17 +218,16 @@ class c_admin extends CI_Controller{
 	}
 	function insert_user(){
 		
-		$data['NIP_PEGAWAI'] = $this->input->post('nip');
-		
+		$data['ID_PEGAWAI'] = $this->input->post('pegawai');
 		$data['PASSWORD'] = $this->input->post('password');
 		$data['OTORITAS'] = $this->input->post('otoritas');
 		$data['STATUS'] = 1;
-		$hasil = $this->m_admin->get_one_pegawai_nip($data['NIP_PEGAWAI']);
-		$data['ID_USER'] = $hasil->ID_PEGAWAI;
-		$data['NAMA_USER'] = $hasil->NAMA;
-		// var_dump($hasil);
+		$hasil = $this->m_admin->get_one_pegawai($data['ID_PEGAWAI']);
+		$data['USERNAME'] = $hasil->NIP;
+		// var_dump($data);
 		$res = $this->m_admin->insert_user($data);
-		if ($res) {
+		// var_dump($res);
+		if ($res==1) {
 			$this->load->view('v_sukses_modal_insert');
 		}else{
 			echo "Error";
@@ -253,6 +252,7 @@ class c_admin extends CI_Controller{
 		$array_del = $this->input->post('array_del');
 		// var_dump($array_del);
 		$this->m_admin->delete_pegawai($array_del);
+
 		// var_dump($data);
 		// if ($res) {
 		$this->load->view('v_sukses_modal');
@@ -265,7 +265,7 @@ class c_admin extends CI_Controller{
 		$array_del = $this->input->post('array_del');
 		// var_dump($array_del);
 		$this->m_admin->delete_user($array_del);
-		$this->load->view('v_sukses_modal');
+		// $this->load->view('v_sukses_modal');
 
 	}
 
@@ -292,8 +292,8 @@ class c_admin extends CI_Controller{
 
 	function edit_form_user(){
 		$id_user = $this->input->post('id_edit');
-		
 		$data['user'] = $this->m_admin->get_one_user($id_user);
+		$data['pegawai']= $this->m_admin->get_pegawai();
 		
 		$this->load->view('v_edit_user', $data);
 	}

@@ -4,20 +4,23 @@
 </div>
 
 <div class="modal-body">
-	<form id="formModal"class="form-horizontal" action="">
+	<form id="editForm"class="form-horizontal" action="">
 		<div class="form-group">
-			<label class="control-label col-sm-3" for="email">Nomor pegawai:</label>
+			<label class="control-label col-sm-3" for="email">Pegawai:</label>
 			<div class="col-sm-9">
-			<input type="hidden" class="form-control" placeholder="Nomor pegawai" name="id" value="<?php echo $user->ID_USER;?>" required>
-				<input type="text" class="form-control" placeholder="Nomor pegawai" name="nip" value="<?php echo $user->NIP_PEGAWAI;?>" required>
+				<select class="selectpicker" data-live-search="true" name="pegawai" disabled>
+					<option disabled selected value="" style="display:none"> -- Pilih pegawai -- </option>
+					<?php foreach ($pegawai as $key => $value): ?>
+						<option	value="<?php echo $value->ID_PEGAWAI?>"	data-tokens="<?php echo $value->NIP.' '.$value->NAMA.' '.$value->NAMA_SATKER?>"
+							<?php if ($value->ID_PEGAWAI==$user->ID_PEGAWAI) {
+								echo "selected";
+							}?>>
+							<?php echo $value->NIP.', '.$value->NAMA.', '.$value->NAMA_SATKER?>
+						</option>
+					<?php endforeach ?>
+				</select>
 			</div>
 		</div>
-		 <div class="form-group">
-			<label class="control-label col-sm-3" for="pwd">Nama pegawai:</label>
-			<div class="col-sm-9">
-				<input type="text" class="form-control" id="nama" placeholder="Nama pegawai" value="<?php echo $user->NAMA_USER;?>" name="nama" required>
-			</div>
-		</div> 
 		<div class="form-group">
 			<label class="control-label col-sm-3" for="pwd">Password:</label>
 			<div class="col-sm-9">
@@ -28,40 +31,25 @@
 			<label class="control-label col-sm-3" for="pwd">Otoritas:</label>
 			<div class="col-sm-9">
 				<select class="selectpicker"  name="otoritas">
-						<option value="1"<?php if ($user->OTORITAS==(1)): ?>
-								<?php echo 'selected';?>
-						<?php endif ?>>Administrator</option>
-						
-						<option value="2" <?php if ($user->OTORITAS==(2)): ?>
-								<?php echo 'selected';?>
-						<?php endif ?>>Verifikator</option>
-						
-						<option value="3" <?php if ($user->OTORITAS==(3)): ?>
-								<?php echo 'selected';?>
-						<?php endif ?>>User Biasa </option>
-					        
+					<option value="1"<?php if ($user->OTORITAS==(1)): ?>
+						<?php echo 'selected';?>
+					<?php endif ?>>Administrator</option>
+
+					<option value="2" <?php if ($user->OTORITAS==(2)): ?>
+						<?php echo 'selected';?>
+					<?php endif ?>>Verifikator</option>
+
+					<option value="3" <?php if ($user->OTORITAS==(3)): ?>
+						<?php echo 'selected';?>
+					<?php endif ?>>User Biasa </option>
+
 				</select>
 			</div>
 		</div>
-		<div class="form-group">
-			<label class="control-label col-sm-3" for="pwd">Status:</label>
-			<div class="col-sm-9">
-				<select class="selectpicker"  name="status">
-						<option value="1"<?php if ($user->STATUS==(1)): ?>
-								<?php echo 'selected';?>
-						<?php endif ?>>Aktif</option>
-						
-						<option value="0" <?php if ($user->STATUS==(0)): ?>
-								<?php echo 'selected';?>
-						<?php endif ?>>Non aktif</option>
-						
-					        
-				</select>
-			</div>
-		</div>
+		<input type="hidden" name="id_user" value =<?php echo $user->ID_USER;?>>
 		<div class="form-group">
 			<div class="col-sm-offset-3 col-sm-9">
-				<button id="edit" type="button" class="btn btn-primary">Submit</button>
+				<button id="edit" type="submit" class="btn btn-primary">Submit</button>
 			</div>
 		</div>
 	</form>
