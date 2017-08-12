@@ -76,6 +76,20 @@ class m_admin extends CI_Model{
 		
 	}
 	
+	function get_all_entitas(){
+		$sql='SELECT p.ID_PEGAWAI AS ID ,P.NAMA,S.NAMA_SATKER as SATKER,"PEGAWAI" AS ASAL  from pegawai P,satuan_kerja S
+		WHERE P.ID_SATKER=S.ID_SATKER  
+		UNION 
+		SELECT ID,NAMA , 
+		INSTITUSI AS SATKER,"NON-PEGAWAI" AS ASAL FROM non_pegawai';
+		//mengembalikan ID,NAMA,SATKER,ASAL
+		$result = $this->db->query($sql);
+			foreach ($result->result() as $row) {
+				$data[] = $row;
+			}
+			return $data;
+	}
+	
 		function get_ruang(){
 		$sql ='SELECT * FROM RUANG_RAPAT';
 		
@@ -148,6 +162,17 @@ class m_admin extends CI_Model{
 	function insert_non($data){
 		// var_dump($data);
 		$result = $this->db->insert('non_pegawai',$data);
+		return $result;
+	}
+	
+	function insert_peserta($id_peserta,$id_rapat){
+		// var_dump($data);	
+		foreach ($id_peserta as $key => $value) {
+			$sql = "INSERT INTO peserta_rapat (ID_USER,ID_RAPAT)
+			VALUES (".$value.",".$id_rapat." )" ;
+			// $sql = "DELETE FROM pegawai WHERE ID_PEGAWAI=".$value;
+			$result = $this->db->query($sql);
+		}
 		return $result;
 	}
 	

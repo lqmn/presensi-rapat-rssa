@@ -37,7 +37,7 @@ $(document).ready(function() {
 			'orderable':false,
 			'className': 'dt-body-center',
 			'render': function (data){
-				return '<button type="button" class="pesertaButton btn btn-info" data-toggle="modal" data-target="#myModal" value="'+data+'">Lihat Peserta</button>';
+				return '<a href="'+BASE_URL+'c_admin/peserta/'+data+'"><button type="button" class="pesertaButton btn btn-info" value="'+data+'">Tambah Peserta</button></a>';
 			}
 		}
 		]

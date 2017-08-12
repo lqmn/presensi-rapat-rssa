@@ -43,6 +43,12 @@ class c_admin extends CI_Controller{
 		
 	}
 
+	function peserta($id_rapat){
+		$data['rapat']=$this->m_admin->get_one_rapat($id_rapat);
+		$this->load->view('v_header_rapat');
+		$this->load->view('v_admin_peserta_rapat',$data);
+		
+	}
 	function presensi(){
 		$this->load->view('v_admin_presensi');
 		
@@ -59,7 +65,11 @@ class c_admin extends CI_Controller{
 	function non_pegawai(){
 		$this->load->view('v_admin_non');
 	}
-
+	
+	
+	function form_insert_rapat(){
+		$this->load->view('v_form_insert_rapat');
+	}
 	function form_pegawai(){
 		$data['satker'] = $this->m_admin->get_sk();
 		$this->load->view('v_form_pegawai', $data);
@@ -135,6 +145,18 @@ class c_admin extends CI_Controller{
 		}else{
 			echo "Error";
 		}
+	}
+	
+	function insert_peserta(){
+	$id_peserta=$this->input->post('array_del');
+	$id_rapat=$this->input->post('id_rapat');
+		$res=$this->m_admin->insert_peserta($id_peserta,$id_rapat);
+	if ($res) {
+			$this->load->view('v_sukses_modal_insert');
+		}else{
+			echo "Error";
+		}
+		
 	}
 
 	function update_user(){
@@ -326,5 +348,10 @@ class c_admin extends CI_Controller{
 		// var_dump($data);
 		echo json_encode($data);
 		
+	}
+	
+	function get_table_all_entitas(){
+		$data= $this->m_admin->get_all_entitas();
+		echo json_encode($data);
 	}
 }
