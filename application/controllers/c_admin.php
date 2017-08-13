@@ -144,6 +144,8 @@ class c_admin extends CI_Controller{
 		$data['JUDUL_RAPAT']=$this->input->post('judul');
 		$data['ID_RUANG'] = $this->input->post('ruang');
 		$data['ID_USER_INPUT']= $this->session->userdata('id_user');
+		 date_default_timezone_set('Asia/Jakarta');
+		$data['DATE_MODIFIED']=date('Y-m-d H:i:s');
 		
 		//BELUM BISA GANTI STATUS OTOMATIS
 		$data['STATUS']= 1;
@@ -222,6 +224,8 @@ class c_admin extends CI_Controller{
 		$date=$this->input->post('tanggal')." ".$this->input->post('waktu');
 		$data['WAKTU_RAPAT'] =date('Y-m-d H:i',strtotime($date));
 		$data['ID_RUANG'] = $this->input->post('ruang');
+		 date_default_timezone_set('Asia/Jakarta');
+		$data['DATE_MODIFIED']=date('Y-m-d H:i:s');
 		$res = $this->m_admin->update_rapat($data);
 		// var_dump($data);
 		if ($res) {
@@ -390,6 +394,7 @@ class c_admin extends CI_Controller{
 	}
 
 	function landing() {
+		$this->m_admin->update_status_rapat();
 		$dataRapat =$this->m_admin->get_rapat();
 		// var_dump($data['rapat']);
 		$this->load->view('v_header_welcome');

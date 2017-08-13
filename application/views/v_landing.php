@@ -24,7 +24,7 @@
 					else if ($d["month"]==5){
 						echo 'Mei';
 					}
-					else if ($d["month"]=6){
+					else if ($d["month"]==6){
 						echo 'Juni';
 					}
 					else if ($d["month"]==7){
@@ -73,7 +73,7 @@
 					
 					<h4>Peserta rapat</h4>
 					
-					<table id="tabel<?php echo $rapat->ID_RAPAT;?> " class="table table-striped table-bordered" cellspacing="0" width="100%">
+					<table id="tabel<?php try{echo $rapat->ID_RAPAT;  }catch (Exception $e){ echo "Belum ada peserta";	}?> " class="table table-striped table-bordered" cellspacing="0" width="100%">
 						<thead> 
 							<tr>
 						
@@ -85,18 +85,28 @@
 						</thead>
 						<tbody>
 							
+							
+								<?php  
 								
-								<?php  foreach($peserta as $key2 =>$peserta){ ?>
-							<?php if($rapat->ID_RAPAT== $peserta->ID_RAPAT){ ?>
+								try{ 
+								
+								foreach((array)$peserta as $key2 =>$peserta){ 
+							if($rapat->ID_RAPAT== $peserta->ID_RAPAT){ ?>
 								<tr>
-									<td><?php echo $peserta->NAMA; ?></td>
-									<td><?php echo $peserta->SATKER; ?></td>
-									<td><?php echo $peserta->ASAL; ?></td>
-								
+									<td><?php echo @$peserta->NAMA; ?></td>
+									<td><?php echo @$peserta->SATKER; ?></td>
+									<td><?php echo @$peserta->ASAL; ?></td>
+							<?php }?>
 								</tr>
 								
-							<?php } ?>
-					<?php } ?>
+							<?php } 
+					} catch(Exception $e){
+						echo "<td>-</td>";
+						echo "<td>-</td>";
+						echo "<td>-</td>";
+					} 
+					
+					?>
 						</tbody>
 					</table>
 					
