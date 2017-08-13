@@ -10,6 +10,9 @@
 .center{
 	text-align:center;
 }
+.modal-dialog {
+	padding-top: 5%;
+}
 /* On small screens, set height to 'auto' for the grid */
 @media screen and (max-width: 767px) {
 	.row.content {

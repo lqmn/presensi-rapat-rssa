@@ -13,9 +13,9 @@
 	<link href="<?php echo base_url(); ?>assets/css/login.css" rel="stylesheet" type="text/css">
 	<link href="assets/img/logo.png" rel="shortcut icon">
 </head>
-<body style="background-image: url(<?php echo base_url();?>assets/img/wallpaper.jpg);">
+<body>
 	<div class="container">
-		<div class="card card-container" style="margin-top: 9%;"">
+		<div class="card card-container">
 			<img id="profile-img" class="profile-img-card" src="<?php echo base_url(); ?>assets/img/logo.png" />
 
 			<?php
