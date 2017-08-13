@@ -130,7 +130,7 @@ $(document).ready(function() {
 
 	// delete
 	$(document).on('click','#hapus',function(event){
-		var requrl = BASE_URL+'c_admin/form_delete_rapat';
+		var requrl = BASE_URL+'c_admin/form_delete_peserta_rapat';
 		$.ajax({
 			url:requrl,
 			success:function(data){
@@ -139,22 +139,22 @@ $(document).ready(function() {
 		});
 	})
 
-	// $('#modalContent').on('click','#delete', function(){
-		// var selected = [];
-		// $('#tabel input:checked').each(function() {
-			// selected.push($(this).attr('value'));
-		// });
-		// var requrl = BASE_URL+'c_admin/delete_rapat';
-		// console.log(selected);
-		// $.ajax({
-			// url:requrl,
-			// type:'post',
-			// data: {"array_del": selected} ,
-			// success:function(data){
-				// $('#modalContent').html(data);
-			// }
-		// });
-	// });
+	$('#modalContent').on('click','#delete', function(){
+		var selected = [];
+		$('#tabel input:checked').each(function() {
+			selected.push($(this).attr('value'));
+		});
+		var requrl = BASE_URL+'c_admin/delete_peserta/'+id_rapat_global;
+		console.log(selected);
+		$.ajax({
+			url:requrl,
+			type:'post',
+			data: {"array_del": selected} ,
+			success:function(data){
+				$('#modalContent').html(data);
+			}
+		});
+	});
 	
 		$('#modalContent').on('click','#insertRapat', function(){
 		var selected = [];
@@ -175,15 +175,15 @@ $(document).ready(function() {
 		});
 	});
 	
-	$(document).on('click','#tambah',function(event){
-		var requrl = BASE_URL+'c_admin/form_insert_rapat';
-		$.ajax({
-			url:requrl,
-			success:function(data){
-				$('#modalContent').html(data);
-			}
-		});
-	})
+	// $(document).on('click','#tambah',function(event){
+		// var requrl = BASE_URL+'c_admin/form_insert_rapat';
+		// $.ajax({
+			// url:requrl,
+			// success:function(data){
+				// $('#modalContent').html(data);
+			// }
+		// });
+	// })
 
 	setInterval(function() {
 		tabel.ajax.reload();

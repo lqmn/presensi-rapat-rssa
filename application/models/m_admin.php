@@ -50,14 +50,17 @@ class m_admin extends CI_Model{
 		return $data;
 		// }
 	}
-	
+
 	function get_rapat(){
-		$sql ='SELECT P.ID_RAPAT,P.JUDUL_RAPAT,P.WAKTU_RAPAT,R.NAMA_RUANG,U.NAMA_USER,
+		$sql ='SELECT rapat.ID_RAPAT AS ID_RAPAT, JUDUL_RAPAT, WAKTU_RAPAT, NAMA_RUANG, pegawai.NAMA AS NAMA_USER,
 		(CASE 
-		WHEN P.status=0      THEN "Belum diverifikasi"
-		WHEN P.status=1      THEN "Terverifikasi"
+		WHEN STATUS_AKTIVASI=0      THEN "Belum diverifikasi"
+		WHEN STATUS_AKTIVASI=1      THEN "Terverifikasi"
 		END) as STATUS
-		FROM rapat P JOIN ruang_rapat R JOIN user U ON P.id_ruang = R.id_ruang AND P.ID_USER_INPUT = U.ID_USER';
+		FROM rapat JOIN ruang_rapat ON rapat.ID_RUANG = ruang_rapat.ID_RUANG
+		JOIN user ON rapat.ID_USER_INPUT = user.ID_USER
+		JOIN pegawai ON user.ID_PEGAWAI = pegawai.ID_PEGAWAI
+		WHERE rapat.STATUS = 1';
 		
 		$result = $this->db->query($sql);
 		foreach ($result->result() as $row) {
@@ -85,20 +88,20 @@ class m_admin extends CI_Model{
 		WHERE ID_RAPAT = "'.$id_rapat.'" )';
 		// mengembalikan ID,NAMA,SATKER,ASAL
 		$result = $this->db->query($sql);
-			foreach ($result->result() as $row) {
-				$data[] = $row;
-			}
-			return $data;
+		foreach ($result->result() as $row) {
+			$data[] = $row;
+		}
+		return $data;
 	}
 	
 	function get_detail_peserta($id_rapat){
-		$sql='SELECT P.NIP AS ID ,P.NAMA,S.NAMA_SATKER as SATKER,"PEGAWAI" AS ASAL  from pegawai P,satuan_kerja S,peserta_rapat R 
+		$sql='SELECT "'.$id_rapat.'" AS ID_RAPAT ,P.NIP AS ID ,P.NAMA,S.NAMA_SATKER as SATKER,"PEGAWAI" AS ASAL  from pegawai P,satuan_kerja S,peserta_rapat R 
 		WHERE 
 		P.ID_SATKER=S.ID_SATKER AND
 		P.NIP = R.ID_USER AND R.ID_RAPAT="'.$id_rapat.'"
 
 		UNION 
-		SELECT ID,NAMA , 
+		SELECT "'.$id_rapat.'" AS ID_RAPAT ,ID,NAMA , 
 		INSTITUSI AS SATKER,"NON-PEGAWAI" AS ASAL FROM non_pegawai,peserta_rapat R
 		WHERE ID = R.ID_USER AND R.ID_RAPAT="'.$id_rapat.'"';
 		// mengembalikan ID,NAMA,SATKER,ASAL
@@ -109,7 +112,6 @@ class m_admin extends CI_Model{
 		return $data;
 	}
 	
-
 	function get_ruang(){
 		$sql ='SELECT * FROM RUANG_RAPAT';
 		
@@ -167,8 +169,10 @@ class m_admin extends CI_Model{
 	function insert_rapat($data){
 		// var_dump($data);
 		$result = $this->db->insert('rapat',$data);
-		return $result;
+		return $this->db->affected_rows();
+		// return $result;
 	}
+
 	function insert_pegawai($data){
 		$result = $this->db->insert('pegawai',$data);
 		return $this->db->affected_rows();
@@ -191,9 +195,9 @@ class m_admin extends CI_Model{
 			$sql = "INSERT INTO peserta_rapat (ID_USER,ID_RAPAT)
 			VALUES (".$value.",".$id_rapat." )" ;
 			// $sql = "DELETE FROM pegawai WHERE ID_PEGAWAI=".$value;
-			$this->db->query($sql);
+			$result = $this->db->query($sql);
 		}
-		return $this->db->affected_rows();
+		return $result;
 	}
 	
 	function update_pegawai($data){
@@ -264,7 +268,20 @@ class m_admin extends CI_Model{
 		// var_dump($data);	
 		foreach ($data as $key => $value) {
 			$sql = "DELETE FROM rapat WHERE ID_RAPAT=".$value;
+			$sql2=" DELETE FROM peserta_rapat WHERE ID_RAPAT=".$value;
+			$result2 = $this->db->query($sql2);
 			$result = $this->db->query($sql);
+			
+		}
+	}
+	
+	function delete_peserta($data,$id_rapat){
+		
+		foreach ($data as $key => $value) {
+			// $sql = "DELETE FROM peserta_rapat WHERE ID_RAPAT=".$id_rapat."AND ID_USER".$value ;
+			$sql = "DELETE FROM peserta_rapat WHERE ID_RAPAT=".$id_rapat." AND ID_USER=".$value." ";
+			$result = $this->db->query($sql);
+			 // var_dump($value);	
 		}
 	}
 

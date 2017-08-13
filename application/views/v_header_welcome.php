@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,35 +26,22 @@
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/moment.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-datetimepicker.min.js"></script>
 <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-datetimepicker.css" />
-	
 
 
 
 </head>
-<body>
-<?php if ($this->session->userdata('otoritas')!=1) {
-			// echo "admin";
-			redirect('c_admin/error_authority', 'refresh');
-		} ?>
-	<div id="myModal" class="modal fade" role="dialog">
-		<div class="modal-dialog">
-
-			<div id="modalContent" class="modal-content">
-				//content from ajax loaded here
+<body>	
+<div class="col-sm-6" style="margin-top:2%">
+           <h4>Jadwal Rapat</h4>
+			
 			</div>
-
-		</div>
-	</div>
-		<div class="col-sm-3 sidenav hidden-xs" style="position:fixed ; <!--background-color:#7CFC00;"-->
-				<img src="<?php echo base_url();?>assets/img/logo.png" width="200px" height="200px"></img>
-				<ul class="nav nav-pills nav-stacked" >
-
-					<li ><a href="<?php echo base_url();?>c_admin/pegawai">Admin</a></li>
-					<li><a href="<?php echo base_url();?>c_admin/presensi">Presensi</a></li>
-					<li class="active"><a href="<?php echo base_url();?>c_admin/rapat">Rapat</a></li>
-					<li><a href="<?php echo base_url();?>c_admin/logout">Logout</a></li>
-					<li style="margin-top:55%">Logged in : <?php echo $this->session->userdata('nama_user'); ?> as administrator</li>
-					<li >NIP: <?php echo $this->session->userdata('nip_pegawai');            ?> </li>
-				</ul><br>
+			<div class="col-sm-6" style="margin-top:2%">
+			<a href="<?php echo base_url();?>"><button id="hapus" type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal" style="top:0;" >login</button></a>
 			</div>
-			<br>
+			
+				
+				
+	
+
+
+

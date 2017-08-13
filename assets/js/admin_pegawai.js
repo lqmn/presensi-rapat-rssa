@@ -121,6 +121,13 @@ $(document).ready(function() {
 
 	// delete
 	$(document).on('click','#hapus',function(event){
+		var sum =0;
+
+		$("input:checked", tabel.table().container()).each(function(){
+			sum++;
+		});
+		console.log(sum);
+
 		var requrl = BASE_URL+'c_admin/form_delete_pegawai';
 		$.ajax({
 			url:requrl,
