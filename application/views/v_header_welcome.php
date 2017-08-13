@@ -36,7 +36,8 @@
 			
 			</div>
 			<div class="col-sm-6" style="margin-top:2%">
-			<a href="<?php echo base_url();?>"><button id="hapus" type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal" style="top:0;" >login</button></a>
+			<a href="<?php echo base_url();?>c_login/welcome"><button id="hapus" type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal" style="top:0;" >login</button></a>
+
 			</div>
 			
 				
