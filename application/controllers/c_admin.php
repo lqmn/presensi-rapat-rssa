@@ -77,6 +77,10 @@ class c_admin extends CI_Controller{
 	function form_insert_rapat(){
 		$this->load->view('v_form_insert_rapat');
 	}
+	function form_rapat(){
+		$data['ruang'] = $this->m_admin->get_ruang();
+		$this->load->view('v_form_rapat',$data);
+	}
 
 	function form_pegawai(){
 		$data['satker'] = $this->m_admin->get_sk();
@@ -92,10 +96,6 @@ class c_admin extends CI_Controller{
 		$this->load->view('v_form_non');
 	}
 	
-	function form_rapat(){
-		$data['ruang'] = $this->m_admin->get_ruang();
-		$this->load->view('v_form_rapat',$data);
-	}
 
 	function form_delete_pegawai(){
 		$this->load->view('v_delete_pegawai');
@@ -109,8 +109,12 @@ class c_admin extends CI_Controller{
 		$this->load->view('v_delete_non');
 	}
 	
+	
 	function form_delete_rapat(){
 		$this->load->view('v_delete_rapat');
+	}
+	function form_delete_peserta_rapat(){
+		$this->load->view('v_delete_peserta_rapat');
 	}
 
 	function insert_pegawai(){
@@ -126,6 +130,7 @@ class c_admin extends CI_Controller{
 			echo "Error";
 		}
 	}
+	
 	
 	function insert_rapat(){
 		$tanggal = $this->input->post('tanggal');
@@ -150,18 +155,19 @@ class c_admin extends CI_Controller{
 		
 		// var_dump($data);
 		$res = $this->m_admin->insert_rapat($data);
-		if ($res) {
+		// var_dump($res);
+		if ($res>0) {
 			$this->load->view('v_sukses_modal_insert');
 		}else{
 			echo "Error";
 		}
 	}
-	
+
 	function insert_peserta(){
 		$id_peserta=$this->input->post('array_del');
 		$id_rapat=$this->input->post('id_rapat');
 		$res=$this->m_admin->insert_peserta($id_peserta,$id_rapat);
-		if ($res>0) {
+		if ($res) {
 			$this->load->view('v_sukses_modal_insert');
 		}else{
 			echo "Error";
@@ -298,7 +304,13 @@ class c_admin extends CI_Controller{
 		$this->m_admin->delete_rapat($array_del);
 		$this->load->view('v_sukses_modal');
 	}
-
+	
+	function delete_peserta($id_rapat){
+		$array_del = $this->input->post('array_del');
+		$this->m_admin->delete_peserta($array_del,$id_rapat);
+		$this->load->view('v_sukses_modal');
+	}
+	
 	function edit_form_pegawai(){
 		$id_pegawai = $this->input->post('id_edit');
 		$data['satker'] = $this->m_admin->get_sk();
@@ -375,5 +387,19 @@ class c_admin extends CI_Controller{
 	function get_table_detail_peserta($id_rapat){
 		$data= $this->m_admin->get_detail_peserta($id_rapat);
 		echo json_encode($data);
+	}
+
+	function landing() {
+		$dataRapat =$this->m_admin->get_rapat();
+		// var_dump($data['rapat']);
+		$this->load->view('v_header_welcome');
+		foreach($dataRapat as $key =>$value){
+			$data['rapat'] = $value;
+			$data['peserta']=$this->m_admin->get_detail_peserta($value->ID_RAPAT);
+			
+			$this->load->view('v_landing',$data);
+		}
+		
+		$this->load->view('v_landing_foot');
 	}
 }

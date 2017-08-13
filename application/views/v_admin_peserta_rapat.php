@@ -7,6 +7,9 @@
 					<input type="hidden" class="id_rapat" name="id" value="<?php echo $rapat->ID_RAPAT ;?>">
 					<h4>Nama Rapat : <?php echo $rapat->JUDUL_RAPAT;?></h4>
 					<br>
+					<h6> Ceklis nama yang ingin ditambahkan ke daftar rapat, lalu klik tombol tambah.</h6>
+					
+					<br>
 					<table id="tabel" class="table table-striped table-bordered" cellspacing="0" width="100%">
 						<thead>
 							<tr><th><input id="select-all" type="checkbox" /></th>
@@ -56,7 +59,7 @@
 						</tbody>
 					</table>
 					<br>
-					<a href="<?php echo base_url();?>c_admin/rapat"<button id="tambah" type="button" class="btn btn-danger pull-right" >Selesai</button></A>
+					<a href="<?php echo base_url();?>c_admin/rapat"<button id="tambah" type="button" class="btn btn-danger pull-right" >Selesai</button></a>
 					<!-- <button id="editPegawai" type="button" class="btn btn-info" data-target="#myModal">Edit</button> -->
 					<br>
 					

@@ -21,6 +21,10 @@ Class c_login extends CI_Controller {
 	// Show login page
 	function index() {
 		// echo 'KWADOKAWOD';
+		redirect('c_admin/landing','refresh');
+		
+	}
+	function welcome(){
 		$this->load->view('v_login');
 	}
 
