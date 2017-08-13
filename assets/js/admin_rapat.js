@@ -113,6 +113,7 @@ $(document).ready(function() {
 	})
 
 	$('#modalContent').on('click','#updateRapat', function(){
+		$('#updateRapat').button('loading');
 		var requrl = BASE_URL+'c_admin/update_rapat/';
 		var data = {};
 

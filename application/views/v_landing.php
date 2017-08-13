@@ -75,6 +75,7 @@
 					
 					<table id="tabel<?php echo $rapat->ID_RAPAT;?> " class="table table-striped table-bordered" cellspacing="0" width="100%">
 						<thead> 
+
 							<tr>
 						
 							    <th>Nama</th>
@@ -110,10 +111,5 @@
 				</div>
 			<hr>	
 	</div>
-	
-	<div>
-	
-	</div>
-
 
 
