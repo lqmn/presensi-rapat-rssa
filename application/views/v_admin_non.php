@@ -57,10 +57,10 @@
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<p class="navbar-text">Logged in : <?php echo $this->session->userdata('nama'); ?> as administrator<br>NIP: <?php echo $this->session->userdata('username'); ?></p>
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="<?php echo base_url();?>c_admin/pegawai">Admin</a></li>
-					<li><a href="<?php echo base_url();?>c_admin/presensi">Presensi</a></li>
-					<li><a href="<?php echo base_url();?>c_admin/rapat">Rapat</a></li>
-					<li><a href="<?php echo base_url();?>c_admin/logout">Logout</a></li>
+					<li class="active"><a href="<?php echo base_url();?>c_admin/pegawai"><span class="	glyphicon glyphicon-user"></span> Admin</a></li>
+					<li><a href="<?php echo base_url();?>c_admin/presensi"><span class="glyphicon glyphicon-th-list"></span> Presensi</a></li>
+					<li><a href="<?php echo base_url();?>c_admin/rapat"><span class="glyphicon glyphicon-briefcase"></span> Rapat</a></li>
+					<li><a href="<?php echo base_url();?>c_admin/logout"><span class="glyphicon glyphicon-off"></span> Logout</a></li>
 				</ul>
 			</div>
 		</div>
@@ -71,10 +71,10 @@
 			<div class="col-sm-3 sidenav hidden-xs affix">
 				<img src="<?php echo base_url();?>assets/img/logo.png" width="200px" height="200px"></img>
 				<ul class="nav nav-pills nav-stacked">
-					<li class="active"><a href="<?php echo base_url();?>c_admin/pegawai">Admin</a></li>
-					<li><a href="<?php echo base_url();?>c_admin/presensi">Presensi</a></li>
-					<li><a href="<?php echo base_url();?>c_admin/rapat">Rapat</a></li>
-					<li><a href="<?php echo base_url();?>c_admin/logout">Logout</a></li>
+					<li class="active"><a href="<?php echo base_url();?>c_admin/pegawai"><span class="	glyphicon glyphicon-user"></span> Admin</a></li>
+					<li><a href="<?php echo base_url();?>c_admin/presensi"><span class="glyphicon glyphicon-th-list"></span> Presensi</a></li>
+					<li><a href="<?php echo base_url();?>c_admin/rapat"><span class="glyphicon glyphicon-briefcase"></span> Rapat</a></li>
+					<li><a href="<?php echo base_url();?>c_admin/logout"><span class="glyphicon glyphicon-off"></span> Logout</a></li>
 				</ul><br>
 				<p class="navbar-text">Logged in : <?php echo $this->session->userdata('nama'); ?> as administrator<br>NIP: <?php echo $this->session->userdata('username'); ?></p>
 			</div>
@@ -84,7 +84,7 @@
 			<div class="col-sm-9">
 				<div class="well">
 					<!-- content -->
-					<div style="float:right;">
+					<div class="pull-right">
 						<select id="page" class="selectpicker" name="tabel">
 							<option value="1">Pegawai</option>
 							<option value="2">User</option>
@@ -95,7 +95,7 @@
 					<table id="tabel" class="table table-striped" cellspacing="0" width="100%">
 						<thead>
 							<tr>
-								<th><input id="select-all" type="checkbox"/></th>
+								<th class="center col-xs-1"><input id="select-all" type="checkbox"/></th>
 								<th>Nama</th>
 								<th>Institusi</th>
 								<th>Panel</th>

@@ -7,7 +7,9 @@
 	background-color: #f1f1f1;
 	height: 100%;
 }
-
+.center{
+	text-align:center;
+}
 /* On small screens, set height to 'auto' for the grid */
 @media screen and (max-width: 767px) {
 	.row.content {
