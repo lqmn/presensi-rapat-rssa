@@ -60,7 +60,7 @@ class m_admin extends CI_Model{
 		FROM rapat JOIN ruang_rapat ON rapat.ID_RUANG = ruang_rapat.ID_RUANG
 		JOIN user ON rapat.ID_USER_INPUT = user.ID_USER
 		JOIN pegawai ON user.ID_PEGAWAI = pegawai.ID_PEGAWAI
-		WHERE rapat.STATUS = 1';
+		WHERE rapat.STATUS = 1 ORDER BY rapat.DATE_MODIFIED DESC';
 		
 		$result = $this->db->query($sql);
 		foreach ($result->result() as $row) {
@@ -106,10 +106,14 @@ class m_admin extends CI_Model{
 		WHERE ID = R.ID_USER AND R.ID_RAPAT="'.$id_rapat.'"';
 		// mengembalikan ID,NAMA,SATKER,ASAL
 		$result = $this->db->query($sql);
+		
 		foreach ($result->result() as $row) {
 			$data[] = $row;
 		}
-		return $data;
+		
+		return @$data;
+		
+		
 	}
 	
 	function get_ruang(){
@@ -283,6 +287,14 @@ class m_admin extends CI_Model{
 			$result = $this->db->query($sql);
 			 // var_dump($value);	
 		}
+	}
+	
+	function update_status_rapat(){
+		$sql="UPDATE  rapat
+			SET rapat.STATUS=0
+			WHERE  DATE_SUB(NOW(), INTERVAL 1 HOUR) > WAKTU_RAPAT";
+			$this->db->query($sql);
+			return $this->db->affected_rows();
 	}
 
 
