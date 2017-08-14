@@ -32,9 +32,9 @@
 							<?php endforeach ?> -->
 						</tbody>
 					</table>
-					<button id="tambah" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Tambah</button>
+					
 					<!-- <button id="editPegawai" type="button" class="btn btn-info" data-target="#myModal">Edit</button> -->
-					<button id="hapus" type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Delete</button>
+					
 				</div>
 			</div>
 

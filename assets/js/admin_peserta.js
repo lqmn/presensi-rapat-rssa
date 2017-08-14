@@ -2,6 +2,7 @@ $(document).ready(function() {
 	// table
 	var id_rapat_global=$('.id_rapat').val();
 	var tabel = $('#tabel').DataTable({
+		"dom": '<"toolbar">frtlp',
 		
 		"ajax": {
 			"url": BASE_URL+"c_admin/get_table_all_entitas/"+id_rapat_global,
@@ -49,6 +50,10 @@ $(document).ready(function() {
 		}
 		
 		]
+		,"order": [],
+		initComplete:function(){
+			$('div.toolbar').html('<div style="float:left;"><button id="tambah" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Tambah <span class="glyphicon glyphicon-plus"></span></div>');
+		}
 	});
 	
 
@@ -185,6 +190,7 @@ $(document).ready(function() {
 	// });
 	
 		$('#modalContent').on('click','#insertRapat', function(){
+			$('#insertRapat').button('loading');
 		var selected = [];
 		var id_rapat=$('.id_rapat').val();
 		$('#tabel input:checked').each(function() {

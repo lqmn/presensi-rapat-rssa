@@ -2,7 +2,7 @@ $(document).ready(function() {
 	// table
 	var id_rapat_global=$('.id_rapat').val();
 	var tabel = $('#tabel').DataTable({
-		
+		"dom": '<"toolbar">frtlp',
 		"ajax": {
 			"url": BASE_URL+"c_admin/get_table_detail_peserta/"+id_rapat_global,
 			"dataSrc": ""
@@ -23,7 +23,10 @@ $(document).ready(function() {
 			}
 		}
 		
-		]
+		],"order": [],
+		initComplete:function(){
+			$('div.toolbar').html('<div style="float:left;"><a href="'+BASE_URL+'c_admin/peserta/'+id_rapat_global+'"><button id="tambah" type="button" class="btn btn-primary" >Tambah Peserta Rapat    <span class="glyphicon glyphicon-plus"></span></button></a> <button id="hapus" type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal" disabled>Delete <span class="glyphicon glyphicon-remove"></span></button></div>');
+		}
 	});
 	
 
@@ -31,8 +34,8 @@ $(document).ready(function() {
 	$("#tabel").on('click','#select-all', function(){
 		// var rows = tabel.table().node();
 		// console.log(rows);
-		var rows = tabel.rows().nodes();
-		$('input[type="checkbox"]', rows).prop('checked', this.checked);
+			var rows = tabel.rows().nodes();
+			$('input[type="checkbox"]', rows).prop('checked', this.checked);
 	});
 
 	$('#myModal').on('hidden.bs.modal', function() {
@@ -184,6 +187,18 @@ $(document).ready(function() {
 			// }
 		// });
 	// })
+	
+	$('#tabel').on('change','input:checkbox',function(){
+		var selected = 0;
+		$('.select:checked').each(function() {
+			selected++;
+		});
+		if (selected>0) {
+			$('#hapus').prop('disabled',false);
+		}else{
+			$('#hapus').prop('disabled',true);
+		}
+	})
 
 	setInterval(function() {
 		tabel.ajax.reload();
