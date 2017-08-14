@@ -14,35 +14,46 @@
 	<link href="assets/img/logo.png" rel="shortcut icon">
 </head>
 <body>
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">WebSiteName</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li><a href="<?php echo base_url();?>c_admin/landing">Rapat</a></li>
+				<li class="active"><a href="<?php echo base_url();?>c_login/welcome">Login</a></li>
+			</ul>
+		</div>
+	</nav>
 	<div class="container">
 		<div class="card card-container">
 			<img id="profile-img" class="profile-img-card" src="<?php echo base_url(); ?>assets/img/logo.png" />
 
 			<?php
-				if (isset($logout_message)) {
-					echo "<div class='message'>";
-					echo $logout_message;
-					echo "</div>";
-				}
+			if (isset($logout_message)) {
+				echo "<div class='message'>";
+				echo $logout_message;
+				echo "</div>";
+			}
 			?>
 
 			<?php
-				if (isset($message_display)) {
-					echo "<div class='message'>";
-					echo $message_display;
-					echo "</div>";
-				}
+			if (isset($message_display)) {
+				echo "<div class='message'>";
+				echo $message_display;
+				echo "</div>";
+			}
 			?>
 
 			<?php echo form_open('c_login/user_login_process'); ?>
 
 			<?php
-				echo "<div class='error_msg'>";
-				if (isset($error_message)) {
-					echo $error_message;
-				}
-				echo validation_errors();
-				echo "</div>";
+			echo "<div class='error_msg'>";
+			if (isset($error_message)) {
+				echo $error_message;
+			}
+			echo validation_errors();
+			echo "</div>";
 			?>
 
 			<div class="form-signin">
