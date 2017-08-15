@@ -31,9 +31,9 @@
 							<?php endforeach ?> -->
 						</tbody>
 					</table>
-					<a href="<?php echo base_url();?>c_admin/peserta/<?php echo $rapat->ID_RAPAT;?>"><button id="tambah" type="button" class="btn btn-primary" >Tambah peserta rapat</button></a>
+					
 					<!-- <button id="editPegawai" type="button" class="btn btn-info" data-target="#myModal">Edit</button> -->
-					<button id="hapus" type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal" >Hapus</button>
+					
 					
 				</div>
 				

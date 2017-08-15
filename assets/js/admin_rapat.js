@@ -1,7 +1,9 @@
 $(document).ready(function() {
 	// table
 	var tabel = $('#tabel').DataTable({
+			"dom": '<"toolbar">frtlp',
 		"ajax": {
+		
 			"url": BASE_URL+"c_admin/get_table_rapat",
 			"dataSrc": ""
 		},
@@ -50,14 +52,17 @@ $(document).ready(function() {
 				return '<a href="'+BASE_URL+'c_admin/lihatPeserta/'+data+'"><button type="button" class="lihatPesertaButton btn btn-info" value="'+data+'">Lihat Peserta</button></a>';
 			}
 		}
-		]
+		],"order": [],
+		initComplete:function(){
+			$('div.toolbar').html('<div style="float:left;"><button id="tambah" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Tambah <span class="glyphicon glyphicon-plus"></span></button> <button id="hapus" type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal" disabled>Delete <span class="glyphicon glyphicon-remove"></span></button></div>');
+		}
 	});
 
 	$("#tabel").on('click','#select-all', function(){
 		// var rows = tabel.table().node();
 		// console.log(rows);
-		// var rows = tabel.rows().nodes();
-		// $('input[type="checkbox"]', rows).prop('checked', this.checked);
+		var rows = tabel.rows().nodes();
+		$('input[type="checkbox"]', rows).prop('checked', this.checked);
 	});
 
 	$('#myModal').on('hidden.bs.modal', function() {
@@ -66,6 +71,7 @@ $(document).ready(function() {
 
 	// insert
 	$(document).on('click','#tambah',function(event){
+		
 		var requrl = BASE_URL+'c_admin/form_rapat';
 		$.ajax({
 			url:requrl,
@@ -76,6 +82,8 @@ $(document).ready(function() {
 	})
 
 	$('#modalContent').on('click','#insertRapat', function(){
+		$('#insertRapat').button('loading');
+		
 		var requrl = BASE_URL+'c_admin/insert_rapat/';
 		var data = {};
 
@@ -160,6 +168,17 @@ $(document).ready(function() {
 			}
 		});
 	});
+		$('#tabel').on('change','input:checkbox',function(){
+		var selected = 0;
+		$('.select:checked').each(function() {
+			selected++;
+		});
+		if (selected>0) {
+			$('#hapus').prop('disabled',false);
+		}else{
+			$('#hapus').prop('disabled',true);
+		}
+	})
 
 	setInterval(function() {
 		tabel.ajax.reload();
