@@ -11,6 +11,9 @@
 	<link href="<?php echo base_url(); ?>assets/css/admin.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+	<?php if ($this->session->userdata('otoritas')!=1) {
+		redirect('c_admin/error_authority', 'refresh');
+	} ?>
 
 	<nav class="navbar navbar-inverse visible-xs">
 		<div class="container-fluid">

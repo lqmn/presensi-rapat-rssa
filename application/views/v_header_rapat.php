@@ -47,13 +47,11 @@
 		<div class="col-sm-3 sidenav hidden-xs" style="position:fixed ; <!--background-color:#7CFC00;"-->
 				<img src="<?php echo base_url();?>assets/img/logo.png" width="200px" height="200px"></img>
 				<ul class="nav nav-pills nav-stacked" >
-
-					<li ><a href="<?php echo base_url();?>c_admin/pegawai">Admin</a></li>
-					<li><a href="<?php echo base_url();?>c_admin/presensi">Presensi</a></li>
-					<li class="active"><a href="<?php echo base_url();?>c_admin/rapat">Rapat</a></li>
-					<li><a href="<?php echo base_url();?>c_admin/logout">Logout</a></li>
-					<li style="margin-top:55%">Logged in : <?php echo $this->session->userdata('nama_user'); ?> as administrator</li>
-					<li >NIP: <?php echo $this->session->userdata('nip_pegawai');            ?> </li>
+					<li><a href="<?php echo base_url();?>c_admin/pegawai"><span class="	glyphicon glyphicon-user"></span> Admin</a></li>
+					<li><a href="<?php echo base_url();?>c_admin/presensi"><span class="glyphicon glyphicon-th-list"></span> Presensi</a></li>
+					<li class="active"><a href="<?php echo base_url();?>c_admin/rapat"><span class="glyphicon glyphicon-briefcase"></span> Rapat</a></li>
+					<li><a href="<?php echo base_url();?>c_admin/logout"><span class="glyphicon glyphicon-off"></span> Logout</a></li>
 				</ul><br>
+				<p class="navbar-text">Logged in : <?php echo $this->session->userdata('nama'); ?> as administrator<br>NIP: <?php echo $this->session->userdata('username'); ?></p>
 			</div>
 			<br>
