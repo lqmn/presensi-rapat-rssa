@@ -1,5 +1,6 @@
 
 <div class="col-sm-12" style="background-color:;">
+<!--
 <div class="col-sm-1" > 
 </div>
 <div class="col-sm-4" style="background-color:;">
@@ -62,10 +63,10 @@
 					
 					
 					<br>
-</div>
+</div> -->
 
 
-<div class="col-sm-6" >
+<div class="col-sm-12" >
 			
 				<div class="well">
 					
@@ -77,35 +78,43 @@
 						<thead> 
 
 							<tr>
-						
-							    <th>Nama</th>
-								<th>SATKER</th>
-								<th>ASAL</th>
+								
+								<th>Waktu Rapat</th>
+								<th>Ruang Rapat</th>
+								<th>Nama</th>
+							    <th>Nama Peserta</th>
+								
 								
 							</tr>
 						</thead>
 						<tbody>
 							
+							<tr>
+							<td><?php echo @$rapat->WAKTU_RAPAT;?> </td>
+							<td><?php echo @$rapat->NAMA_RUANG;?> </td>
+							<td><?php echo @$rapat->JUDUL_RAPAT;?> </td>
 							
-								<?php  
 								
-								try{ 
+								<td>
+								<?php 
 								
 								foreach((array)$peserta as $key2 =>$peserta){ 
 							if($rapat->ID_RAPAT== $peserta->ID_RAPAT){ ?>
-								<tr>
-									<td><?php echo @$peserta->NAMA; ?></td>
-									<td><?php echo @$peserta->SATKER; ?></td>
-									<td><?php echo @$peserta->ASAL; ?></td>
-							<?php }?>
-								</tr>
 								
-							<?php } 
-					} catch(Exception $e){
-						echo "<td>-</td>";
-						echo "<td>-</td>";
-						echo "<td>-</td>";
-					} 
+								
+									
+							
+							<?php echo @$peserta->NAMA."<br>"; ?>
+							
+								
+									
+											
+								
+							<?php }?>
+								
+								
+							<?php }  echo "</td></tr>"
+					
 					
 					?>
 						</tbody>

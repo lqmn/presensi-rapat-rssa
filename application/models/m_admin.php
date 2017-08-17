@@ -52,6 +52,8 @@ class m_admin extends CI_Model{
 	}
 
 	function get_rapat(){
+		if($this->session->userdata('otoritas')==1)
+		{
 		$sql ='SELECT rapat.ID_RAPAT AS ID_RAPAT, JUDUL_RAPAT, WAKTU_RAPAT, NAMA_RUANG, pegawai.NAMA AS NAMA_USER,
 		(CASE 
 		WHEN STATUS_AKTIVASI=0      THEN "Belum diverifikasi"
@@ -60,8 +62,32 @@ class m_admin extends CI_Model{
 		FROM rapat JOIN ruang_rapat ON rapat.ID_RUANG = ruang_rapat.ID_RUANG
 		JOIN user ON rapat.ID_USER_INPUT = user.ID_USER
 		JOIN pegawai ON user.ID_PEGAWAI = pegawai.ID_PEGAWAI
-		WHERE rapat.STATUS = 1 ORDER BY rapat.DATE_MODIFIED DESC';
+		WHERE rapat.STATUS = 1 ORDER BY rapat.DATE_MODIFIED DESC';}
 		
+		else if($this->session->userdata('otoritas')==2)
+		{
+			$sql ='SELECT rapat.ID_RAPAT AS ID_RAPAT, JUDUL_RAPAT, WAKTU_RAPAT, NAMA_RUANG, pegawai.NAMA AS NAMA_USER,
+		(CASE 
+		WHEN STATUS_AKTIVASI=0      THEN "Belum diverifikasi"
+		WHEN STATUS_AKTIVASI=1      THEN "Terverifikasi"
+		END) as STATUS
+		FROM rapat JOIN ruang_rapat ON rapat.ID_RUANG = ruang_rapat.ID_RUANG
+		JOIN user ON rapat.ID_USER_INPUT = user.ID_USER
+		JOIN pegawai ON user.ID_PEGAWAI = pegawai.ID_PEGAWAI
+		WHERE rapat.STATUS = 1 AND rapat.STATUS_AKTIVASI=0 ORDER BY rapat.DATE_MODIFIED DESC';
+			
+		}
+		else 
+		{
+		$sql ='SELECT rapat.ID_RAPAT AS ID_RAPAT, JUDUL_RAPAT, WAKTU_RAPAT, NAMA_RUANG, pegawai.NAMA AS NAMA_USER,
+		(CASE 
+		WHEN STATUS_AKTIVASI=0      THEN "Belum diverifikasi"
+		WHEN STATUS_AKTIVASI=1      THEN "Terverifikasi"
+		END) as STATUS
+		FROM rapat JOIN ruang_rapat ON rapat.ID_RUANG = ruang_rapat.ID_RUANG
+		JOIN user ON rapat.ID_USER_INPUT = user.ID_USER
+		JOIN pegawai ON user.ID_PEGAWAI = pegawai.ID_PEGAWAI
+		WHERE rapat.STATUS = 1 ORDER BY rapat.DATE_MODIFIED DESC';}
 		$result = $this->db->query($sql);
 		foreach ($result->result() as $row) {
 			$data[] = $row;
@@ -69,6 +95,28 @@ class m_admin extends CI_Model{
 		return (array)@$data;
 		
 	}
+	
+	function get_waktu_by_id_rapat($id_rapat){
+		$sql='SELECT WAKTU_RAPAT FROM rapat WHERE ID_RAPAT=1' ;
+		$result = $this->db->query($sql);
+		$res=$result->result();
+		return $res;
+	}
+	
+	function get_rapat_by_waktu($waktu){
+		$d = date_parse_from_format("Y-m-d", $waktu); 
+		$sql ='SELECT rapat.JUDUL_RAPAT,rapat.WAKTU_RAPAT,ruang_rapat.NAMA_RUANG
+		from rapat JOIN ruang_rapat
+		WHERE rapat.ID_RUANG=ruang_rapat.ID_RUANG AND DAY(rapat.WAKTU_RAPAT)='.$d['day'].'
+		AND rapat.STATUS_AKTIVASI=1 AND rapat.STATUS=1 AND MONTH(rapat.WAKTU_RAPAT)='.$d['month'] ;
+		$result = $this->db->query($sql);
+		foreach ($result->result() as $row) {
+			$data[] = $row;
+		}
+		return (array)@$data;
+		}
+		
+	
 	
 	function get_all_entitas($id_rapat){
 		$sql='SELECT p.NIP AS ID , p.NAMA, s.NAMA_SATKER as SATKER, "PEGAWAI" AS ASAL 
@@ -296,6 +344,14 @@ function update_status_rapat(){
 	WHERE  DATE_SUB(NOW(), INTERVAL 1 HOUR) > WAKTU_RAPAT";
 	$this->db->query($sql);
 	return $this->db->affected_rows();
+}
+
+function verifikasi_rapat($id_rapat){
+	$sql='UPDATE RAPAT 
+	SET STATUS_AKTIVASI=1 WHERE ID_RAPAT='.$id_rapat ;
+		$this->db->query($sql);
+	return $this->db->affected_rows();
+	
 }
 
 
