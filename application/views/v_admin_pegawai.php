@@ -26,7 +26,6 @@
 	<script src="<?php echo base_url(); ?>assets/js/admin.js"></script>
 	<script type="text/javascript">
 		var BASE_URL = "<?php echo base_url();?>";
-		var tabel;
 	</script>
 </head>
 <body>

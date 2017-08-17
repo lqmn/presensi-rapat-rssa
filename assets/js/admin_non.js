@@ -33,18 +33,6 @@ $(document).ready(function() {
 			$('div.toolbar').html('<div style="float:left;"><button id="tambah" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Tambah <span class="glyphicon glyphicon-plus"></span></button> <button id="hapus" type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal" disabled>Delete <span class="glyphicon glyphicon-remove"></span></button></div>');
 		}
 	});
-
-	$("#tabel").on('click','#select-all', function(){
-		// var rows = tabel_pegawai.table().node();
-		// console.log(rows);
-		var rows = tabel.rows().nodes();
-		$('input[type="checkbox"]', rows).prop('checked', this.checked);
-	});
-
-	$('#myModal').on('hidden.bs.modal', function() {
-		tabel.ajax.reload();
-		$('#hapus').prop('disabled',true);
-	});
 	
 	// insert
 	$(document).on('click','#tambah',function(event){
@@ -146,21 +134,4 @@ $(document).ready(function() {
 			}
 		});
 	});
-
-	$('#tabel').on('change','input:checkbox',function(){
-		var selected = 0;
-		$('.select:checked').each(function() {
-			selected++;
-		});
-		if (selected>0) {
-			$('#hapus').prop('disabled',false);
-		}else{
-			$('#hapus').prop('disabled',true);
-		}
-	})
-
-	setInterval(function() {
-		tabel.ajax.reload();
-		$('#hapus').prop('disabled',true);
-	}, 300000 );
 });
