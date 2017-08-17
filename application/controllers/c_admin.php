@@ -39,7 +39,15 @@ class c_admin extends CI_Controller{
 	
 	function rapat(){
 		$this->load->view('v_header_rapat');
-		$this->load->view('v_admin_rapat');
+	
+		if($this->session->userdata('otoritas')==2){
+				$this->load->view('v_ver_rapat');
+		}
+		else if($this->session->userdata('otoritas')==1){ 
+		
+			$this->load->view('v_admin_rapat');
+		}
+	
 		
 	}
 
@@ -383,6 +391,8 @@ class c_admin extends CI_Controller{
 		
 	}
 	
+	
+	
 	function get_table_all_entitas($id_rapat){
 		$data= $this->m_admin->get_all_entitas($id_rapat);
 		echo json_encode($data);
@@ -406,5 +416,31 @@ class c_admin extends CI_Controller{
 		}
 		
 		$this->load->view('v_landing_foot');
+	}
+	
+	function form_verif(){
+		
+		// $waktu_rapat = $this->input->post('waktu_rapat');
+		$id_rapat = $this->input->post('id_rapat');
+		$waktu_rapat =$this->m_admin->get_waktu_by_id_rapat($id_rapat);
+	foreach($waktu_rapat as $key =>$value){
+		$data['waktu']=$this->m_admin->get_rapat_by_waktu($value->WAKTU_RAPAT);
+	
+		
+		$data['tanggal']=date('Y-m-d',strtotime($value->WAKTU_RAPAT));
+		$data['tanggal_lengkap']=$value->WAKTU_RAPAT;
+		$data['id']=$id_rapat;
+		$this->load->view('v_form_verif',$data);
+	}
+	}
+	
+	function verifikasi_rapat($id_rapat){
+		$res=$this->m_admin->verifikasi_rapat($id_rapat);
+		if ($res>0) {
+			$this->load->view('v_sukses_modal_verif');
+		}else{
+			echo "Error";
+		}
+		
 	}
 }
