@@ -35,17 +35,6 @@ $(document).ready(function() {
 		}
 	});
 
-	$("#tabel").on('click','#select-all', function(){
-		// var rows = tabel.table().node();
-		// console.log(rows);
-		var rows = tabel.rows().nodes();
-		$('input[type="checkbox"]', rows).prop('checked', this.checked);
-	});
-
-	$('#myModal').on('hidden.bs.modal', function() {
-		tabel.ajax.reload();
-		$('#hapus').prop('disabled',true);
-	});
 
 	// insert
 	$(document).on('click','#tambah',function(event){
@@ -121,13 +110,6 @@ $(document).ready(function() {
 
 	// delete
 	$(document).on('click','#hapus',function(event){
-		var sum =0;
-
-		$("input:checked", tabel.table().container()).each(function(){
-			sum++;
-		});
-		console.log(sum);
-
 		var requrl = BASE_URL+'c_admin/form_delete_pegawai';
 		$.ajax({
 			url:requrl,
@@ -139,36 +121,22 @@ $(document).ready(function() {
 
 	$('#modalContent').on('click','#delete', function(){
 		$('#delete').button('loading');
-		var selected = [];
-		$('.select:checked').each(function() {
-			selected.push($(this).attr('value'));
+
+		var checked = [];
+		$("input:checked", tabel.rows().nodes()).each(function(){
+			checked.push($(this).val());
 		});
+		console.log(checked);
 		var requrl = BASE_URL+'c_admin/delete_pegawai';
-		console.log(selected);
+
 		$.ajax({
 			url:requrl,
 			type:'post',
-			data: {"array_del": selected} ,
+			data: {"array_del": checked} ,
 			success:function(data){
 				$('#modalContent').html(data);
 			}
 		});
 	});
 
-	$('#tabel').on('change','input:checkbox',function(){
-		var selected = 0;
-		$('.select:checked').each(function() {
-			selected++;
-		});
-		if (selected>0) {
-			$('#hapus').prop('disabled',false);
-		}else{
-			$('#hapus').prop('disabled',true);
-		}
-	})
-
-	setInterval(function() {
-		tabel.ajax.reload();
-		$('#hapus').prop('disabled',true);
-	}, 300000 );
 });
