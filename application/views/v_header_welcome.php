@@ -31,17 +31,14 @@
 
 </head>
 <body>	
-	<nav class="navbar navbar-inverse">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#">WebSiteName</a>
+<div class="col-sm-6" style="margin-top:2%">
+           <h4>Jadwal Rapat</h4>
+			
 			</div>
-			<ul class="nav navbar-nav">
-				<li class="active"><a href="<?php echo base_url();?>c_admin/landing">Rapat</a></li>
-				<li><a href="<?php echo base_url();?>c_login/welcome">Login</a></li>
-			</ul>
-		</div>
-	</nav>
+			<div class="col-sm-6" style="margin-top:2%">
+			<a href="<?php echo base_url();?>c_login/welcome"><button id="hapus" type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal" style="top:0;" >login</button></a>
+
+			</div>
 			
 				
 				

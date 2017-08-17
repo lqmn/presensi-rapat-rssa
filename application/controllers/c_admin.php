@@ -412,8 +412,9 @@ class c_admin extends CI_Controller{
 			$data['rapat'] = $value;
 			$data['peserta']=$this->m_admin->get_detail_peserta($value->ID_RAPAT);
 			
-			$this->load->view('v_rapat',$data);
+			$this->load->view('v_landing',$data);
 		}
+		
 		$this->load->view('v_landing_foot');
 	}
 	
