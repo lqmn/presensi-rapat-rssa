@@ -63,72 +63,72 @@
 					
 					
 					<br>
-</div> -->
+				</div> -->
 
 
-<div class="col-sm-12" >
-			
-				<div class="well">
-					
-					
-					
-					<h4>Peserta rapat</h4>
-					
-					<table id="tabel<?php try{echo $rapat->ID_RAPAT;  }catch (Exception $e){ echo "Belum ada peserta";	}?> " class="table table-striped table-bordered" cellspacing="0" width="100%">
-						<thead> 
+				<div class="col-sm-12" >
 
-							<tr>
-								
-								<th>Waktu Rapat</th>
-								<th>Ruang Rapat</th>
-								<th>Nama</th>
-							    <th>Nama Peserta</th>
-								
-								
-							</tr>
-						</thead>
-						<tbody>
-							
-							<tr>
-							<td><?php echo @$rapat->WAKTU_RAPAT;?> </td>
-							<td><?php echo @$rapat->NAMA_RUANG;?> </td>
-							<td><?php echo @$rapat->JUDUL_RAPAT;?> </td>
-							
-								
-								<td>
-								<?php 
-								
-								foreach((array)$peserta as $key2 =>$peserta){ 
-							if($rapat->ID_RAPAT== $peserta->ID_RAPAT){ ?>
-								
-								
-									
-							
-							<?php echo @$peserta->NAMA."<br>"; ?>
-							
-								
-									
+					<div class="well">
+
+
+
+						<h4>Peserta rapat</h4>
+
+						<table id="tabel<?php try{echo $rapat->ID_RAPAT;  }catch (Exception $e){ echo "Belum ada peserta";	}?> " class="table table-striped table-bordered" cellspacing="0" width="100%">
+							<thead> 
+
+								<tr>
+
+									<th>Waktu Rapat</th>
+									<th>Ruang Rapat</th>
+									<th>Nama</th>
+									<th>Nama Peserta</th>
+
+
+								</tr>
+							</thead>
+							<tbody>
+
+								<tr>
+									<td><?php echo @$rapat->WAKTU_RAPAT;?> </td>
+									<td><?php echo @$rapat->NAMA_RUANG;?> </td>
+									<td><?php echo @$rapat->JUDUL_RAPAT;?> </td>
+
+
+									<td>
+										<?php 
+
+										foreach((array)$peserta as $key2 =>$peserta){ 
+											if($rapat->ID_RAPAT== $peserta->ID_RAPAT){ ?>
+
+
+
+
+											<?php echo @$peserta->NAMA."<br>"; ?>
+
+
+
 											
-								
-							<?php }?>
-								
-								
-							<?php }  echo "</td></tr>"
-					
-					
-					?>
-						</tbody>
-					</table>
-					
-					
-					
-					<!-- <button id="editPegawai" type="button" class="btn btn-info" data-target="#myModal">Edit</button> -->
-					
-					
-				</div>
-				
-				</div>
-			<hr>	
-	</div>
+
+											<?php }?>
+
+
+											<?php }  echo "</td></tr>"
+
+
+											?>
+										</tbody>
+									</table>
+
+
+
+									<!-- <button id="editPegawai" type="button" class="btn btn-info" data-target="#myModal">Edit</button> -->
+
+
+								</div>
+
+							</div>
+							<hr>	
+						</div>
 
 
