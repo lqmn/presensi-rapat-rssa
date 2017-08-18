@@ -1,29 +1,25 @@
 $(document).ready(function() {
 	// table
+	// alert('awdojawod');
 	var tabel = $('#tabel').DataTable({
-			"dom": '<"toolbar">frtlp',
+		"dom": '<"toolbar">frtlp',
 		"ajax": {
-		
-			"url": BASE_URL+"c_admin/get_table_rapat",
+			"url": BASE_URL+"c_admin/get_table_pegawai",
 			"dataSrc": ""
 		},
 		"columns": [
-		{ "data": "ID_RAPAT" },
-		{ "data": "JUDUL_RAPAT" },
-		{ "data": "WAKTU_RAPAT" },
-		{ "data": "NAMA_RUANG" },
-		{ "data": "NAMA_USER" },
-		{ "data": "STATUS" },
-		{ "data": "ID_RAPAT" },
-		{ "data": "ID_RAPAT" },
-		{ "data": "ID_RAPAT" }
+		{ "data": "ID_PEGAWAI" },
+		{ "data": "NAMA" },
+		{ "data": "NIP" },
+		{ "data": "NAMA_SATKER" },
+		{ "data": "ID_PEGAWAI" }
 		],'columnDefs':[{
-			'targets': 8,
+			'targets': 4,
 			'searchable':false,
 			'orderable':false,
 			'className': 'dt-body-center',
 			'render': function (data){
-				return '<button type="button" class="editButton btn btn-info" data-toggle="modal" data-target="#myModal" value="'+data+'"><span class="glyphicon glyphicon-edit"></span> Edit</button>';
+				return '<button type="button" class="editButton btn btn-info" data-toggle="modal" data-target="#myModal" value="'+data+'">Edit <span class="glyphicon glyphicon-edit"></span></button>';
 			}
 		},{
 			'targets': 0,
@@ -33,46 +29,16 @@ $(document).ready(function() {
 			'render': function (data){
 				return '<input type="checkbox" class="select" value="' + data + '">';
 			}
-		}
-		,{
-			'targets': 7,
-			'searchable':false,
-			'orderable':false,
-			'className': 'dt-body-center',
-			'render': function (data){
-				return '<a href="'+BASE_URL+'c_admin/peserta/'+data+'"><button type="button" class="pesertaButton btn btn-info" value="'+data+'">Tambah Peserta</button></a>';
-			}
-		}
-		,{
-			'targets': 6,
-			'searchable':false,
-			'orderable':false,
-			'className': 'dt-body-center',
-			'render': function (data){
-				return '<a href="'+BASE_URL+'c_admin/lihatPeserta/'+data+'"><button type="button" class="lihatPesertaButton btn btn-info" value="'+data+'">Lihat Peserta</button></a>';
-			}
-		}
-		],"order": [],
+		}],"order": [],
 		initComplete:function(){
 			$('div.toolbar').html('<div style="float:left;"><button id="tambah" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Tambah <span class="glyphicon glyphicon-plus"></span></button> <button id="hapus" type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal" disabled>Delete <span class="glyphicon glyphicon-remove"></span></button></div>');
 		}
 	});
 
-	$("#tabel").on('click','#select-all', function(){
-		// var rows = tabel.table().node();
-		// console.log(rows);
-		var rows = tabel.rows().nodes();
-		$('input[type="checkbox"]', rows).prop('checked', this.checked);
-	});
-
-	$('#myModal').on('hidden.bs.modal', function() {
-		tabel.ajax.reload();
-	});
 
 	// insert
 	$(document).on('click','#tambah',function(event){
-		
-		var requrl = BASE_URL+'c_admin/form_rapat';
+		var requrl = BASE_URL+'c_admin/form_pegawai';
 		$.ajax({
 			url:requrl,
 			success:function(data){
@@ -81,10 +47,9 @@ $(document).ready(function() {
 		});
 	})
 
-	$('#modalContent').on('click','#insertRapat', function(){
-		$('#insertRapat').button('loading');
-		
-		var requrl = BASE_URL+'c_admin/insert_rapat/';
+	$('#modalContent').on('submit','#insertForm', function(e){
+		$('#insert').button('loading');
+		var requrl = BASE_URL+'c_admin/insert_pegawai/';
 		var data = {};
 
 		$('#modalContent').find('[name]').each(function(index, value){
@@ -102,13 +67,14 @@ $(document).ready(function() {
 				$('#modalContent').html(data);
 			}
 		});
+		return false;
 	});
 
 	// edit
 	$(document).on('click','.editButton',function(event){
 		var data = $(this).val();
 		// console.log(data);
-		var requrl = BASE_URL+'c_admin/edit_form_rapat';
+		var requrl = BASE_URL+'c_admin/edit_form_pegawai';
 		
 		$.ajax({
 			url:requrl,
@@ -120,9 +86,9 @@ $(document).ready(function() {
 		});
 	})
 
-	$('#modalContent').on('click','#updateRapat', function(){
-		$('#updateRapat').button('loading');
-		var requrl = BASE_URL+'c_admin/update_rapat/';
+	$('#modalContent').on('submit','#editForm', function(){
+		$('#edit').button('loading');
+		var requrl = BASE_URL+'c_admin/update_pegawai/';
 		var data = {};
 
 		$('#modalContent').find('[name]').each(function(index, value){
@@ -139,11 +105,12 @@ $(document).ready(function() {
 				$('#modalContent').html(data);
 			}
 		});
+		return false;
 	});
 
 	// delete
 	$(document).on('click','#hapus',function(event){
-		var requrl = BASE_URL+'c_admin/form_delete_rapat';
+		var requrl = BASE_URL+'c_admin/form_delete_pegawai';
 		$.ajax({
 			url:requrl,
 			success:function(data){
@@ -153,34 +120,23 @@ $(document).ready(function() {
 	})
 
 	$('#modalContent').on('click','#delete', function(){
-		var selected = [];
-		$('#tabel input:checked').each(function() {
-			selected.push($(this).attr('value'));
+		$('#delete').button('loading');
+
+		var checked = [];
+		$("input:checked", tabel.rows().nodes()).each(function(){
+			checked.push($(this).val());
 		});
-		var requrl = BASE_URL+'c_admin/delete_rapat';
-		console.log(selected);
+		console.log(checked);
+		var requrl = BASE_URL+'c_admin/delete_pegawai';
+
 		$.ajax({
 			url:requrl,
 			type:'post',
-			data: {"array_del": selected} ,
+			data: {"array_del": checked} ,
 			success:function(data){
 				$('#modalContent').html(data);
 			}
 		});
 	});
-		$('#tabel').on('change','input:checkbox',function(){
-		var selected = 0;
-		$('.select:checked').each(function() {
-			selected++;
-		});
-		if (selected>0) {
-			$('#hapus').prop('disabled',false);
-		}else{
-			$('#hapus').prop('disabled',true);
-		}
-	})
 
-	setInterval(function() {
-		tabel.ajax.reload();
-	}, 300000 );
 });
