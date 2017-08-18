@@ -146,4 +146,21 @@ $(document).ready(function() {
 		}
 	});
 	
+	$(document).on('change','#pageVer',function(){
+		var x = $('#pageVer').val();
+		console.log(x);
+		switch(parseInt(x)){
+			case 1:
+			window.location.href =  BASE_URL+'c_admin/rapat';
+			break;
+			case 2:	
+			window.location.href =  BASE_URL+'c_admin/rapat_verified';
+			break;
+			case 3:	
+			window.location.href =  BASE_URL+'c_admin/all_rapat';
+			break;
+			default:
+		}
+	});
+	
 });

@@ -50,6 +50,22 @@ class c_admin extends CI_Controller{
 	
 		
 	}
+	
+	function rapat_verified(){
+		$this->load->view('v_header_rapat');
+		$this->load->view('v_ver_rapat_verified');
+		
+	
+		
+	}
+	
+	function all_rapat(){
+		$this->load->view('v_header_rapat');
+		$this->load->view('v_ver_all_rapat');
+		
+	
+		
+	}
 
 	function peserta($id_rapat){
 		$data['rapat']=$this->m_admin->get_one_rapat($id_rapat);
@@ -389,6 +405,16 @@ class c_admin extends CI_Controller{
 		// var_dump($data);
 		echo json_encode($data);
 		
+	}
+	
+	function get_table_rapat_verified(){
+		$data=$this->m_admin->get_rapat_verified();
+		echo json_encode($data);
+	}
+	
+	function get_all_rapat(){
+		$data=$this->m_admin->get_all_rapat();
+		echo json_encode($data);
 	}
 	
 	
