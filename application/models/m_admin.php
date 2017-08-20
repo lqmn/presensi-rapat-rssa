@@ -133,7 +133,7 @@ class m_admin extends CI_Model{
 	} 
 	
 	function get_waktu_by_id_rapat($id_rapat){
-		$sql='SELECT WAKTU_RAPAT FROM rapat WHERE ID_RAPAT=1' ;
+		$sql='SELECT WAKTU_RAPAT FROM rapat WHERE ID_RAPAT='.$id_rapat ;
 		$result = $this->db->query($sql);
 		$res=$result->result();
 		return $res;

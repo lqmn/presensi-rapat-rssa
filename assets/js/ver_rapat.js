@@ -213,17 +213,3 @@ $(document).on('click','#verif',function(event){
 	
 	
 
-
-$(document).on('change','#page',function(){
-		var x = $('#page').val();
-		console.log(x);
-		switch(parseInt(x)){
-			case 1:
-			window.location.href =  BASE_URL+'c_admin/rapat';
-			break;
-			case 2:	
-			window.location.href =  BASE_URL+'c_admin/all_rapat_ver';
-			break;
-			default:
-		}
-	});

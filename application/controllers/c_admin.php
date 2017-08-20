@@ -445,7 +445,7 @@ class c_admin extends CI_Controller{
 	
 	function form_verif(){
 		
-		// $waktu_rapat = $this->input->post('waktu_rapat');
+		$waktu_rapat = $this->input->post('waktu_rapat');
 		$id_rapat = $this->input->post('id_rapat');
 		$waktu_rapat =$this->m_admin->get_waktu_by_id_rapat($id_rapat);
 	foreach($waktu_rapat as $key =>$value){
