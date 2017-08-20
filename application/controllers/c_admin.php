@@ -39,15 +39,15 @@ class c_admin extends CI_Controller{
 	
 	function rapat(){
 		$this->load->view('v_header_rapat');
-	
+		
 		if($this->session->userdata('otoritas')==2){
-				$this->load->view('v_ver_rapat');
+			$this->load->view('v_ver_rapat');
 		}
 		else if($this->session->userdata('otoritas')==1){ 
-		
+			
 			$this->load->view('v_admin_rapat');
 		}
-	
+		
 		
 	}
 
@@ -152,7 +152,7 @@ class c_admin extends CI_Controller{
 		$data['JUDUL_RAPAT']=$this->input->post('judul');
 		$data['ID_RUANG'] = $this->input->post('ruang');
 		$data['ID_USER_INPUT']= $this->session->userdata('id_user');
-		 date_default_timezone_set('Asia/Jakarta');
+		date_default_timezone_set('Asia/Jakarta');
 		$data['DATE_MODIFIED']=date('Y-m-d H:i:s');
 		
 		//BELUM BISA GANTI STATUS OTOMATIS
@@ -232,7 +232,7 @@ class c_admin extends CI_Controller{
 		$date=$this->input->post('tanggal')." ".$this->input->post('waktu');
 		$data['WAKTU_RAPAT'] =date('Y-m-d H:i',strtotime($date));
 		$data['ID_RUANG'] = $this->input->post('ruang');
-		 date_default_timezone_set('Asia/Jakarta');
+		date_default_timezone_set('Asia/Jakarta');
 		$data['DATE_MODIFIED']=date('Y-m-d H:i:s');
 		$res = $this->m_admin->update_rapat($data);
 		// var_dump($data);
@@ -422,15 +422,15 @@ class c_admin extends CI_Controller{
 		// $waktu_rapat = $this->input->post('waktu_rapat');
 		$id_rapat = $this->input->post('id_rapat');
 		$waktu_rapat =$this->m_admin->get_waktu_by_id_rapat($id_rapat);
-	foreach($waktu_rapat as $key =>$value){
-		$data['waktu']=$this->m_admin->get_rapat_by_waktu($value->WAKTU_RAPAT);
-	
-		
-		$data['tanggal']=date('Y-m-d',strtotime($value->WAKTU_RAPAT));
-		$data['tanggal_lengkap']=$value->WAKTU_RAPAT;
-		$data['id']=$id_rapat;
-		$this->load->view('v_form_verif',$data);
-	}
+		foreach($waktu_rapat as $key =>$value){
+			$data['waktu']=$this->m_admin->get_rapat_by_waktu($value->WAKTU_RAPAT);
+			
+			
+			$data['tanggal']=date('Y-m-d',strtotime($value->WAKTU_RAPAT));
+			$data['tanggal_lengkap']=$value->WAKTU_RAPAT;
+			$data['id']=$id_rapat;
+			$this->load->view('v_form_verif',$data);
+		}
 	}
 	
 	function verifikasi_rapat($id_rapat){

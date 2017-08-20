@@ -21,10 +21,11 @@
 			<label class="control-label col-sm-3" for="pwd">Satuan kerja:</label>
 			<div class="col-sm-9">
 
-				<select class="selectpicker" data-live-search="true" name="satker">
+				<select class="selectpicker" data-live-search="true" name="satker" required>
+					<option disabled selected value="" style="display:none"> -- Pilih satuan kerja -- </option>
 					<?php foreach ($satker as $key => $value): ?>
 						<option value="<?php echo $value->ID_SATKER?>" data-tokens="<?php echo $value->NAMA_SATKER?>"><?php echo $value->NAMA_SATKER?></option>
-					<?php endforeach ?>          
+					<?php endforeach ?>
 				</select>
 			</div>
 		</div>

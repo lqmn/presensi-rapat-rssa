@@ -20,10 +20,15 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/i18n/defaults-*.min.js"></script>
 
+	
+	<!-- bootstrap-datetimepicker -->
+	<script type="text/javascript" src="<?php echo base_url();?>assets/js/moment.js"></script>
+	<script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-datetimepicker.min.js"></script>
+	<link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-datetimepicker.css" />
 	<!-- Custom CSS & JS -->
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/admin.css" type="text/css">
 	<script src="<?php echo base_url(); ?>assets/js/admin_rapat.js"></script>
-	<!-- <script src="<?php echo base_url(); ?>assets/js/admin.js"></script> -->
+	<script src="<?php echo base_url(); ?>assets/js/rapat.js"></script>
 	<script type="text/javascript">
 		var BASE_URL = "<?php echo base_url();?>";
 	</script>
@@ -36,6 +41,14 @@
 			</div>
 		</div>
 	</div>
+	<div id="bigModal" class="modal fade" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div id="bigModalContent" class="modal-content">
+				//content from ajax loaded here
+			</div>
+		</div>
+	</div>
+
 
 	<nav class="navbar navbar-inverse visible-xs">
 		<div class="container-fluid">
@@ -89,6 +102,8 @@
 								<th>Waktu</th>
 								<th>Ruang</th>
 								<th>Status</th>
+								<th>Pembuat</th>
+								<th>Panel</th>
 							</tr>
 						</thead>
 					</table>

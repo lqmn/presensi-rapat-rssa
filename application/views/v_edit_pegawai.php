@@ -8,7 +8,7 @@
 		<div class="form-group">
 			<label class="control-label col-sm-3" for="email">Nomor pegawai:</label>
 			<div class="col-sm-9">
-			<input type="hidden" name="id" value="<?php echo $pegawai->ID_PEGAWAI;?>" required>
+				<input type="hidden" name="id" value="<?php echo $pegawai->ID_PEGAWAI;?>" required>
 				<input type="text" class="form-control" placeholder="Nomor pegawai" name="nomor" value="<?php echo $pegawai->NIP; ?>" required>
 			</div>
 		</div>
