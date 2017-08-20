@@ -47,6 +47,10 @@ class c_admin extends CI_Controller{
 		
 			$this->load->view('v_admin_rapat');
 		}
+		else if($this->session->userdata('otoritas')==3){ 
+		
+			$this->load->view('v_user_rapat');
+		}
 	
 		
 	}

@@ -116,7 +116,7 @@ Class c_login extends CI_Controller {
 		}elseif ($this->session->userdata('otoritas')==2) {
 			redirect('c_admin/rapat','refresh');
 		}elseif ($this->session->userdata('otoritas')==3) {
-			echo "user";
+			redirect('c_admin/rapat','refresh');
 		}
 	}
 
