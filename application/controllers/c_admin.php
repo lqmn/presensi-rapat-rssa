@@ -468,4 +468,33 @@ class c_admin extends CI_Controller{
 		}
 		
 	}
+	function test(){
+
+		$this->load->library('Excelfile');
+
+		$excelFile = "./uploads/dummy.xls";
+
+		$objPHPExcel = PHPExcel_IOFactory::load($excelFile);
+		foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
+			$arrayData = $worksheet->toArray();
+		}
+		echo "
+			<table>
+
+		";
+		foreach ($arrayData as $key => $value) {
+			// var_dump($value);
+			echo "
+				<tr>
+					<td>".$value[0]."</td>
+					<td>".$value[1]."</td>
+					<td>".$value[2]."</td>
+				</tr>
+			";
+		}
+
+		echo "</table>";
+
+	}
+
 }

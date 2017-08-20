@@ -36,7 +36,7 @@
 			<div class="navbar-header">
 				<a class="navbar-brand" href="#">WebSiteName</a>
 			</div>
-			<ul class="nav navbar-nav">
+			<ul class="nav navbar-nav navbar-right">
 				<li class="active"><a href="<?php echo base_url();?>c_admin/landing">Rapat</a></li>
 				<li><a href="<?php echo base_url();?>c_login/welcome">Login</a></li>
 			</ul>
