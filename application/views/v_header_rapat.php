@@ -31,7 +31,7 @@
 
 </head>
 <body>
-<?php if ($this->session->userdata('otoritas')==3) {
+<?php if ($this->session->userdata('otoritas')==0) {
 			// echo "admin";
 			redirect('c_admin/error_authority', 'refresh');
 		} ?>
