@@ -96,6 +96,42 @@ class m_admin extends CI_Model{
 		
 	}
 	
+	function get_rapat_verified(){
+		$sql ='SELECT rapat.ID_RAPAT AS ID_RAPAT, JUDUL_RAPAT, WAKTU_RAPAT, NAMA_RUANG, pegawai.NAMA AS NAMA_USER,
+		(CASE 
+		WHEN STATUS_AKTIVASI=0      THEN "Belum diverifikasi"
+		WHEN STATUS_AKTIVASI=1      THEN "Terverifikasi"
+		END) as STATUS
+		FROM rapat JOIN ruang_rapat ON rapat.ID_RUANG = ruang_rapat.ID_RUANG
+		JOIN user ON rapat.ID_USER_INPUT = user.ID_USER
+		JOIN pegawai ON user.ID_PEGAWAI = pegawai.ID_PEGAWAI
+		WHERE rapat.STATUS = 1 AND STATUS_AKTIVASI=1 ORDER BY rapat.DATE_MODIFIED DESC';
+		
+		$result = $this->db->query($sql);
+		foreach ($result->result() as $row) {
+			$data[] = $row;
+		}
+		return (array)@$data;
+	}
+	
+	function get_all_rapat(){
+		$sql =$sql ='SELECT rapat.ID_RAPAT AS ID_RAPAT, JUDUL_RAPAT, WAKTU_RAPAT, NAMA_RUANG, pegawai.NAMA AS NAMA_USER,
+		(CASE 
+		WHEN STATUS_AKTIVASI=0      THEN "Belum diverifikasi"
+		WHEN STATUS_AKTIVASI=1      THEN "Terverifikasi"
+		END) as STATUS
+		FROM rapat JOIN ruang_rapat ON rapat.ID_RUANG = ruang_rapat.ID_RUANG
+		JOIN user ON rapat.ID_USER_INPUT = user.ID_USER
+		JOIN pegawai ON user.ID_PEGAWAI = pegawai.ID_PEGAWAI
+		WHERE rapat.STATUS = 1 ORDER BY rapat.DATE_MODIFIED DESC';
+		
+		$result = $this->db->query($sql);
+		foreach ($result->result() as $row) {
+			$data[] = $row;
+		}
+		return (array)@$data;
+	} 
+	
 	function get_waktu_by_id_rapat($id_rapat){
 		$sql='SELECT WAKTU_RAPAT FROM rapat WHERE ID_RAPAT=1' ;
 		$result = $this->db->query($sql);
