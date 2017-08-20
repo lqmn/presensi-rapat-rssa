@@ -77,6 +77,20 @@ class m_admin extends CI_Model{
 		WHERE rapat.STATUS = 1 AND rapat.STATUS_AKTIVASI=0 ORDER BY rapat.DATE_MODIFIED DESC';
 			
 		}
+		
+		else if($this->session->userdata('otoritas')==3)
+		{
+			$sql ='SELECT rapat.ID_RAPAT AS ID_RAPAT, JUDUL_RAPAT, WAKTU_RAPAT, NAMA_RUANG, pegawai.NAMA AS NAMA_USER,
+		(CASE 
+		WHEN STATUS_AKTIVASI=0      THEN "Belum diverifikasi"
+		WHEN STATUS_AKTIVASI=1      THEN "Terverifikasi"
+		END) as STATUS
+		FROM rapat JOIN ruang_rapat ON rapat.ID_RUANG = ruang_rapat.ID_RUANG
+		JOIN user ON rapat.ID_USER_INPUT = user.ID_USER
+		JOIN pegawai ON user.ID_PEGAWAI = pegawai.ID_PEGAWAI
+		WHERE rapat.STATUS = 1 AND rapat.ID_USER_INPUT='.$this->session->userdata('id_user').' ORDER BY rapat.DATE_MODIFIED DESC';
+			
+		}
 		else 
 		{
 		$sql ='SELECT rapat.ID_RAPAT AS ID_RAPAT, JUDUL_RAPAT, WAKTU_RAPAT, NAMA_RUANG, pegawai.NAMA AS NAMA_USER,
