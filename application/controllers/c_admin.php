@@ -5,6 +5,7 @@ class c_admin extends CI_Controller{
 	public function __construct(){
 		parent::__construct();
 		$this->load->helper('url');
+		 $this->load->helper(array('form', 'url'));
 
 		// Load form validation library
 		// $this->load->lxibraryibrary('form_validation');
@@ -85,8 +86,19 @@ class c_admin extends CI_Controller{
 		
 	}
 	function presensi(){
-		$this->load->view('v_admin_presensi');
+		$this->load->view('v_header_presensi');
+	
+		if($this->session->userdata('otoritas')==2){
+				$this->load->view('v_ver_presensi');
+		}
+		else if($this->session->userdata('otoritas')==1){ 
 		
+			$this->load->view('v_admin_presensi');
+		}
+		else if($this->session->userdata('otoritas')==3){ 
+		
+			$this->load->view('v_user_presensi');
+		}
 	}
 
 
@@ -476,7 +488,7 @@ class c_admin extends CI_Controller{
 
 		$this->load->library('Excelfile');
 
-		$excelFile = "./uploads/dummy.xls";
+		$excelFile = "./uploads/clean_slate.xlsx";
 
 		$objPHPExcel = PHPExcel_IOFactory::load($excelFile);
 		foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
@@ -501,4 +513,55 @@ class c_admin extends CI_Controller{
 
 	}
 
+	 public function do_upload()
+        {
+
+        	date_default_timezone_set('Asia/Jakarta');
+$date = date('mdYhis', time());
+
+                $config['upload_path']          = './uploads/';
+                $config['allowed_types']        = 'xls|xlsx';
+                $config['max_size']             = 1500;
+                $config['file_name']           = $this->session->userdata('id_user').'_'.$date;
+
+                $this->load->library('Excelfile');
+
+
+                $this->load->library('upload', $config);
+
+
+                $this->load->view('v_header_presensi');
+
+                if ( ! $this->upload->do_upload('userfile'))
+                {
+                        $error = array('error' => $this->upload->display_errors());
+
+                        $this->load->view('v_upload_gagal');
+                }
+                else
+                {
+                        $data = array('upload_data' => $this->upload->data());
+
+
+//perlu metode buat menamdapatkan ekstensi dari file yang diupload. variabel dibawah masih menerima ekstensi xlsx saja
+		$excelFile = "./uploads/".$config['file_name'].".xlsx";
+
+
+
+		$objPHPExcel = PHPExcel_IOFactory::load($excelFile);
+		foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
+			$arrayData = $worksheet->toArray();
+		}
+
+		foreach ($arrayData as $key => $value) {
+			$dataAbs['ID_USER']=$value[0];
+			$dataAbs['TANGGAL']=date('Y-m-d H:i',strtotime($value[1]));
+			$this->m_admin->insert_absen($dataAbs);
+		}
+                        $this->load->view('v_upload_sukses');
+                       
+                }
+        }
+
 }
+

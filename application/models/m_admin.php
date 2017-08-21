@@ -403,6 +403,14 @@ function verifikasi_rapat($id_rapat){
 	return $this->db->affected_rows();
 	
 }
+function insert_absen($data){
+
+
+$result=$this->db->insert('absensi', $data);
+
+	return $this->db->affected_rows();
+}
+
 
 
 }
