@@ -449,7 +449,7 @@ class c_admin extends CI_Controller{
 	
 	function form_verif(){
 		
-		// $waktu_rapat = $this->input->post('waktu_rapat');
+		$waktu_rapat = $this->input->post('waktu_rapat');
 		$id_rapat = $this->input->post('id_rapat');
 		$waktu_rapat =$this->m_admin->get_waktu_by_id_rapat($id_rapat);
 	foreach($waktu_rapat as $key =>$value){
@@ -472,4 +472,33 @@ class c_admin extends CI_Controller{
 		}
 		
 	}
+	function test(){
+
+		$this->load->library('Excelfile');
+
+		$excelFile = "./uploads/dummy.xls";
+
+		$objPHPExcel = PHPExcel_IOFactory::load($excelFile);
+		foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
+			$arrayData = $worksheet->toArray();
+		}
+		echo "
+			<table>
+
+		";
+		foreach ($arrayData as $key => $value) {
+			// var_dump($value);
+			echo "
+				<tr>
+					<td>".$value[0]."</td>
+					<td>".$value[1]."</td>
+					<td>".$value[2]."</td>
+				</tr>
+			";
+		}
+
+		echo "</table>";
+
+	}
+
 }

@@ -88,7 +88,9 @@ class m_admin extends CI_Model{
 		FROM rapat JOIN ruang_rapat ON rapat.ID_RUANG = ruang_rapat.ID_RUANG
 		JOIN user ON rapat.ID_USER_INPUT = user.ID_USER
 		JOIN pegawai ON user.ID_PEGAWAI = pegawai.ID_PEGAWAI
-		WHERE rapat.STATUS = 1  AND rapat.ID_USER_INPUT='.$this->session->userdata('id_user').' ORDER BY rapat.DATE_MODIFIED DESC';
+
+		WHERE rapat.STATUS = 1 AND rapat.ID_USER_INPUT='.$this->session->userdata('id_user').' ORDER BY rapat.DATE_MODIFIED DESC';
+
 			
 		}
 		else 
@@ -101,7 +103,7 @@ class m_admin extends CI_Model{
 		FROM rapat JOIN ruang_rapat ON rapat.ID_RUANG = ruang_rapat.ID_RUANG
 		JOIN user ON rapat.ID_USER_INPUT = user.ID_USER
 		JOIN pegawai ON user.ID_PEGAWAI = pegawai.ID_PEGAWAI
-		WHERE rapat.STATUS = 1 ORDER BY rapat.DATE_MODIFIED DESC';}
+		WHERE rapat.STATUS = 1 ORDER BY rapat.WAKTU_RAPAT ASC';}
 		$result = $this->db->query($sql);
 		foreach ($result->result() as $row) {
 			$data[] = $row;
@@ -147,7 +149,7 @@ class m_admin extends CI_Model{
 	} 
 	
 	function get_waktu_by_id_rapat($id_rapat){
-		$sql='SELECT WAKTU_RAPAT FROM rapat WHERE ID_RAPAT=1' ;
+		$sql='SELECT WAKTU_RAPAT FROM rapat WHERE ID_RAPAT='.$id_rapat ;
 		$result = $this->db->query($sql);
 		$res=$result->result();
 		return $res;

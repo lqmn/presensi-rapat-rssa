@@ -23,11 +23,9 @@
 								<th>Nama Ruang</th>
 								<th>User Pembuat</th>
 								
-								
-								<th>Lihat Peserta</th>
-								<th>Tambah Peserta</th>
-								<th>Panel</th>
 								<th>Verifikasi</th>
+								<th>Aksi</th>
+								
 							</tr>
 						</thead>
 						<tbody>

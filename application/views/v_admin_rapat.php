@@ -15,9 +15,8 @@
 								<th>User Pembuat</th>
 								<th>Status</th>
 								
-								<th>Lihat Peserta</th>
-								<th>Tambah Peserta</th>
-								<th>Panel</th>
+								
+								<th>Aksi</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -49,6 +48,8 @@
 		var BASE_URL = "<?php echo base_url();?>";
 		var tabel;
 	</script>
+	
+
 	
 	
 	

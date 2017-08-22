@@ -29,7 +29,7 @@
 		
 	</div>
 	<div class="modal-footer">
-		<button id="accVerif" type="submit" class="btn btn-success" value=<?php echo $id;?>>Verifikasi</button>
+		<button id="accVerif" type="submit" class="btn btn-success" value=<?php echo $id;?>>Verifikasi </button>
 		<button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
 	</form>
 

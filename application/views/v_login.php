@@ -19,9 +19,9 @@
 			<div class="navbar-header">
 				<a class="navbar-brand" href="#">WebSiteName</a>
 			</div>
-			<ul class="nav navbar-nav">
+			<ul class="nav navbar-nav navbar-right">
 				<li><a href="<?php echo base_url();?>c_admin/landing">Rapat</a></li>
-				<li class="active"><a href="<?php echo base_url();?>c_login/welcome">Login</a></li>
+				<li class="active "><a href="<?php echo base_url();?>c_login/welcome">Login</a></li>
 			</ul>
 		</div>
 	</nav>
@@ -60,8 +60,8 @@
 				<!-- <label>UserName :</label> -->
 				<input class="form-control" type="text" name="username" id="name" placeholder="Username">
 				<!-- <label>Password :</label> -->
-				<input class="form-control" type="password" name="password" id="password" placeholder="password">
-				<button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" name="submit">Sign in</button>
+				<input class="form-control" type="password" name="password" id="password" placeholder="Password">
+				<button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" name="submit">Log In</button>
 			</div>
 			<?php echo form_close(); ?>
 		</div>
