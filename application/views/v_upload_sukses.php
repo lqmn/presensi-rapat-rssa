@@ -15,6 +15,7 @@
 					</div>-->
 					<h4>Upload Sukses!</h4>
 					<br>
+					<a href="<?php echo base_url();?>c_admin/presensi/"><button class="btn btn-info">Selesai</button</a>
 					
 					
 

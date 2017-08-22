@@ -413,6 +413,32 @@ $result=$this->db->insert('absensi', $data);
 	return $this->db->affected_rows();
 }
 
+function get_id_absen($id_bulan){
+//jangan lupa parameternya bulan
+	$sql="SELECT DISTINCT ID_USER FROM absensi WHERE ID_BULAN=".$id_bulan;
+	$result=$this->db->query($sql);
+	foreach ($result->result() as $row) {
+			$data[] = $row;
+		}
+		return (array)@$data;
+		}
+
+function rekap_absen($id_user,$id_bulan){ //kasih parameter id_bulan
+	$sql="SELECT   '".$id_user."' as ID_USER, COUNT(DISTINCT DAY(TANGGAL)) AS TOTAL_ABSEN FROM `absensi` WHERE ID_BULAN=".$id_bulan." AND ID_USER_INPUT=".$this->session->userdata('id_user')." AND ID_USER='".$id_user."'";
+	$result=$this->db->query($sql);
+	foreach ($result->result() as $row) {
+			$data[] = $row;
+		}
+		return (array)@$data;
+		}
+
+
+
+
+	
+
+
+
 
 
 }
