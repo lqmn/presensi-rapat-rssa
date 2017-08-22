@@ -488,9 +488,11 @@ class c_admin extends CI_Controller{
 
 		$this->load->library('Excelfile');
 
-		$excelFile = "./uploads/clean_slate.xlsx";
+		$excelFile = "./uploads/tes.xlsx";
 
 		$objPHPExcel = PHPExcel_IOFactory::load($excelFile);
+		$objPHPExcel->getActiveSheet()->removeRow(1, 1);
+		$objPHPExcel->getActiveSheet()->removeColumn('A');
 		foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
 			$arrayData = $worksheet->toArray();
 		}
@@ -500,11 +502,15 @@ class c_admin extends CI_Controller{
 		";
 		foreach ($arrayData as $key => $value) {
 			// var_dump($value);
+			if(ltrim($value[0]) == '' || ltrim($value[1]) == '' ) continue;
+			// if(ltrim($value[1]) == '') continue;
+			$tanggal=DateTime::createFromFormat('d/m/Y H:i', $value[1]);
 			echo "
 				<tr>
 					<td>".$value[0]."</td>
-					<td>".$value[1]."</td>
-					<td>".$value[2]."</td>
+
+					<td>".$tanggal->format('Y-m-d H:i')."</td>
+				
 				</tr>
 			";
 		}
@@ -515,6 +521,8 @@ class c_admin extends CI_Controller{
 
 	 public function do_upload()
         {
+        	$id_bulan=$this->input->post('id_bulan');
+	
 
         	date_default_timezone_set('Asia/Jakarta');
 $date = date('mdYhis', time());
@@ -549,18 +557,42 @@ $date = date('mdYhis', time());
 
 
 		$objPHPExcel = PHPExcel_IOFactory::load($excelFile);
+		$objPHPExcel->getActiveSheet()->removeRow(1, 1);
+		$objPHPExcel->getActiveSheet()->removeColumn('A');
 		foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
 			$arrayData = $worksheet->toArray();
 		}
 
 		foreach ($arrayData as $key => $value) {
+			// var_dump($value);
+			if(ltrim($value[0]) == '' || ltrim($value[1]) == '' ) continue;
+			// if(ltrim($value[1]) == '') continue;
+			$tanggal=DateTime::createFromFormat('d/m/Y H:i', $value[1]);
 			$dataAbs['ID_USER']=$value[0];
-			$dataAbs['TANGGAL']=date('Y-m-d H:i',strtotime($value[1]));
+			$dataAbs['TANGGAL']=$tanggal->format('Y-m-d H:i');
+			$dataAbs['ID_BULAN']=$id_bulan;
+			$dataAbs['ID_USER_INPUT']=$this->session->userdata('id_user');
 			$this->m_admin->insert_absen($dataAbs);
 		}
+		
+
                         $this->load->view('v_upload_sukses');
                        
                 }
+        }
+
+        function rekap_absen(){
+        	//parametrnya id_bulan untuk metod ini d
+        	$id_bulan=$this->input->post('id_bulan2');
+        	$this->load->view('v_header_presensi');
+        	$this->load->view('v_header_rekap');
+        	$id_absents=$this->m_admin->get_id_absen($id_bulan);//harus ada parameter bulan
+        	foreach($id_absents as $key =>$value){
+        		$data['absen']=$this->m_admin->rekap_absen($value->ID_USER,$id_bulan);
+        		$this->load->view('v_rekap',$data);
+        	}
+        	$this->load->view('v_footer_rekap');
+
         }
 
 }
