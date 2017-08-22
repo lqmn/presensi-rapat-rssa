@@ -23,7 +23,9 @@
 								<th>Nama Ruang</th>
 								<th>User Pembuat</th>
 								<th>Status</th>
+
 								<th>Aksi</th>
+
 								
 							</tr>
 						</thead>

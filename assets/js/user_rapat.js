@@ -14,14 +14,18 @@ $(document).ready(function() {
 		{ "data": "NAMA_RUANG" },
 		{ "data": "NAMA_USER" },
 		{ "data": "STATUS" },
+
 		{ "data": "ID_RAPAT" }
 		],'columnDefs':[{
 			'targets': 6,
+
 			'searchable':false,
 			'orderable':false,
 			'className': 'dt-body-center',
 			'render': function (data){
+
 				return '<button type="button" class="editButton btn-xs btn-info pull-left" data-toggle="modal" data-target="#myModal" value="'+data+'"><span class="glyphicon glyphicon-edit" data-toggle="tooltip" data-placement="top" title="PICKLE RICK!"></span> Edit</button><br><br><a href="'+BASE_URL+'c_admin/lihatPeserta/'+data+'"><button type="button" class="lihatPesertaButton btn-xs btn-info pull-left" value="'+data+'">Lihat Peserta</button></a><br><br><a href="'+BASE_URL+'c_admin/peserta/'+data+'"><button type="button" class="pesertaButton btn-xs btn-info pull-left" value="'+data+'">Tambah Peserta</button></a>';
+
 			}
 		},{
 			'targets': 0,
@@ -32,7 +36,9 @@ $(document).ready(function() {
 				return '<input type="checkbox" class="select" value="' + data + '">';
 			}
 		}
+
 		
+
 		
 		],"order": [],
 		initComplete:function(){
