@@ -5,8 +5,8 @@ $(document).ready(function() {
 	var tabelPeserta;
 	var tabel = $('#tabel').DataTable({
 		"dom": "<'toolbar'>f" +
-"<'row'<'col-sm-12'tr>>" +
-"<'row'<'col-sm-5'l><'col-sm-7'p>>",
+		"<'row'<'col-sm-12'tr>>" +
+		"<'row'<'col-sm-5'l><'col-sm-7'p>>",
 		"ajax": {
 			"url": BASE_URL+"c_rapat/get_table_rapat",
 			"dataSrc": ""

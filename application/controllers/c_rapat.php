@@ -10,14 +10,15 @@ class c_rapat extends CI_Controller{
 	}
 
 	function index(){
-		if (false) {
+		if ($this->session->userdata('otoritas')==1) {
 			$this->load->view('v_admin_rapat');
-		}elseif (false) {
+		}elseif ($this->session->userdata('otoritas')==2) {
 			$this->load->view('v_verifikator_rapat');
-		}elseif (true) {
+		}elseif ($this->session->userdata('otoritas')==3) {
 			$this->load->view('v_user_rapat');
+		}else{
+			$this->load->view('v_guest');
 		}
-		// $this->session->userdata('otoritas')==3
 	}
 
 	function get_table_rapat(){
@@ -158,5 +159,19 @@ class c_rapat extends CI_Controller{
 		}else{
 			echo "Error";
 		}
+	}
+
+	function guest_data_peserta($id_rapat){
+		$res = $this->m_rapat->get_peserta_by_rapat($id_rapat);
+		echo json_encode($res);
+	}
+
+	function guest_data_rapat(){
+		$res = $this->m_rapat->get_rapat_guest();
+		echo json_encode($res);
+	}
+
+	function guest(){
+		$this->load->view('v_guest');
 	}
 }

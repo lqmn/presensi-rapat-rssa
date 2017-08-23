@@ -168,7 +168,7 @@ class m_rapat extends CI_Model{
 		$sql ='SELECT JUDUL_RAPAT, WAKTU_RAPAT, rp.NAMA_RUANG
 		FROM rapat r JOIN ruang_rapat rp ON r.ID_RUANG= rp.ID_RUANG
 		WHERE r.STATUS_AKTIVASI=1 AND r.STATUS=1 AND date(WAKTU_RAPAT)="'.$tanggal[0].'"';
-		var_dump($sql);
+		// var_dump($sql);
 		$result = $this->db->query($sql);
 		foreach ($result->result() as $row) {
 			$data[] = $row;
@@ -181,5 +181,54 @@ class m_rapat extends CI_Model{
 		SET STATUS_AKTIVASI=1 WHERE ID_RAPAT='.$id_rapat ;
 		$this->db->query($sql);
 		return $this->db->affected_rows();
+	}
+
+	function get_peserta_guest(){
+		$sql='SELECT p.NIP, p.NAMA, s.NAMA_SATKER
+		FROM peserta_rapat pr JOIN pegawai p ON pr.ID_REF=p.ID_PEGAWAI
+		JOIN satuan_kerja s ON p.ID_SATKER = s.ID_SATKER
+		WHERE pr.PEGAWAI=1';
+
+		$result = $this->db->query($sql);
+		foreach ($result->result() as $row) {
+			$test = new stdClass();
+
+			$test->NAMA = $row->NIP.', '.$row->NAMA;
+			$test->INSTITUSI =$row->NAMA_SATKER.', RSSA Malang';
+			$test->PEGAWAI = 'Y';
+
+			$peserta[]=$test;
+		}
+
+		$sql='SELECT np.NAMA, np.INSTITUSI 
+		FROM peserta_rapat pr JOIN non_pegawai np ON pr.ID_REF=np.ID 
+		WHERE pr.PEGAWAI=0';
+
+		$result = $this->db->query($sql);
+		foreach ($result->result() as $row) {
+			$test = new stdClass();
+
+			$test->NAMA = $row->NAMA;
+			$test->INSTITUSI =$row->INSTITUSI;
+			$test->PEGAWAI = 'N';
+
+			$peserta[]=$test;
+		}
+		return $peserta;
+
+	}
+
+	function get_rapat_guest(){
+		$sql='SELECT ID_RAPAT, r.WAKTU_RAPAT, rp.NAMA_RUANG, r.JUDUL_RAPAT
+		FROM rapat r JOIN ruang_rapat rp on r.ID_RUANG = rp.ID_RUANG  
+		WHERE WAKTU_RAPAT>NOW()  
+		ORDER BY r.WAKTU_RAPAT ASC';
+
+		$result = $this->db->query($sql);
+		foreach ($result->result() as $row) {
+			$rapat[] = $row;
+		}
+		return $rapat;
+
 	}
 }

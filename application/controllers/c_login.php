@@ -111,7 +111,6 @@ Class c_login extends CI_Controller {
 
 	function loginsuccess(){
 		if ($this->session->userdata('otoritas')==1) {
-			// echo "admin";
 			redirect('c_admin', 'refresh');
 		}elseif ($this->session->userdata('otoritas')==2) {
 			redirect('c_admin/rapat','refresh');
@@ -129,5 +128,27 @@ Class c_login extends CI_Controller {
 		$this->session->unset_userdata('authority', $sess_array);
 		$data['message_display'] = 'Successfully Logout';
 		$this->load->view('v_login', $data);
+	}
+
+	function proses_login(){
+		$data = $this->input->post();
+		$res = $this->m_login->login($data);
+		if ($res==false) {
+			echo "0";
+			return;
+		}else{
+			$res = $this->m_login->read_user_information($res);
+			var_dump($res);
+			$session_data = array(
+				'id_user' => $res->ID_USER,
+				'id_pegawai' => $res->ID_PEGAWAI,
+				'username' => $res->USERNAME,
+				'otoritas' => $res->OTORITAS,
+				'nama' => $res->NAMA,
+				'nama_satker' => $res->NAMA_SATKER
+				);
+			$this->session->set_userdata($session_data);
+			echo "1";
+		}
 	}
 }
