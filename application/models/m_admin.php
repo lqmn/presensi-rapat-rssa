@@ -424,13 +424,33 @@ function get_id_absen($id_bulan){
 		}
 
 function rekap_absen($id_user,$id_bulan){ //kasih parameter id_bulan
-	$sql="SELECT   '".$id_user."' as ID_USER, COUNT(DISTINCT DAY(TANGGAL)) AS TOTAL_ABSEN FROM `absensi` WHERE ID_BULAN=".$id_bulan." AND ID_USER_INPUT=".$this->session->userdata('id_user')." AND ID_USER='".$id_user."'";
+	$sql="SELECT   pegawai.NAMA ,'".$id_user."' as ID_USER, COUNT(DISTINCT DAY(TANGGAL)) AS TOTAL_ABSEN FROM `absensi`,pegawai WHERE ID_BULAN=".$id_bulan." AND ID_USER_INPUT=".$this->session->userdata('id_user')." AND pegawai.NIP='".$id_user."' AND ID_USER='".$id_user."'";
 	$result=$this->db->query($sql);
 	foreach ($result->result() as $row) {
 			$data[] = $row;
 		}
 		return (array)@$data;
 		}
+
+function get_tanggal_absen($iduser,$id_bulan){
+$sql="SELECT distinct '".$iduser."' as ID_USER, DAY(TANGGAL) as TANGGAL FROM `absensi` WHERE ID_BULAN=".$id_bulan." AND ID_USER_INPUT=".$this->session->userdata('id_user')." AND ID_USER='".$iduser."'" ;
+
+$result=$this->db->query($sql);
+	foreach ($result->result() as $row) {
+			$data[] = $row;
+		}
+		return (array)@$data;
+}
+
+function rekap_lembur($iduser,$tanggal,$id_bulan){
+$sql="select HOUR(TANGGAL) AS JAM FROM absensi WHERE ID_USER='".$iduser."' AND ID_USER_INPUT=".$this->session->userdata('id_user')." AND DAY(TANGGAL)=".$tanggal." AND ID_BULAN=".$id_bulan." ORDER BY HOUR(TANGGAL) DESC LIMIT 1" ;
+
+$result=$this->db->query($sql);
+	foreach ($result->result() as $row) {
+			$data[] = $row;
+		}
+		return (array)@$data;
+}
 
 
 
