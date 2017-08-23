@@ -587,7 +587,31 @@ $date = date('mdYhis', time());
         	$this->load->view('v_header_presensi');
         	$this->load->view('v_header_rekap');
         	$id_absents=$this->m_admin->get_id_absen($id_bulan);//harus ada parameter bulan
+
+
+
+        	//PREPARE FOR INSANITY, 3 TIMES FOREACH, 3 TIMES THE ITERATION, 3 TIMES THE CRAZINESS
         	foreach($id_absents as $key =>$value){
+        		$tanggal_only=$this->m_admin->get_tanggal_absen($value->ID_USER,$id_bulan);
+        	$counter_jam_lembur=0;
+			foreach($tanggal_only as $key2 =>$value2){
+        		$jamLembur=$this->m_admin->rekap_lembur($value2->ID_USER,$value2->TANGGAL,$id_bulan);
+        		// var_dump($jamLembur);
+
+        		foreach($jamLembur as $key3 =>$value3){
+        			$jam=0;
+        			if(($value3->JAM)<15){
+        				$jam=15;
+        			}
+        			else { 
+        				$jam=$value3->JAM;
+        			}
+        			$counter_jam_lembur=$counter_jam_lembur-15+$jam;
+        		}
+        		
+        	}
+
+        	    $data['lembur']=$counter_jam_lembur;
         		$data['absen']=$this->m_admin->rekap_absen($value->ID_USER,$id_bulan);
         		$this->load->view('v_rekap',$data);
         	}
