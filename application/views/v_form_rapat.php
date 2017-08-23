@@ -13,6 +13,13 @@
 		</div>
 
 		<div class="form-group">
+			<label class="control-label col-sm-3" for="tanggal">Tanggal rapat:</label>
+			<div class="col-sm-9">
+				<input type='text' id='tanggal' class="form-control" name="tanggal" required>
+			</div>
+		</div>
+
+		<div class="form-group">
 			<label class="control-label col-sm-3" for="waktu">Waktu rapat:</label>
 			<div class="col-sm-9">
 				<input type='text' id='waktu' class="form-control" name="waktu" required>
@@ -44,11 +51,17 @@
 <script type="text/javascript">
 	$('.selectpicker').selectpicker('refresh');
 
-	$('#waktu').datetimepicker({
-		format: 'DD/MM/YYYY HH:mm',
+	$('#tanggal').datetimepicker({
+		format: 'DD/MM/YYYY',
 		locale : 'id',
-		sideBySide:true,
-		minDate: new Date(),
+		// minDate: new Date(),
+		showClose : true
+	});
+
+	$('#waktu').datetimepicker({
+		format: 'HH:mm',
+		locale : 'id',
+		// minDate: new Date(),
 		showClose : true
 	});
 </script>

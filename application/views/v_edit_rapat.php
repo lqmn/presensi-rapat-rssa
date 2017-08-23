@@ -12,10 +12,18 @@
 			</div>
 		</div>
 
+		<?php $waktu = explode(' ',$rapat->WAKTU_RAPAT);?>
+		<div class="form-group">
+			<label class="control-label col-sm-3" for="tanggal">Tanggal rapat:</label>
+			<div class="col-sm-9">
+				<input type='text' id='tanggal' class="form-control" name="tanggal" value="<?php echo $waktu[0] ?>" required>
+			</div>
+		</div>
+
 		<div class="form-group">
 			<label class="control-label col-sm-3" for="waktu">Waktu rapat:</label>
 			<div class="col-sm-9">
-				<input type='text' id='waktu' class="form-control" name="waktu" value="<?php echo $rapat->WAKTU_RAPAT ?>" required>
+				<input type='text' id='waktu' class="form-control" name="waktu" value="<?php echo $waktu[1] ?>" required>
 			</div>
 		</div>
 		
@@ -31,7 +39,7 @@
 			</div>
 		</div>
 
-		<div class="form-group">
+		<!-- <div class="form-group">
 			<label class="control-label col-sm-3" >Status:</label>
 			<div class="col-sm-9">
 				<select class="selectpicker" name="verif" required>
@@ -39,7 +47,7 @@
 					<option value="1" <?php if($rapat->STATUS_AKTIVASI == 1){ echo 'selected';}?>>Telah diverifikasi</option>
 				</select>
 			</div>
-		</div>
+		</div> -->
 
 		<div class="form-group">
 			<div class="col-sm-offset-3 col-sm-9">
@@ -55,10 +63,17 @@
 <script type="text/javascript">
 	$('.selectpicker').selectpicker('refresh');
 
-	$('#waktu').datetimepicker({
-		format: 'DD/MM/YYYY HH:mm',
+	$('#tanggal').datetimepicker({
+		format: 'DD/MM/YYYY',
 		locale : 'id',
-		sideBySide:true,
-		minDate: new Date()
+		// minDate: new Date(),
+		showClose : true
+	});
+
+	$('#waktu').datetimepicker({
+		format: 'HH:mm',
+		locale : 'id',
+		// minDate: new Date(),
+		showClose : true
 	});
 </script>

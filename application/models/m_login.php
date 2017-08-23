@@ -26,7 +26,7 @@ Class m_login extends CI_Model {
 
 	// Read data using username and password
 	public function login($data) {
-		$condition = "USERNAME =" . "'" . $data['USERNAME'] . "' AND " . "PASSWORD =" . "'" . $data['PASSWORD'] . "'";
+		$condition = 'STATUS="1" AND USERNAME="'.$data['USERNAME'].'" AND PASSWORD="'.$data['PASSWORD'].'"';
 		$this->db->select('*');
 		$this->db->from('user');
 		$this->db->where($condition);
@@ -34,12 +34,6 @@ Class m_login extends CI_Model {
 		$query = $this->db->get();
 
 		if ($query->num_rows() == 1) {
-
-			$data=$query->result_array();
-			if($data[0]['STATUS'] == 0){
-				return false;
-			}
-			// var_dump($data);
 			return $data[0]['ID_USER'];
 		} else {
 			return false;

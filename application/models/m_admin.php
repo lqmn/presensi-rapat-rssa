@@ -140,28 +140,39 @@ class m_admin extends CI_Model{
 	}
 
 	function get_detail_peserta($id_rapat){
-		$sql = 'SELECT pr.ID_RAPAT, p.NIP, p.NAMA, sk.NAMA_SATKER
-		FROM peserta_rapat pr JOIN pegawai p ON pr.ID_REF = p.ID_PEGAWAI
-		JOIN satuan_kerja sk ON p.ID_SATKER=sk.ID_SATKER
-		WHERE pr.PEGAWAI = 1 AND pr.ID_RAPAT = 4'
-		$sql='SELECT "'.$id_rapat.'" AS ID_RAPAT ,P.NIP AS ID ,P.NAMA,S.NAMA_SATKER as SATKER,"PEGAWAI" AS ASAL  from pegawai P,satuan_kerja S,peserta_rapat R 
-		WHERE 
-		P.ID_SATKER=S.ID_SATKER AND
-		P.NIP = R.ID_USER AND R.ID_RAPAT="'.$id_rapat.'"
+		$sql='SELECT ID_RAPAT, p.NIP, p.NAMA, s.NAMA_SATKER
+		FROM peserta_rapat pr JOIN pegawai p ON pr.ID_REF=p.ID_PEGAWAI
+		JOIN satuan_kerja s ON p.ID_SATKER = s.ID_SATKER
+		WHERE pr.PEGAWAI=1 AND pr.ID_RAPAT='.$id_rapat;
 
-		UNION 
-		SELECT "'.$id_rapat.'" AS ID_RAPAT ,ID,NAMA , 
-		INSTITUSI AS SATKER,"NON-PEGAWAI" AS ASAL FROM non_pegawai,peserta_rapat R
-		WHERE ID = R.ID_USER AND R.ID_RAPAT="'.$id_rapat.'"';
-		// mengembalikan ID,NAMA,SATKER,ASAL
-		$result = $this->db->query($sql);
+		$pegawai = $this->db->query($sql);
+		foreach ($pegawai->result() as $row) {
+			$test = new stdClass();
 
-		foreach ($result->result() as $row) {
-			$data[] = $row;
+			$test->ID = $row->ID_RAPAT;
+			$test->NAMA = $row->NIP.', '.$row->NAMA;
+			$test->INSTITUSI =$row->NAMA_SATKER.', RSSA Malang';
+			$test->PEGAWAI = 1;
+
+			$data[]=$test;
 		}
 
-		return (array)@$data;
+		$sql='SELECT ID_RAPAT, np.NAMA, np.INSTITUSI 
+		FROM peserta_rapat pr JOIN non_pegawai np ON pr.ID_REF=np.ID 
+		WHERE pr.PEGAWAI=0 AND pr.ID_RAPAT='.$id_rapat;
 
+		$non_pegawai = $this->db->query($sql);
+		foreach ($non_pegawai->result() as $row) {
+			$test = new stdClass();
+
+			$test->ID = $row->ID_RAPAT;
+			$test->NAMA = $row->NAMA;
+			$test->INSTITUSI =$row->INSTITUSI;
+			$test->PEGAWAI = 0;
+
+			$data[]=$test;
+		}
+		return (array)@$data;
 	}
 
 	function get_ruang(){
@@ -243,116 +254,111 @@ class m_admin extends CI_Model{
 
 	function insert_peserta($id_peserta,$id_rapat){
 		// var_dump($data);	
-		foreach ($id_peserta
-			as $key => $value) {
+		foreach ($id_peserta as $key => $value) {
 			$sql = "INSERT INTO peserta_rapat (ID_USER,ID_RAPAT)
-		VALUES (".$value.",".$id_rapat." )" ;
+			VALUES (".$value.",".$id_rapat." )" ;
 			// $sql = "DELETE FROM pegawai WHERE ID_PEGAWAI=".$value;
-		$result = $this->db->query($sql);
+			$result = $this->db->query($sql);
+		}
+		return $result;
 	}
-	return $result;
-}
 
-function update_pegawai($data){
+	function update_pegawai($data){
 		// $var_dump($data);
-	$this->db->where('ID_PEGAWAI',$data['ID_PEGAWAI']);
-	$this->db->update('pegawai',$data);
+		$this->db->where('ID_PEGAWAI',$data['ID_PEGAWAI']);
+		$this->db->update('pegawai',$data);
 
-	return $this->db->affected_rows();
-}
+		return $this->db->affected_rows();
+	}
 
-function update_user($data){
+	function update_user($data){
 
-	$this->db->where('ID_USER',$data['ID_USER']);
-	$res = $this->db->update('user',$data);
+		$this->db->where('ID_USER',$data['ID_USER']);
+		$res = $this->db->update('user',$data);
 
-	return $this->db->affected_rows();
-}
+		return $this->db->affected_rows();
+	}
 
-function update_non($data){
+	function update_non($data){
 		// $var_dump($data);
-	$this->db->where('ID',$data['ID']);
-	$this->db->update('non_pegawai',$data);
-	return $this->db->affected_rows();
-}
+		$this->db->where('ID',$data['ID']);
+		$this->db->update('non_pegawai',$data);
+		return $this->db->affected_rows();
+	}
 
-function update_rapat($data){
+	function update_rapat($data){
 		// $var_dump($data);
-	$this->db->where('ID_RAPAT',$data['ID_RAPAT']);
-	$this->db->update('rapat',$data);
-	$result="nice";
-	return $result;
-}
+		$this->db->where('ID_RAPAT',$data['ID_RAPAT']);
+		$this->db->update('rapat',$data);
+		$result="nice";
+		return $result;
+	}
 
-function delete_pegawai($data){
+	function delete_pegawai($data){
 		// var_dump($data);	
-	foreach ($data as $key => $value) {
-		$sql = "UPDATE pegawai
-		SET status = 0
-		WHERE ID_PEGAWAI=".$value;
+		foreach ($data as $key => $value) {
+			$sql = "UPDATE pegawai
+			SET status = 0
+			WHERE ID_PEGAWAI=".$value;
 			// $sql = "DELETE FROM pegawai WHERE ID_PEGAWAI=".$value;
-		$this->db->query($sql);
+			$this->db->query($sql);
+		}
+		return $this->db->affected_rows();
 	}
-	return $this->db->affected_rows();
-}
 
-function delete_user($data){
+	function delete_user($data){
 		// var_dump($data);	
-	foreach ($data as $key => $value) {
-		$sql = "UPDATE user
-		SET status = 0
-		WHERE ID_USER=".$value;
+		foreach ($data as $key => $value) {
+			$sql = "UPDATE user
+			SET status = 0
+			WHERE ID_USER=".$value;
 			// $sql = "DELETE FROM user WHERE ID_USER=".$value;
-		$result = $this->db->query($sql);
+			$result = $this->db->query($sql);
+		}
+		return $this->db->affected_rows();
 	}
-	return $this->db->affected_rows();
-}
 
-function delete_non($data){
+	function delete_non($data){
 		// var_dump($data);	
-	foreach ($data as $key => $value) {
-		$sql = "DELETE FROM non_pegawai WHERE ID=".$value;
-		$result = $this->db->query($sql);
+		foreach ($data as $key => $value) {
+			$sql = "DELETE FROM non_pegawai WHERE ID=".$value;
+			$result = $this->db->query($sql);
+		}
+		return $this->db->affected_rows();
 	}
-	return $this->db->affected_rows();
-}
 
-function delete_rapat($data){
+	function delete_rapat($data){
 		// var_dump($data);	
-	foreach ($data as $key => $value) {
-		$sql = "DELETE FROM rapat WHERE ID_RAPAT=".$value;
-		$sql2=" DELETE FROM peserta_rapat WHERE ID_RAPAT=".$value;
-		$result2 = $this->db->query($sql2);
-		$result = $this->db->query($sql);
+		foreach ($data as $key => $value) {
+			$sql = "DELETE FROM rapat WHERE ID_RAPAT=".$value;
+			$sql2=" DELETE FROM peserta_rapat WHERE ID_RAPAT=".$value;
+			$result2 = $this->db->query($sql2);
+			$result = $this->db->query($sql);
 
+		}
 	}
-}
 
-function delete_peserta($data,$id_rapat){
-
-	foreach ($data as $key => $value) {
+	function delete_peserta($data,$id_rapat){
+		foreach ($data as $key => $value) {
 			// $sql = "DELETE FROM peserta_rapat WHERE ID_RAPAT=".$id_rapat."AND ID_USER".$value ;
-		$sql = "DELETE FROM peserta_rapat WHERE ID_RAPAT=".$id_rapat." AND ID_USER=".$value." ";
-		$result = $this->db->query($sql);
+			$sql = "DELETE FROM peserta_rapat WHERE ID_RAPAT=".$id_rapat." AND ID_USER=".$value." ";
+			$result = $this->db->query($sql);
 			 // var_dump($value);	
+		}
 	}
-}
 
-function update_status_rapat(){
-	$sql="UPDATE  rapat
-	SET rapat.STATUS=0
-	WHERE  DATE_SUB(NOW(), INTERVAL 1 HOUR) > WAKTU_RAPAT";
-	$this->db->query($sql);
-	return $this->db->affected_rows();
-}
+	function update_status_rapat(){
+		$sql="UPDATE  rapat
+		SET rapat.STATUS=0
+		WHERE  DATE_SUB(NOW(), INTERVAL 1 HOUR) > WAKTU_RAPAT";
+		$this->db->query($sql);
+		return $this->db->affected_rows();
+	}
 
-function verifikasi_rapat($id_rapat){
-	$sql='UPDATE RAPAT 
-	SET STATUS_AKTIVASI=1 WHERE ID_RAPAT='.$id_rapat ;
-	$this->db->query($sql);
-	return $this->db->affected_rows();
-
-}
-
-
+	function verifikasi_rapat($id_rapat){
+		$sql='UPDATE RAPAT 
+		SET STATUS_AKTIVASI=1 WHERE ID_RAPAT='.$id_rapat ;
+		$this->db->query($sql);
+		return $this->db->affected_rows();
+	}
 }
