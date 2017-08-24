@@ -1,4 +1,6 @@
 $(document).ready(function() {
+	$('#login-nav').addClass("active");
+
 	$(document).on('submit','#loginForm', function(e){
 		$('#loginButton').button('loading');
 		var requrl = BASE_URL+'c_login/proses_login/';

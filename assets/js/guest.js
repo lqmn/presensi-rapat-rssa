@@ -17,6 +17,8 @@ function showPeserta(id_rapat, dt) {
 }
 
 $(document).ready(function(){
+	$('#jadwal-nav').addClass("active");
+
 	tabelGuest = $('#tabelGuest').DataTable({
 		'dom' : '<"#toolbar.pull-left">p<"row"<"col-sm-12"tr>>',
 		"pageLength": 1,

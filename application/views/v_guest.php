@@ -20,28 +20,26 @@
 	</script>
 </head>
 <body>
-	<nav class="navbar navbar-inverse">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#">WebSiteName</a>
+	<?php $this->load->view('navbar_guest'); ?>
+
+	<div class="container-fluid text-center">
+		<div class="row content">
+			<div class="col-sm-12 text-left">
+
+				<table id="tabelGuest" class="table">
+					<thead>
+						<tr>
+							<th></th>
+							<th>Waktu</th>
+							<th>Ruang</th>
+							<th>Judul</th>
+						</tr>
+					</thead>
+				</table>
+
 			</div>
-			<ul class="nav navbar-nav pull-right">
-				<li class="active"><a href="<?php echo base_url();?>c_rapat/">Rapat</a></li>
-				<li><a href="<?php echo base_url();?>c_login/welcome">Login</a></li>
-			</ul>
 		</div>
-	</nav>
-	<div class="well">
-	<table id="tabelGuest" class="table">
-		<thead>
-			<tr>
-				<th></th>
-				<th>Waktu</th>
-				<th>Ruang</th>
-				<th>Judul</th>
-			</tr>
-		</thead>
-	</table>
 	</div>
+
 </body>
 </html>

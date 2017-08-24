@@ -19,36 +19,29 @@
 	</script>
 </head>
 <body>
-	<nav class="navbar navbar-inverse">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#">WebSiteName</a>
+
+	<?php $this->load->view('navbar_guest'); ?>
+
+	<div class="container text-center">
+		<div class="row content">
+			<div class="col-md-4 col-sm-3"></div>
+			<div id="login" class="col-md-4 col-sm-6 card well">
+				<img src="<?php echo base_url(); ?>assets/img/logo.png" />
+				<form id="loginForm">
+					<div class="form-group">
+						<input class="form-control" type="text" name="username" placeholder="Username" required>
+					</div>
+					<div class="form-group">
+						<input class="form-control" type="password" name="password" placeholder="Password" required>
+					</div>
+					<div class="form-group">
+						<p id="error">Login gagal</p>
+						<button id="loginButton" class="btn btn-primary" type="submit">Login</button>
+					</div>
+				</form>
 			</div>
-			<ul class="nav navbar-nav">
-				<li><a href="<?php echo base_url();?>c_rapat/">Rapat</a></li>
-				<li class="active"><a href="<?php echo base_url();?>c_login/welcome">Login</a></li>
-			</ul>
-		</div>
-	</nav>
-	<div class="container">
-		<div class="col-md-4 col-sm-3"></div>
-		<div id="login" class="col-md-4 col-sm-6 card well">
-			<img src="<?php echo base_url(); ?>assets/img/logo.png" />
-			<form id="loginForm">
-				<div class="form-group">
-				<input class="form-control" type="text" name="username" placeholder="Username" required>
-				</div><div class="form-group">
-				<input class="form-control" type="password" name="password" placeholder="Password" required>
-				</div>
-				<div class="form-group">
-				<p id="error">Login gagal</p>
-				<button id="loginButton" class="btn btn-primary" type="submit">Login</button>
-				</div>
-			</form>
-			<!-- <input class="form-control" type="text" name="username" id="name" placeholder="Username">
-			<input class="form-control" type="password" name="password" id="password" placeholder="password">
-			<button id="loginButton" class="btn btn-lg btn-primary btn-block btn-signin" type="submit" name="submit">Login</button> -->
 		</div>
 	</div>
+	
 </body>
 </html>

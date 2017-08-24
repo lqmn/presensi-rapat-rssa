@@ -4,31 +4,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class c_admin extends CI_Controller{
 
 	function test(){
+		$this->load->view('navbar_guest');
+		// $this->load->library('Excelfile');
 
-		$this->load->library('Excelfile');
+		// $excelFile = "./uploads/dummy.csv";
 
-		$excelFile = "./uploads/dummy.csv";
+		// $objPHPExcel = PHPExcel_IOFactory::load($excelFile);
+		// foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
+		// 	$arrayData = $worksheet->toArray();
+		// }
+		// echo "
+		// 	<table>
 
-		$objPHPExcel = PHPExcel_IOFactory::load($excelFile);
-		foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
-			$arrayData = $worksheet->toArray();
-		}
-		echo "
-			<table>
+		// ";
+		// foreach ($arrayData as $key => $value) {
+		// 	// var_dump($value);
+		// 	echo "
+		// 		<tr>
+		// 			<td>".$value[0]."</td>
+		// 			<td>".$value[1]."</td>
+		// 			<td>".$value[2]."</td>
+		// 		</tr>
+		// 	";
+		// }
 
-		";
-		foreach ($arrayData as $key => $value) {
-			// var_dump($value);
-			echo "
-				<tr>
-					<td>".$value[0]."</td>
-					<td>".$value[1]."</td>
-					<td>".$value[2]."</td>
-				</tr>
-			";
-		}
-
-		echo "</table>";
+		// echo "</table>";
 
 	}
 
