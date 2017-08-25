@@ -1,6 +1,7 @@
 $(document).ready(function() {
-	tabel = $("#tabel").DataTable();
 
+	$('#admin-nav').addClass("active");
+	tabel = $("#tabel").DataTable();
 	$(document).on('change','#page',function(){
 		var x = $('#page').val();
 		console.log(x);

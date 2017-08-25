@@ -3,44 +3,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 Class m_login extends CI_Model {
 
-	// Insert registration data in database
-	// public function registration_insert($data) {
-
-	// 	// Query to check whether username already exist or not
-	// 	$condition = "user_name =" . "'" . $data['user_name'] . "'";
-	// 	$this->db->select('*');
-	// 	$this->db->from('user_login');
-	// 	$this->db->where($condition);
-	// 	$this->db->limit(1);
-	// 	$query = $this->db->get();
-	// 	if ($query->num_rows() == 0) {
-	// 		// Query to insert data in database
-	// 		$this->db->insert('user_login', $data);
-	// 		if ($this->db->affected_rows() > 0) {
-	// 			return true;
-	// 		}
-	// 	} else {
-	// 		return false;
-	// 	}
-	// }
-
-	// Read data using username and password
 	public function login($data) {
-		$condition = "USERNAME =" . "'" . $data['USERNAME'] . "' AND " . "PASSWORD =" . "'" . $data['PASSWORD'] . "'";
-		$this->db->select('*');
-		$this->db->from('user');
-		$this->db->where($condition);
-		$this->db->limit(1);
-		$query = $this->db->get();
-
-		if ($query->num_rows() == 1) {
-
-			$data=$query->result_array();
-			if($data[0]['STATUS'] == 0){
-				return false;
-			}
-			// var_dump($data);
-			return $data[0]['ID_USER'];
+		$sql ='SELECT * FROM user WHERE STATUS="1" AND USERNAME="'.$data['username'].'" AND PASSWORD="'.$data['password'].'"';
+		$res = $this->db->query($sql);
+		if ($res->num_rows()>0) {
+			return $res->result()[0]->ID_USER;
 		} else {
 			return false;
 		}
