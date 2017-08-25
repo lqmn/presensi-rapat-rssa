@@ -18,9 +18,12 @@ Class c_login extends CI_Controller {
 		$this->load->model('m_login');
 	}
 
-	// Show login page
 	function index() {
-		$this->load->view('v_login');
+		if($this->session->userdata('username')){
+			$this->loginsuccess();
+		}else{
+			$this->load->view('v_guest');
+		}
 	}
 
 	// Check for user login process
@@ -116,5 +119,13 @@ Class c_login extends CI_Controller {
 			$this->session->set_userdata($session_data);
 			echo "1";
 		}
+	}
+
+	function error_authority(){
+		$this->load->view('v_error_access');
+	}
+
+	function login_form(){
+		$this->load->view('v_login');
 	}
 }

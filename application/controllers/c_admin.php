@@ -47,12 +47,13 @@ class c_admin extends CI_Controller{
 		$this->load->model('m_admin');
 	}
 
-	function error_authority(){
-		$this->load->view('v_error_access');
-	}
 
 	function index() {
-		$this->load->view('v_admin_home');
+		if($this->session->userdata('otoritas')==1){
+			$this->load->view('v_admin_pegawai');
+		}else{
+			redirect('c_login/error_authority/','refresh');
+		}
 	}
 
 	function logout(){
@@ -61,7 +62,11 @@ class c_admin extends CI_Controller{
 	}
 
 	function pegawai(){
-		$this->load->view('v_admin_pegawai');
+		if($this->session->userdata('otoritas')==1){
+			$this->load->view('v_admin_pegawai');
+		}else{
+			$this->error_authority();
+		}
 	}
 
 
@@ -71,8 +76,7 @@ class c_admin extends CI_Controller{
 		if($this->session->userdata('otoritas')==2){
 			$this->load->view('v_ver_rapat');
 		}
-		else if($this->session->userdata('otoritas')==1){ 
-
+		else if($this->session->userdata('otoritas')==1){
 			$this->load->view('v_admin_rapat');
 		}
 
@@ -94,30 +98,35 @@ class c_admin extends CI_Controller{
 	}
 	function presensi(){
 		$this->load->view('v_header_presensi');
-		
+
 		if($this->session->userdata('otoritas')==2){
 			$this->load->view('v_ver_presensi');
 		}
 		else if($this->session->userdata('otoritas')==1){ 
-			
+
 			$this->load->view('v_admin_presensi');
 		}
 		else if($this->session->userdata('otoritas')==3){ 
-			
+
 			$this->load->view('v_user_presensi');
 		}
 	}
 
 
 	function user(){
-		// $data1['dataPegawai']= $this->m_admin->get_pegawai();
-		// $data2['v_table_pegawai'] = $this->load->view('v_table_pegawai', $data1, true);
-		// var_dump($dataPegawai);
-		$this->load->view('v_admin_user');
+		if($this->session->userdata('otoritas')==1){
+			$this->load->view('v_admin_user');
+		}else{
+			$this->error_authority();
+		}
 	}
 
 	function non_pegawai(){
-		$this->load->view('v_admin_non');
+		if($this->session->userdata('otoritas')==1){
+			$this->load->view('v_admin_non');
+		}else{
+			$this->error_authority();
+		}
 	}
 
 
@@ -500,7 +509,7 @@ class c_admin extends CI_Controller{
 	// 				<td>".$value[0]."</td>
 
 	// 				<td>".$tanggal->format('Y-m-d H:i')."</td>
-	
+
 	// 			</tr>
 	// 		";
 	// 	}
@@ -512,7 +521,7 @@ class c_admin extends CI_Controller{
 	public function do_upload()
 	{
 		$id_bulan=$this->input->post('id_bulan');
-		
+
 
 		date_default_timezone_set('Asia/Jakarta');
 		$date = date('mdYhis', time());
@@ -564,10 +573,10 @@ class c_admin extends CI_Controller{
 				$dataAbs['ID_USER_INPUT']=$this->session->userdata('id_user');
 				$this->m_admin->insert_absen($dataAbs);
 			}
-			
+
 
 			$this->load->view('v_upload_sukses');
-			
+
 		}
 	}
 
@@ -598,7 +607,7 @@ class c_admin extends CI_Controller{
         				}
         				$counter_jam_lembur=$counter_jam_lembur-15+$jam;
         			}
-        			
+
         		}
 
         		$data['lembur']=$counter_jam_lembur;

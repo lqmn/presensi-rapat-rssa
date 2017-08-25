@@ -16,6 +16,11 @@ function showPeserta(id_rapat, dt) {
 	return html;
 }
 
+function updateClock (){
+	var currentTime = new Date ();
+	// console.log(currentTime);
+	$("#clock").html(currentTime);
+}
 $(document).ready(function(){
 	$('#jadwal-nav').addClass("active");
 
@@ -41,9 +46,10 @@ $(document).ready(function(){
 				var id_rapat = this.data()['ID_RAPAT'];
 				showPeserta(id_rapat,this);
 			});
-			$('#toolbar').html('<h3>Jadwal rapat</h3>');
+			$('#toolbar').html('<h3>Jadwal rapat</h3><p id="clock"></p>');
 		}
 	});
+
 	setInterval(function(){
 		if (tabelGuest.page.info().end==tabelGuest.page.info().pages) {
 			tabelGuest.page('first').draw('page');
@@ -51,4 +57,7 @@ $(document).ready(function(){
 			tabelGuest.page('next').draw('page');
 		}
 	}, 8000);
+
+
+	setInterval('updateClock()', 1000);
 })
