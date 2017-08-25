@@ -1,6 +1,5 @@
 $(document).ready(function() {
-	// table
-	// alert('awdojawod');
+	
 	var tabel = $('#tabel').DataTable({
 		"dom": '<"toolbar">frtlp',
 		"ajax": {
@@ -19,7 +18,7 @@ $(document).ready(function() {
 			'orderable':false,
 			'className': 'dt-body-center',
 			'render': function (data){
-				return '<button type="button" class="editButton btn btn-info" data-toggle="modal" data-target="#myModal" value="'+data+'">Edit <span class="glyphicon glyphicon-edit"></span></button>';
+				return '<button type="button" class="editButton btn btn-default btn-xs" data-toggle="modal" data-target="#myModal" value="'+data+'"><span class="glyphicon glyphicon-edit"></span> Edit</button>';
 			}
 		},{
 			'targets': 0,
@@ -31,7 +30,7 @@ $(document).ready(function() {
 			}
 		}],"order": [],
 		initComplete:function(){
-			$('div.toolbar').html('<div style="float:left;"><button id="tambah" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Tambah <span class="glyphicon glyphicon-plus"></span></button> <button id="hapus" type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal" disabled>Delete <span class="glyphicon glyphicon-remove"></span></button></div>');
+			$('div.toolbar').html('<div style="float:left;"><button id="tambah" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus"></span> Tambah</button> <button id="hapus" type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal" disabled><span class="glyphicon glyphicon-remove"></span> Delete</button></div>');
 		}
 	});
 
