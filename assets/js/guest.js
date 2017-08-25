@@ -50,5 +50,5 @@ $(document).ready(function(){
 		}else{
 			tabelGuest.page('next').draw('page');
 		}
-	}, 3000);
+	}, 8000);
 })

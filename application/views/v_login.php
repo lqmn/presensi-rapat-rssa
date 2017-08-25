@@ -1,22 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Homepage</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Login</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-	<!-- jQuery library -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<!-- Bootstrap -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-	<!-- custom -->
-	<link href="<?php echo base_url(); ?>assets/css/login.css" rel="stylesheet" type="text/css">
-	<script src="<?php echo base_url(); ?>assets/js/login.js"></script>
-	<script type="text/javascript">
-		var BASE_URL = "<?php echo base_url();?>";
-	</script>
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url("assets/css/bootstrap.css"); ?>">
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url("assets/css/login.css"); ?>">
 </head>
 <body>
 
@@ -26,7 +15,7 @@
 		<div class="row content">
 			<div class="col-md-4 col-sm-3"></div>
 			<div id="login" class="col-md-4 col-sm-6 card well">
-				<img src="<?php echo base_url(); ?>assets/img/logo.png" />
+				<img src="<?php echo base_url("assets/img/logo.png"); ?>" />
 				<form id="loginForm">
 					<div class="form-group">
 						<input class="form-control" type="text" name="username" placeholder="Username" required>
@@ -43,5 +32,11 @@
 		</div>
 	</div>
 	
+	<script type="text/javascript" src="<?php echo base_url("assets/js/jquery-3.2.1.min.js"); ?>"></script>
+	<script type="text/javascript" src="<?php echo base_url("assets/js/bootstrap.js"); ?>"></script>
+	<script type="text/javascript" src="<?php echo base_url("assets/js/login.js"); ?>"></script>
+	<script type="text/javascript">
+		var BASE_URL = "<?php echo base_url();?>";
+	</script>
 </body>
 </html>

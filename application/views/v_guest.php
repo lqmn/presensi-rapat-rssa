@@ -1,23 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
-	<!-- jQuery library -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<!-- Bootstrap -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<title>Jadwal rapat</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-	<!-- dataTables -->
-	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css"/>
-	<script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-	<script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
-
-	<!-- custom -->
-	<script src="<?php echo base_url(); ?>assets/js/guest.js"></script>
-	<script type="text/javascript">
-		var BASE_URL = "<?php echo base_url();?>";
-	</script>
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url("assets/css/bootstrap.css"); ?>">
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url("assets/DataTables/datatables.min.css"); ?>">
 </head>
 <body>
 	<?php $this->load->view('navbar_guest'); ?>
@@ -41,5 +29,12 @@
 		</div>
 	</div>
 
+	<script type="text/javascript" src="<?php echo base_url("assets/js/jquery-3.2.1.min.js"); ?>"></script>
+	<script type="text/javascript" src="<?php echo base_url("assets/js/bootstrap.js"); ?>"></script>
+	<script type="text/javascript" src="<?php echo base_url("assets/DataTables/datatables.min.js"); ?>"></script>
+	<script type="text/javascript" src="<?php echo base_url("assets/js/guest.js"); ?>"></script>
+	<script type="text/javascript">
+		var BASE_URL = "<?php echo base_url();?>";
+	</script>
 </body>
 </html>

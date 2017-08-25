@@ -25,7 +25,7 @@ $(document).ready(function() {
 			'orderable':false,
 			'className': 'dt-body-center',
 			'render': function (data){
-				return '<div class="dropdown"><button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Aksi <span class="caret"></span></button><ul class="dropdown-menu"><li class="editButton" data-toggle="modal" data-target="#myModal" value="'+data+'"><a href="#">Edit</a></li><li class="peserta" data-toggle="modal" data-target="#bigModal" value="'+data+'"><a href="#">Lihat peserta</a></li></ul></div>';
+				return '<div class="dropdown"><button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Aksi <span class="caret"></span></button><ul class="dropdown-menu"><li class="editButton" data-toggle="modal" data-target="#myModal" value="'+data+'"><a href="#">Edit</a></li><li class="peserta" data-toggle="modal" data-target="#bigModal" value="'+data+'"><a href="#">Lihat peserta</a></li></ul></div>';
 			}
 		},{
 			'targets': 0,

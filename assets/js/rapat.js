@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	$('#rapat-nav').addClass("active");
 	tabel = $("#tabel").DataTable();
 	var id_rapat;
 	var tabelPeserta;

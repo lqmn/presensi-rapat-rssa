@@ -23,7 +23,7 @@ $(document).ready(function() {
 			'orderable':false,
 			'className': 'dt-body-center',
 			'render': function (data){
-				return '<div class="dropdown"><button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Aksi <span class="caret"></span></button><ul class="dropdown-menu"><li class="editButton" data-toggle="modal" data-target="#myModal" value="'+data+'"><a href="#">Edit</a></li><li class="peserta" data-toggle="modal" data-target="#bigModal" value="'+data+'"><a href="#">Lihat peserta</a></li><li class="verif" data-toggle="modal" data-target="#myModal" value="'+data+'"><a href="#">Verifikasi</a></li></ul></div>';
+				return '<div class="dropdown"><button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Aksi <span class="caret"></span></button><ul class="dropdown-menu"><li class="editButton" data-toggle="modal" data-target="#myModal" value="'+data+'"><a href="#">Edit</a></li><li class="peserta" data-toggle="modal" data-target="#bigModal" value="'+data+'"><a href="#">Lihat peserta</a></li><li class="verif" data-toggle="modal" data-target="#myModal" value="'+data+'"><a href="#">Verifikasi</a></li></ul></div>';
 			}
 		},{
 			'targets': 0,
@@ -35,7 +35,7 @@ $(document).ready(function() {
 			}
 		}],"order": [],
 		initComplete:function(){
-			$('div.toolbar').html('<div style="float:left;"><button id="tambah" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Tambah <span class="glyphicon glyphicon-plus"></span></button> <button id="hapus" type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal" disabled>Delete <span class="glyphicon glyphicon-remove"></span></button></div><div class="wow pull-right">&nbsp;</div>');
+			$('div.toolbar').html('<div style="float:left;"><button id="tambah" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus"></span> Tambah</button> <button id="hapus" type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal" disabled><span class="glyphicon glyphicon-remove"></span> Delete</button></div><div class="wow pull-right">&nbsp;</div>');
 
 			var column = this.api().column(4);
 			var select = $('<select class="form-control"><option value="">Semua Rapat</option></select>')

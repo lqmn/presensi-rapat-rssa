@@ -39,16 +39,6 @@
 			</div>
 		</div>
 
-		<!-- <div class="form-group">
-			<label class="control-label col-sm-3" >Status:</label>
-			<div class="col-sm-9">
-				<select class="selectpicker" name="verif" required>
-					<option value="0" <?php if($rapat->STATUS_AKTIVASI == 0){ echo 'selected';}?>>Belum diverifikasi</option>
-					<option value="1" <?php if($rapat->STATUS_AKTIVASI == 1){ echo 'selected';}?>>Telah diverifikasi</option>
-				</select>
-			</div>
-		</div> -->
-
 		<div class="form-group">
 			<div class="col-sm-offset-3 col-sm-9">
 				<input type="hidden" name="id" value="<?php echo $rapat->ID_RAPAT;?>" required>
@@ -57,9 +47,9 @@
 		</div>
 	</form>
 </div>
-<div class="modal-footer">
-	<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
-</div>
+<!-- <div class="modal-footer">
+	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div> -->
 <script type="text/javascript">
 	$('.selectpicker').selectpicker('refresh');
 

@@ -75,23 +75,25 @@ Class c_login extends CI_Controller {
 
 	function loginsuccess(){
 		if ($this->session->userdata('otoritas')==1) {
-			redirect('c_admin', 'refresh');
+			$this->load->view('v_admin_home');
 		}elseif ($this->session->userdata('otoritas')==2) {
-			redirect('c_admin/rapat','refresh');
+			$this->load->view('v_ver_home');
 		}elseif ($this->session->userdata('otoritas')==3) {
-			echo "user";
+			$this->load->view('v_user_home');
 		}
 	}
 
 	// Logout from admin page
 	function logout() {
 		// Removing session data
-		$sess_array = array(
-			'username' => ''
-			);
-		$this->session->unset_userdata('authority', $sess_array);
-		$data['message_display'] = 'Successfully Logout';
-		$this->load->view('v_login', $data);
+		// $sess_array = array(
+		// 	'username' => ''
+		// 	);
+		// $this->session->unset_userdata('authority', $sess_array);
+		// $data['message_display'] = 'Successfully Logout';
+		// $this->load->view('v_login', $data);
+		$this->session->sess_destroy();
+		redirect('c_login','refresh');
 	}
 
 	function proses_login(){

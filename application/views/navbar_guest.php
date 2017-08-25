@@ -1,8 +1,8 @@
 <style type="text/css">
-    .navbar {
-      margin-bottom: 0;
-      border-radius: 0;
-    }
+	.navbar {
+		margin-bottom: 0;
+		border-radius: 0;
+	}
 </style>
 <nav class="navbar navbar-inverse">
 	<div class="container-fluid">
@@ -12,14 +12,16 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>                        
 			</button>
-			<a class="navbar-brand" href="#">Logo</a>
+			<a class="navbar-brand" href="#">
+				<img src="<?php echo base_url("assets/img/logo.png");?>" width="25px"></img>
+			</a>
 		</div>
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav"> 
-				<li id="jadwal-nav"><a href="<?php echo base_url();?>c_rapat/">Jadwal</a></li>
+				<li id="jadwal-nav"><a href="<?php echo base_url("c_rapat/"); ?>">Jadwal</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li id="login-nav"><a href="<?php echo base_url();?>c_login/">Login</a></li>
+				<li id="login-nav"><a href="<?php echo base_url("c_login/"); ?>">Login</a></li>
 			</ul>
 		</div>
 	</div>

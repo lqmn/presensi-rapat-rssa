@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class c_admin extends CI_Controller{
 
 	function test(){
-		$this->load->view('navbar_guest');
+		$this->load->view('test');
 		// $this->load->library('Excelfile');
 
 		// $excelFile = "./uploads/dummy.csv";
@@ -60,10 +60,7 @@ class c_admin extends CI_Controller{
 	}
 
 	function pegawai(){
-		// $data1['dataPegawai']= $this->m_admin->get_pegawai();
-		// $data2['v_table_pegawai'] = $this->load->view('v_table_pegawai', $data1, true);
 		$this->load->view('v_admin_pegawai');
-		// $this->load->view('v_admin_non');
 	}
 
 

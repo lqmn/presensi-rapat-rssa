@@ -15,7 +15,7 @@
 		<label class="btn btn-default">
 			<input type="radio" name="options" id="addNon" autocomplete="off"> Tambah non pegawai
 		</label>
-	</div>
+	</div><br>
 
 	<table id="listPeserta" class="table" cellspacing="0" width="100%">
 		<thead>
@@ -29,9 +29,9 @@
 	</table>
 </div>
 
-<div class="modal-footer">
-	<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
-</div>
+<!-- <div class="modal-footer">
+	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div> -->
 <script type="text/javascript">
 
 </script>
