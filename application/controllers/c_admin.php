@@ -2,6 +2,36 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class c_admin extends CI_Controller{
+
+	function test(){
+		$this->load->view('test');
+		// $this->load->library('Excelfile');
+
+		// $excelFile = "./uploads/dummy.csv";
+
+		// $objPHPExcel = PHPExcel_IOFactory::load($excelFile);
+		// foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
+		// 	$arrayData = $worksheet->toArray();
+		// }
+		// echo "
+		// 	<table>
+
+		// ";
+		// foreach ($arrayData as $key => $value) {
+		// 	// var_dump($value);
+		// 	echo "
+		// 		<tr>
+		// 			<td>".$value[0]."</td>
+		// 			<td>".$value[1]."</td>
+		// 			<td>".$value[2]."</td>
+		// 		</tr>
+		// 	";
+		// }
+
+		// echo "</table>";
+
+	}
+
 	public function __construct(){
 		parent::__construct();
 		$this->load->helper('url');
@@ -16,7 +46,7 @@ class c_admin extends CI_Controller{
 		// Load database
 		$this->load->model('m_admin');
 	}
-	
+
 	function error_authority(){
 		$this->load->view('v_error_access');
 	}
@@ -24,66 +54,43 @@ class c_admin extends CI_Controller{
 	function index() {
 		$this->load->view('v_admin_home');
 	}
-	
+
 	function logout(){
 		$this->session->sess_destroy();
 		redirect('c_login','refresh');
 	}
 
 	function pegawai(){
-		// $data1['dataPegawai']= $this->m_admin->get_pegawai();
-		// $data2['v_table_pegawai'] = $this->load->view('v_table_pegawai', $data1, true);
 		$this->load->view('v_admin_pegawai');
-		// $this->load->view('v_admin_non');
 	}
-	
-	
+
+
 	function rapat(){
 		$this->load->view('v_header_rapat');
-	
+
 		if($this->session->userdata('otoritas')==2){
-				$this->load->view('v_ver_rapat');
+			$this->load->view('v_ver_rapat');
 		}
 		else if($this->session->userdata('otoritas')==1){ 
-		
+
 			$this->load->view('v_admin_rapat');
 		}
-		else if($this->session->userdata('otoritas')==3){ 
-		
-			$this->load->view('v_user_rapat');
-		}
-	
-		
-	}
-	
-	function rapat_verified(){
-		$this->load->view('v_header_rapat');
-		$this->load->view('v_ver_rapat_verified');
-		
-	
-		
-	}
-	
-	function all_rapat(){
-		$this->load->view('v_header_rapat');
-		$this->load->view('v_ver_all_rapat');
-		
-	
-		
+
+
 	}
 
 	function peserta($id_rapat){
 		$data['rapat']=$this->m_admin->get_one_rapat($id_rapat);
 		$this->load->view('v_header_rapat');
 		$this->load->view('v_admin_peserta_rapat',$data);
-		
+
 	}
-	
+
 	function lihatPeserta($id_rapat){
 		$data['rapat']=$this->m_admin->get_one_rapat($id_rapat);
 		$this->load->view('v_header_rapat');
 		$this->load->view('v_admin_detail_peserta',$data);
-		
+
 	}
 	function presensi(){
 		$this->load->view('v_header_presensi');
@@ -112,8 +119,8 @@ class c_admin extends CI_Controller{
 	function non_pegawai(){
 		$this->load->view('v_admin_non');
 	}
-	
-	
+
+
 	function form_insert_rapat(){
 		$this->load->view('v_form_insert_rapat');
 	}
@@ -135,7 +142,7 @@ class c_admin extends CI_Controller{
 	function form_non(){
 		$this->load->view('v_form_non');
 	}
-	
+
 
 	function form_delete_pegawai(){
 		$this->load->view('v_delete_pegawai');
@@ -148,8 +155,8 @@ class c_admin extends CI_Controller{
 	function form_delete_non(){
 		$this->load->view('v_delete_non');
 	}
-	
-	
+
+
 	function form_delete_rapat(){
 		$this->load->view('v_delete_rapat');
 	}
@@ -170,13 +177,13 @@ class c_admin extends CI_Controller{
 			echo "Error";
 		}
 	}
-	
-	
+
+
 	function insert_rapat(){
 		$tanggal = $this->input->post('tanggal');
 		$waktu = $this->input->post('waktu');
 		$date=$tanggal." ".$waktu;
-		
+
 		$data['WAKTU_RAPAT'] =date('Y-m-d H:i',strtotime($date));
 		// $data['WAKTU_RAPAT'] = DateTime::createFromFormat('d-m-Y H:i', $date)->format('d-m-Y H:i');
 		// $data['WAKTU_RAPAT'] = DateTime::createFromFormat('d/m/Y H:i', $date);
@@ -184,17 +191,17 @@ class c_admin extends CI_Controller{
 		$data['JUDUL_RAPAT']=$this->input->post('judul');
 		$data['ID_RUANG'] = $this->input->post('ruang');
 		$data['ID_USER_INPUT']= $this->session->userdata('id_user');
-		 date_default_timezone_set('Asia/Jakarta');
+		date_default_timezone_set('Asia/Jakarta');
 		$data['DATE_MODIFIED']=date('Y-m-d H:i:s');
-		
+
 		//BELUM BISA GANTI STATUS OTOMATIS
 		$data['STATUS']= 1;
-		
+
 		// Belum bisa nambah peserta. konfigurasi ulang database untuk nambah peserta pegawai maupun non pegawai
 		// $data['PESERTA_RAPAT'] = $this->input->post('peserta');
 		// $res2= $this->m_admin->insert_peserta($data);
-		
-		
+
+
 		// var_dump($data);
 		$res = $this->m_admin->insert_rapat($data);
 		// var_dump($res);
@@ -214,7 +221,7 @@ class c_admin extends CI_Controller{
 		}else{
 			echo "Error";
 		}
-		
+
 	}
 
 	function update_user(){
@@ -230,7 +237,7 @@ class c_admin extends CI_Controller{
 			echo "Error";
 		}
 	}
-	
+
 	function update_pegawai(){
 		$data['ID_PEGAWAI'] = $this->input->post('id');
 		$data['NIP'] = $this->input->post('nomor');
@@ -244,7 +251,7 @@ class c_admin extends CI_Controller{
 			echo "Error";
 		}
 	}
-	
+
 	function update_non(){
 		$data['ID'] = $this->input->post('id');
 		$data['NAMA'] = $this->input->post('nama');
@@ -257,14 +264,14 @@ class c_admin extends CI_Controller{
 			echo "Error";
 		}
 	}
-	
+
 	function update_rapat(){
 		$data['ID_RAPAT'] = $this->input->post('id');
 		$data['JUDUL_RAPAT'] = $this->input->post('judul');
 		$date=$this->input->post('tanggal')." ".$this->input->post('waktu');
 		$data['WAKTU_RAPAT'] =date('Y-m-d H:i',strtotime($date));
 		$data['ID_RUANG'] = $this->input->post('ruang');
-		 date_default_timezone_set('Asia/Jakarta');
+		date_default_timezone_set('Asia/Jakarta');
 		$data['DATE_MODIFIED']=date('Y-m-d H:i:s');
 		$res = $this->m_admin->update_rapat($data);
 		// var_dump($data);
@@ -275,7 +282,7 @@ class c_admin extends CI_Controller{
 		}
 	}
 	function insert_user(){
-		
+
 		$data['ID_PEGAWAI'] = $this->input->post('pegawai');
 		$data['PASSWORD'] = $this->input->post('password');
 		$data['OTORITAS'] = $this->input->post('otoritas');
@@ -291,9 +298,9 @@ class c_admin extends CI_Controller{
 			echo "Error";
 		}
 	}
-	
+
 	function insert_non(){
-		
+
 		$data['NAMA'] = $this->input->post('nama');
 		$data['INSTITUSI'] = $this->input->post('institusi');
 		// var_dump($hasil);
@@ -306,12 +313,9 @@ class c_admin extends CI_Controller{
 	}
 
 	function delete_pegawai(){
-		// $array_del = filter_input(INPUT_POST, 'array_del', FILTER_SANITIZE_STRING);
 		$array_del = $this->input->post('array_del');
-		// var_dump($array_del);
 		$res = $this->m_admin->delete_pegawai($array_del);
 
-		// var_dump($data);
 		if ($res>0) {
 			$this->load->view('v_sukses_modal');
 		}else{
@@ -342,19 +346,19 @@ class c_admin extends CI_Controller{
 
 
 	}
-	
+
 	function delete_rapat(){
 		$array_del = $this->input->post('array_del');
 		$this->m_admin->delete_rapat($array_del);
 		$this->load->view('v_sukses_modal');
 	}
-	
+
 	function delete_peserta($id_rapat){
 		$array_del = $this->input->post('array_del');
 		$this->m_admin->delete_peserta($array_del,$id_rapat);
 		$this->load->view('v_sukses_modal');
 	}
-	
+
 	function edit_form_pegawai(){
 		$id_pegawai = $this->input->post('id_edit');
 		$data['satker'] = $this->m_admin->get_sk();
@@ -367,33 +371,33 @@ class c_admin extends CI_Controller{
 		$id_user = $this->input->post('id_edit');
 		$data['user'] = $this->m_admin->get_one_user($id_user);
 		$data['pegawai']= $this->m_admin->get_pegawai();
-		
+
 		$this->load->view('v_edit_user', $data);
 	}
-	
+
 	function edit_form_non(){
 		$id_non = $this->input->post('id_edit');
-		
+
 		$data['non'] = $this->m_admin->get_one_non($id_non);
-		
+
 		$this->load->view('v_edit_non', $data);
 	}
-	
+
 	function edit_form_rapat(){
 		$id_rapat = $this->input->post('id_edit');
 		$data['rapat'] = $this->m_admin->get_one_rapat($id_rapat);
 		$data['ruang']= $this->m_admin->get_ruang();
-		
+
 		//mengambil list seluruh peserta rapat
 		//still work in progress
 		// $data['rapat'] = $this->m_admin->get_peserta_rapat_by_id_rapat($id_rapat);
-		
-		
+
+
 		// var_dump($data);
 		$this->load->view('v_edit_rapat', $data);
 	}
 
-	
+
 	function get_table_pegawai(){
 		$data= $this->m_admin->get_pegawai();
 
@@ -405,13 +409,13 @@ class c_admin extends CI_Controller{
 
 		echo json_encode($data);
 	}
-	
+
 	function get_table_non(){
 		$data= $this->m_admin->get_non();
-		
+
 		echo json_encode($data);
 	}
-	
+
 	function get_table_rapat(){
 		$data= $this->m_admin->get_rapat();
 		//cara edit data untuk JS ke PHP, edit di url yang dipanggil ajax
@@ -420,61 +424,47 @@ class c_admin extends CI_Controller{
 		// }
 		// var_dump($data);
 		echo json_encode($data);
-		
+
 	}
-	
-	function get_table_rapat_verified(){
-		$data=$this->m_admin->get_rapat_verified();
-		echo json_encode($data);
-	}
-	
-	function get_all_rapat(){
-		$data=$this->m_admin->get_all_rapat();
-		echo json_encode($data);
-	}
-	
-	
-	
 	function get_table_all_entitas($id_rapat){
 		$data= $this->m_admin->get_all_entitas($id_rapat);
 		echo json_encode($data);
 	}
-	
+
 	function get_table_detail_peserta($id_rapat){
 		$data= $this->m_admin->get_detail_peserta($id_rapat);
 		echo json_encode($data);
 	}
 
 	function landing() {
-		$this->m_admin->update_status_rapat();
-		$dataRapat =$this->m_admin->get_rapat();
-		// var_dump($data['rapat']);
+		// $this->m_admin->update_status_rapat();
+		// $dataRapat =$this->m_admin->get_rapat();
+		// var_dump($dataRapat);
 		$this->load->view('v_header_welcome');
-		foreach($dataRapat as $key =>$value){
-			$data['rapat'] = $value;
-			$data['peserta']=$this->m_admin->get_detail_peserta($value->ID_RAPAT);
-			
-			$this->load->view('v_rapat',$data);
-		}
-		$this->load->view('v_landing_foot');
+		// foreach($dataRapat as $key =>$value){
+		// 	$data['rapat'] = $value;
+		// 	$data['peserta']=$this->m_admin->get_detail_peserta($value->ID_RAPAT);
+
+		// 	$this->load->view('v_rapat',$data);
+		// }
+		// $this->load->view('v_landing_foot');
 	}
-	
+
 	function form_verif(){
-		
-		$waktu_rapat = $this->input->post('waktu_rapat');
+
+		// $waktu_rapat = $this->input->post('waktu_rapat');
 		$id_rapat = $this->input->post('id_rapat');
 		$waktu_rapat =$this->m_admin->get_waktu_by_id_rapat($id_rapat);
-	foreach($waktu_rapat as $key =>$value){
-		$data['waktu']=$this->m_admin->get_rapat_by_waktu($value->WAKTU_RAPAT);
-	
-		
-		$data['tanggal']=date('Y-m-d',strtotime($value->WAKTU_RAPAT));
-		$data['tanggal_lengkap']=$value->WAKTU_RAPAT;
-		$data['id']=$id_rapat;
-		$this->load->view('v_form_verif',$data);
+		foreach($waktu_rapat as $key =>$value){
+			$data['waktu']=$this->m_admin->get_rapat_by_waktu($value->WAKTU_RAPAT);
+
+			$data['tanggal']=date('Y-m-d',strtotime($value->WAKTU_RAPAT));
+			$data['tanggal_lengkap']=$value->WAKTU_RAPAT;
+			$data['id']=$id_rapat;
+			$this->load->view('v_form_verif',$data);
+		}
 	}
-	}
-	
+
 	function verifikasi_rapat($id_rapat){
 		$res=$this->m_admin->verifikasi_rapat($id_rapat);
 		if ($res>0) {
@@ -482,7 +472,7 @@ class c_admin extends CI_Controller{
 		}else{
 			echo "Error";
 		}
-		
+
 	}
 	function test(){
 

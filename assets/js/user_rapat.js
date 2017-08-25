@@ -1,10 +1,14 @@
 $(document).ready(function() {
 	// table
+	// alert('awdojawod');
+	var id_rapat;
+	var tabelPeserta;
 	var tabel = $('#tabel').DataTable({
-			"dom": '<"toolbar">frtlp',
+		"dom": "<'toolbar'>f" +
+		"<'row'<'col-sm-12'tr>>" +
+		"<'row'<'col-sm-5'l><'col-sm-7'p>>",
 		"ajax": {
-		
-			"url": BASE_URL+"c_admin/get_table_rapat",
+			"url": BASE_URL+"c_rapat/get_table_rapat",
 			"dataSrc": ""
 		},
 		"columns": [
@@ -12,20 +16,16 @@ $(document).ready(function() {
 		{ "data": "JUDUL_RAPAT" },
 		{ "data": "WAKTU_RAPAT" },
 		{ "data": "NAMA_RUANG" },
-		{ "data": "NAMA_USER" },
-		{ "data": "STATUS" },
-
+		{ "data": "STATUS_AKTIVASI" },
+		{ "data": "PEMBUAT" },
 		{ "data": "ID_RAPAT" }
 		],'columnDefs':[{
 			'targets': 6,
-
 			'searchable':false,
 			'orderable':false,
 			'className': 'dt-body-center',
 			'render': function (data){
-
-				return '<button type="button" class="editButton btn-xs btn-info pull-left" data-toggle="modal" data-target="#myModal" value="'+data+'"><span class="glyphicon glyphicon-edit" data-toggle="tooltip" data-placement="top" title="PICKLE RICK!"></span> Edit</button><br><br><a href="'+BASE_URL+'c_admin/lihatPeserta/'+data+'"><button type="button" class="lihatPesertaButton btn-xs btn-info pull-left" value="'+data+'">Lihat Peserta</button></a><br><br><a href="'+BASE_URL+'c_admin/peserta/'+data+'"><button type="button" class="pesertaButton btn-xs btn-info pull-left" value="'+data+'">Tambah Peserta</button></a>';
-
+				return '<div class="dropdown"><button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Aksi <span class="caret"></span></button><ul class="dropdown-menu"><li class="editButton" data-toggle="modal" data-target="#myModal" value="'+data+'"><a href="#">Edit</a></li><li class="peserta" data-toggle="modal" data-target="#bigModal" value="'+data+'"><a href="#">Lihat peserta</a></li></ul></div>';
 			}
 		},{
 			'targets': 0,
@@ -35,32 +35,30 @@ $(document).ready(function() {
 			'render': function (data){
 				return '<input type="checkbox" class="select" value="' + data + '">';
 			}
-		}
-
-		
-
-		
-		],"order": [],
+		}],"order": [],
 		initComplete:function(){
-			$('div.toolbar').html('<div style="float:left;"><button id="tambah" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Tambah <span class="glyphicon glyphicon-plus"></span></button> <button id="hapus" type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal" disabled>Delete <span class="glyphicon glyphicon-remove"></span></button></div>');
+			$('div.toolbar').html('<div style="float:left;"><button id="tambah" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Tambah <span class="glyphicon glyphicon-plus"></span></button></div><div class="wow pull-right">&nbsp;</div>');
+
+			var column = this.api().column(4);
+			var select = $('<select class="form-control"><option value="">Semua Rapat</option></select>')
+			.appendTo( $('.wow')).on('change', function(){
+				var val = $.fn.dataTable.util.escapeRegex($(this).val());
+				console.log(val);
+				column.search( val ? '^'+val+'$' : '', true, false ).draw();
+			});
+
+			column.data().unique().sort().each( function ( d, j ) {
+				select.append( '<option value="'+d+'">'+d+'</option>' )
+			});
+
 		}
 	});
 
-	$("#tabel").on('click','#select-all', function(){
-		// var rows = tabel.table().node();
-		// console.log(rows);
-		var rows = tabel.rows().nodes();
-		$('input[type="checkbox"]', rows).prop('checked', this.checked);
-	});
-
-	$('#myModal').on('hidden.bs.modal', function() {
-		tabel.ajax.reload();
-	});
 
 	// insert
 	$(document).on('click','#tambah',function(event){
-		
-		var requrl = BASE_URL+'c_admin/form_rapat';
+		var requrl = BASE_URL+'c_rapat/form_rapat';
+
 		$.ajax({
 			url:requrl,
 			success:function(data){
@@ -69,10 +67,10 @@ $(document).ready(function() {
 		});
 	})
 
-	$('#modalContent').on('click','#insertRapat', function(){
-		$('#insertRapat').button('loading');
-		
-		var requrl = BASE_URL+'c_admin/insert_rapat/';
+	$('#modalContent').on('submit','#insertForm', function(e){
+		$('#insert').button('loading');
+		var requrl = BASE_URL+'c_rapat/insert_rapat/';
+
 		var data = {};
 
 		$('#modalContent').find('[name]').each(function(index, value){
@@ -90,13 +88,14 @@ $(document).ready(function() {
 				$('#modalContent').html(data);
 			}
 		});
+		return false;
 	});
 
 	// edit
 	$(document).on('click','.editButton',function(event){
 		var data = $(this).val();
-		// console.log(data);
-		var requrl = BASE_URL+'c_admin/edit_form_rapat';
+		console.log(data);
+		var requrl = BASE_URL+'c_rapat/edit_form_rapat';
 		
 		$.ajax({
 			url:requrl,
@@ -108,9 +107,9 @@ $(document).ready(function() {
 		});
 	})
 
-	$('#modalContent').on('click','#updateRapat', function(){
-		$('#updateRapat').button('loading');
-		var requrl = BASE_URL+'c_admin/update_rapat/';
+	$('#modalContent').on('submit','#editForm', function(){
+		$('#edit').button('loading');
+		var requrl = BASE_URL+'c_rapat/update_rapat/';
 		var data = {};
 
 		$('#modalContent').find('[name]').each(function(index, value){
@@ -127,82 +126,6 @@ $(document).ready(function() {
 				$('#modalContent').html(data);
 			}
 		});
+		return false;
 	});
-
-	// delete
-	$(document).on('click','#hapus',function(event){
-		var requrl = BASE_URL+'c_admin/form_delete_rapat';
-		$.ajax({
-			url:requrl,
-			success:function(data){
-				$('#modalContent').html(data);
-			}
-		});
-	})
-
-	$('#modalContent').on('click','#accVerif', function(){
-		var dataRapat = $(this).val();
-		var requrl = BASE_URL+'c_admin/verifikasi_rapat/'+dataRapat;
-		$.ajax({
-			url:requrl,
-			success:function(data){
-				$('#modalContent').html(data);
-			}
-		});
-	});
-		$('#tabel').on('change','input:checkbox',function(){
-		var selected = 0;
-		$('.select:checked').each(function() {
-			selected++;
-		});
-		if (selected>0) {
-			$('#hapus').prop('disabled',false);
-		}else{
-			$('#hapus').prop('disabled',true);
-		}
-	})
-
-	setInterval(function() {
-		tabel.ajax.reload();
-	}, 300000 );
 });
-
-$(document).on('click','#verif',function(event){
-		
-		var requrl = BASE_URL+'c_admin/form_verif';
-		var data=$(this).val();
-		$.ajax({
-			url:requrl,
-			type:'post',
-			data:{"id_rapat" : data},
-			success:function(data){
-				$('#modalContent').html(data);
-			}
-		});
-	})
-	
-	// $.ajax({
-			// url:requrl,
-			// type:'post',
-			// data: {"array_del": selected} ,
-			// success:function(data){
-				// $('#modalContent').html(data);
-			// }
-		// });
-	
-	
-
-
-$(document).on('change','#page',function(){
-		var x = $('#page').val();
-		console.log(x);
-		switch(parseInt(x)){
-			case 1:
-			window.location.href =  BASE_URL+'c_admin/rapat';
-			break;
-			case 2:	
-			window.location.href =  BASE_URL+'c_admin/all_rapat_ver';
-			break;
-			default:
-		}
-	});

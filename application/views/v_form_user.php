@@ -29,7 +29,8 @@
 		<div class="form-group">
 			<label class="control-label col-sm-3" for="pwd">Otoritas:</label>
 			<div class="col-sm-9">
-				<select class="selectpicker"  name="otoritas">
+				<select class="selectpicker"  name="otoritas" required>
+					<option disabled selected value="" style="display:none"> -- Pilih otoritas -- </option>
 					<option value="1" >Administrator</option>
 					<option value="2" >Verifikator</option>
 					<option value="3" >User Biasa </option>
@@ -44,9 +45,9 @@
 		</div>
 	</form>
 </div>
-<div class="modal-footer">
-	<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
-</div>
+<!-- <div class="modal-footer">
+	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div> -->
 <script type="text/javascript">
 	$('.selectpicker').selectpicker('refresh');
 </script>
