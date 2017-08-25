@@ -35,7 +35,7 @@ class c_admin extends CI_Controller{
 	public function __construct(){
 		parent::__construct();
 		$this->load->helper('url');
-		 $this->load->helper(array('form', 'url'));
+		$this->load->helper(array('form', 'url'));
 
 		// Load form validation library
 		// $this->load->lxibraryibrary('form_validation');
@@ -94,16 +94,16 @@ class c_admin extends CI_Controller{
 	}
 	function presensi(){
 		$this->load->view('v_header_presensi');
-	
+		
 		if($this->session->userdata('otoritas')==2){
-				$this->load->view('v_ver_presensi');
+			$this->load->view('v_ver_presensi');
 		}
 		else if($this->session->userdata('otoritas')==1){ 
-		
+			
 			$this->load->view('v_admin_presensi');
 		}
 		else if($this->session->userdata('otoritas')==3){ 
-		
+			
 			$this->load->view('v_user_presensi');
 		}
 	}
@@ -474,108 +474,108 @@ class c_admin extends CI_Controller{
 		}
 
 	}
-	function test(){
+	// function test(){
+
+	// 	$this->load->library('Excelfile');
+
+	// 	$excelFile = "./uploads/tes.xlsx";
+
+	// 	$objPHPExcel = PHPExcel_IOFactory::load($excelFile);
+	// 	$objPHPExcel->getActiveSheet()->removeRow(1, 1);
+	// 	$objPHPExcel->getActiveSheet()->removeColumn('A');
+	// 	foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
+	// 		$arrayData = $worksheet->toArray();
+	// 	}
+	// 	echo "
+	// 		<table>
+
+	// 	";
+	// 	foreach ($arrayData as $key => $value) {
+	// 		// var_dump($value);
+	// 		if(ltrim($value[0]) == '' || ltrim($value[1]) == '' ) continue;
+	// 		// if(ltrim($value[1]) == '') continue;
+	// 		$tanggal=DateTime::createFromFormat('d/m/Y H:i', $value[1]);
+	// 		echo "
+	// 			<tr>
+	// 				<td>".$value[0]."</td>
+
+	// 				<td>".$tanggal->format('Y-m-d H:i')."</td>
+	
+	// 			</tr>
+	// 		";
+	// 	}
+
+	// 	echo "</table>";
+
+	// }
+
+	public function do_upload()
+	{
+		$id_bulan=$this->input->post('id_bulan');
+		
+
+		date_default_timezone_set('Asia/Jakarta');
+		$date = date('mdYhis', time());
+
+		$config['upload_path']          = './uploads/';
+		$config['allowed_types']        = 'xls|xlsx';
+		$config['max_size']             = 1500;
+		$config['file_name']           = $this->session->userdata('id_user').'_'.$date;
 
 		$this->load->library('Excelfile');
 
-		$excelFile = "./uploads/tes.xlsx";
 
-		$objPHPExcel = PHPExcel_IOFactory::load($excelFile);
-		$objPHPExcel->getActiveSheet()->removeRow(1, 1);
-		$objPHPExcel->getActiveSheet()->removeColumn('A');
-		foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
-			$arrayData = $worksheet->toArray();
+		$this->load->library('upload', $config);
+
+
+		$this->load->view('v_header_presensi');
+
+		if ( ! $this->upload->do_upload('userfile'))
+		{
+			$error = array('error' => $this->upload->display_errors());
+
+			$this->load->view('v_upload_gagal');
 		}
-		echo "
-			<table>
-
-		";
-		foreach ($arrayData as $key => $value) {
-			// var_dump($value);
-			if(ltrim($value[0]) == '' || ltrim($value[1]) == '' ) continue;
-			// if(ltrim($value[1]) == '') continue;
-			$tanggal=DateTime::createFromFormat('d/m/Y H:i', $value[1]);
-			echo "
-				<tr>
-					<td>".$value[0]."</td>
-
-					<td>".$tanggal->format('Y-m-d H:i')."</td>
-				
-				</tr>
-			";
-		}
-
-		echo "</table>";
-
-	}
-
-	 public function do_upload()
-        {
-        	$id_bulan=$this->input->post('id_bulan');
-	
-
-        	date_default_timezone_set('Asia/Jakarta');
-$date = date('mdYhis', time());
-
-                $config['upload_path']          = './uploads/';
-                $config['allowed_types']        = 'xls|xlsx';
-                $config['max_size']             = 1500;
-                $config['file_name']           = $this->session->userdata('id_user').'_'.$date;
-
-                $this->load->library('Excelfile');
-
-
-                $this->load->library('upload', $config);
-
-
-                $this->load->view('v_header_presensi');
-
-                if ( ! $this->upload->do_upload('userfile'))
-                {
-                        $error = array('error' => $this->upload->display_errors());
-
-                        $this->load->view('v_upload_gagal');
-                }
-                else
-                {
-                        $data = array('upload_data' => $this->upload->data());
+		else
+		{
+			$data = array('upload_data' => $this->upload->data());
 
 
 //perlu metode buat menamdapatkan ekstensi dari file yang diupload. variabel dibawah masih menerima ekstensi xlsx saja
-		$excelFile = "./uploads/".$config['file_name'].".xlsx";
+			$excelFile = "./uploads/".$config['file_name'].".xlsx";
 
 
 
-		$objPHPExcel = PHPExcel_IOFactory::load($excelFile);
-		$objPHPExcel->getActiveSheet()->removeRow(1, 1);
-		$objPHPExcel->getActiveSheet()->removeColumn('A');
-		foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
-			$arrayData = $worksheet->toArray();
-		}
+			$objPHPExcel = PHPExcel_IOFactory::load($excelFile);
+			$objPHPExcel->getActiveSheet()->removeRow(1, 1);
+			$objPHPExcel->getActiveSheet()->removeColumn('A');
+			foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
+				$arrayData = $worksheet->toArray();
+			}
 
-		foreach ($arrayData as $key => $value) {
+			foreach ($arrayData as $key => $value) {
 			// var_dump($value);
-			if(ltrim($value[0]) == '' || ltrim($value[1]) == '' ) continue;
+				if(ltrim($value[0]) == '' || ltrim($value[1]) == '' ) continue;
 			// if(ltrim($value[1]) == '') continue;
-			$tanggal=DateTime::createFromFormat('d/m/Y H:i', $value[1]);
-			$dataAbs['ID_USER']=$value[0];
-			$dataAbs['TANGGAL']=$tanggal->format('Y-m-d H:i');
-			$dataAbs['ID_BULAN']=$id_bulan;
-			$dataAbs['ID_USER_INPUT']=$this->session->userdata('id_user');
-			$this->m_admin->insert_absen($dataAbs);
+				$tanggal=DateTime::createFromFormat('d/m/Y H:i', $value[1]);
+				$dataAbs['ID_USER']=$value[0];
+				$dataAbs['TANGGAL']=$tanggal->format('Y-m-d H:i');
+				$dataAbs['ID_BULAN']=$id_bulan;
+				$dataAbs['ID_USER_INPUT']=$this->session->userdata('id_user');
+				$this->m_admin->insert_absen($dataAbs);
+			}
+			
+
+			$this->load->view('v_upload_sukses');
+			
 		}
-		
+	}
 
-                        $this->load->view('v_upload_sukses');
-                       
-                }
-        }
-
-        function rekap_absen(){
+	function rekap_absen(){
         	//parametrnya id_bulan untuk metod ini d
-        	$id_bulan=$this->input->post('id_bulan2');
-        	$this->load->view('v_header_presensi');
-        	$this->load->view('v_header_rekap');
+		$id_bulan=$this->input->post('id_bulan2');
+		$this->load->view('v_header_presensi');
+		$this->load->view('v_header_rekap');
         	$id_absents=$this->m_admin->get_id_absen($id_bulan);//harus ada parameter bulan
 
 
@@ -583,25 +583,25 @@ $date = date('mdYhis', time());
         	//PREPARE FOR INSANITY, 3 TIMES FOREACH, 3 TIMES THE ITERATION, 3 TIMES THE CRAZINESS
         	foreach($id_absents as $key =>$value){
         		$tanggal_only=$this->m_admin->get_tanggal_absen($value->ID_USER,$id_bulan);
-        	$counter_jam_lembur=0;
-			foreach($tanggal_only as $key2 =>$value2){
-        		$jamLembur=$this->m_admin->rekap_lembur($value2->ID_USER,$value2->TANGGAL,$id_bulan);
+        		$counter_jam_lembur=0;
+        		foreach($tanggal_only as $key2 =>$value2){
+        			$jamLembur=$this->m_admin->rekap_lembur($value2->ID_USER,$value2->TANGGAL,$id_bulan);
         		// var_dump($jamLembur);
 
-        		foreach($jamLembur as $key3 =>$value3){
-        			$jam=0;
-        			if(($value3->JAM)<15){
-        				$jam=15;
+        			foreach($jamLembur as $key3 =>$value3){
+        				$jam=0;
+        				if(($value3->JAM)<15){
+        					$jam=15;
+        				}
+        				else { 
+        					$jam=$value3->JAM;
+        				}
+        				$counter_jam_lembur=$counter_jam_lembur-15+$jam;
         			}
-        			else { 
-        				$jam=$value3->JAM;
-        			}
-        			$counter_jam_lembur=$counter_jam_lembur-15+$jam;
+        			
         		}
-        		
-        	}
 
-        	    $data['lembur']=$counter_jam_lembur;
+        		$data['lembur']=$counter_jam_lembur;
         		$data['absen']=$this->m_admin->rekap_absen($value->ID_USER,$id_bulan);
         		$this->load->view('v_rekap',$data);
         	}
@@ -609,5 +609,5 @@ $date = date('mdYhis', time());
 
         }
 
-}
+    }
 
