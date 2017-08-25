@@ -11,6 +11,6 @@
 					<tr>
 						<th>NAMA</th>
 						<th>NIP</th>
-						<th>TOTAL ABSEN</th>
+						<th>TOTAL JAM LEMBUR</th>
 					</tr>
 				</thead>
