@@ -23,6 +23,7 @@
 		<div class="modal-dialog modal-lg">
 			<div id="bigModalContent" class="modal-content">
 				//content from ajax loaded here
+
 			</div>
 		</div>
 	</div>

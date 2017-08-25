@@ -53,8 +53,8 @@
 				<?php }?>
 		
 					
-					<li><a href="<?php echo base_url();?>c_admin/presensi"><span class="glyphicon glyphicon-th-list"></span> Presensi</a></li>
-					<li class="active"><a href="<?php echo base_url();?>c_admin/rapat"><span class="glyphicon glyphicon-briefcase"></span> Rapat</a></li>
+					<li class="active"><a href="<?php echo base_url();?>c_admin/presensi"><span class="glyphicon glyphicon-th-list"></span> Presensi</a></li>
+					<li ><a href="<?php echo base_url();?>c_admin/rapat"><span class="glyphicon glyphicon-briefcase"></span> Rapat</a></li>
 					<li><a href="<?php echo base_url();?>c_admin/logout"><span class="glyphicon glyphicon-off"></span> Logout</a></li>
 				</ul><br>
 				<p class="navbar-text">Logged in : <?php echo $this->session->userdata('nama'); ?> as <?php if($this->session->userdata('otoritas')==1){ echo "Administrator";} else if ($this->session->userdata('otoritas')==2){ echo "Verifikator";} else {echo "User";}?><br>NIP: <?php echo $this->session->userdata('username'); ?></p>

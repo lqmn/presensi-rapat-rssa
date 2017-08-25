@@ -3,17 +3,16 @@
 			<div class="col-sm-9" style="margin-left:25%">
 				<div class="well">
 					<div width=100% style="float:right;">
-						
-					</div>
+						</div>
 					<div class="pull-right">
 						<select id="pageVer" class="selectpicker" name="tabel">
-							<option value="1" selected>Rapat Non Terverifikasi</option>
+							<option value="1" >Rapat Non Terverifikasi</option>
 							<option value="2" >Rapat Terverifikasi</option>
-							<option value="3">Semua Rapat</option>
+							<option value="3" selected >Semua Rapat</option>
 							
 						</select>
-					</div>
-					<h4>Rapat Belum Terverifikasi</h4>
+					</div>	
+					<h4>Semua Rapat</h4>
 					<br>
 					<table id="tabel" class="table table-striped table-bordered" cellspacing="0" width="100%">
 						<thead>
@@ -22,10 +21,10 @@
 								<th>Waktu Rapat</th>
 								<th>Nama Ruang</th>
 								<th>User Pembuat</th>
-								
-								<th>Verifikasi</th>
-								<th>Aksi</th>
-								
+								<th>Status</th>
+								<th>Lihat Peserta</th>
+								<th>Tambah Peserta</th>
+								<th>Panel</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -51,7 +50,7 @@
 </body>
 	<!-- Custom CSS & JS -->
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/admin.css" type="text/css">
-	<script src="<?php echo base_url(); ?>assets/js/ver_rapat.js"></script>
+	<script src="<?php echo base_url(); ?>assets/js/ver_rapat_3.js"></script>
 	<script src="<?php echo base_url(); ?>assets/js/admin.js"></script>
 	<script type="text/javascript">
 		var BASE_URL = "<?php echo base_url();?>";

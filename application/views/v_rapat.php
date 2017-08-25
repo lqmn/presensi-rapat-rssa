@@ -1,4 +1,5 @@
 <div class="col-sm-12">
+
 	<div class="col-sm-12 well" >
 		<h4><?php echo $rapat->JUDUL_RAPAT;?></h4>
 
@@ -7,14 +8,14 @@
 				<tr>
 					<th>Waktu Rapat</th>
 					<th>Ruang Rapat</th>
-					<th>Nama</th>
+					<!--<th>Nama</th>-->
 					<th>Nama Peserta</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
 					<td><?php echo @$rapat->WAKTU_RAPAT;?> </td>
-					<td><?php echo @$rapat->NAMA_RUANG;?> </td>
+					<!-- <td><?php echo @$rapat->NAMA_RUANG;?> </td> -->
 					<td><?php echo @$rapat->JUDUL_RAPAT;?> </td>
 					<td>
 						<?php 

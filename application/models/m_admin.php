@@ -86,6 +86,7 @@ class m_admin extends CI_Model{
 			JOIN pegawai ON user.ID_PEGAWAI = pegawai.ID_PEGAWAI
 			WHERE rapat.STATUS = 1 ORDER BY rapat.DATE_MODIFIED DESC';
 		}
+
 		$result = $this->db->query($sql);
 		foreach ($result->result() as $row) {
 			$data[] = $row;
@@ -93,9 +94,45 @@ class m_admin extends CI_Model{
 		return (array)@$data;
 
 	}
-
+	
+	function get_rapat_verified(){
+		$sql ='SELECT rapat.ID_RAPAT AS ID_RAPAT, JUDUL_RAPAT, WAKTU_RAPAT, NAMA_RUANG, pegawai.NAMA AS NAMA_USER,
+		(CASE 
+		WHEN STATUS_AKTIVASI=0      THEN "Belum diverifikasi"
+		WHEN STATUS_AKTIVASI=1      THEN "Terverifikasi"
+		END) as STATUS
+		FROM rapat JOIN ruang_rapat ON rapat.ID_RUANG = ruang_rapat.ID_RUANG
+		JOIN user ON rapat.ID_USER_INPUT = user.ID_USER
+		JOIN pegawai ON user.ID_PEGAWAI = pegawai.ID_PEGAWAI
+		WHERE rapat.STATUS = 1 AND STATUS_AKTIVASI=1 ORDER BY rapat.DATE_MODIFIED DESC';
+		
+		$result = $this->db->query($sql);
+		foreach ($result->result() as $row) {
+			$data[] = $row;
+		}
+		return (array)@$data;
+	}
+	
+	function get_all_rapat(){
+		$sql =$sql ='SELECT rapat.ID_RAPAT AS ID_RAPAT, JUDUL_RAPAT, WAKTU_RAPAT, NAMA_RUANG, pegawai.NAMA AS NAMA_USER,
+		(CASE 
+		WHEN STATUS_AKTIVASI=0      THEN "Belum diverifikasi"
+		WHEN STATUS_AKTIVASI=1      THEN "Terverifikasi"
+		END) as STATUS
+		FROM rapat JOIN ruang_rapat ON rapat.ID_RUANG = ruang_rapat.ID_RUANG
+		JOIN user ON rapat.ID_USER_INPUT = user.ID_USER
+		JOIN pegawai ON user.ID_PEGAWAI = pegawai.ID_PEGAWAI
+		WHERE rapat.STATUS = 1 ORDER BY rapat.DATE_MODIFIED DESC';
+		
+		$result = $this->db->query($sql);
+		foreach ($result->result() as $row) {
+			$data[] = $row;
+		}
+		return (array)@$data;
+	} 
+	
 	function get_waktu_by_id_rapat($id_rapat){
-		$sql='SELECT WAKTU_RAPAT FROM rapat WHERE ID_RAPAT=1' ;
+		$sql='SELECT WAKTU_RAPAT FROM rapat WHERE ID_RAPAT='.$id_rapat ;
 		$result = $this->db->query($sql);
 		$res=$result->result();
 		return $res;
@@ -346,6 +383,76 @@ class m_admin extends CI_Model{
 			 // var_dump($value);	
 		}
 	}
+
+
+function update_status_rapat(){
+	$sql="UPDATE  rapat
+	SET rapat.STATUS=0
+	WHERE  DATE_SUB(NOW(), INTERVAL 1 HOUR) > WAKTU_RAPAT";
+	$this->db->query($sql);
+	return $this->db->affected_rows();
+}
+
+function verifikasi_rapat($id_rapat){
+	$sql='UPDATE RAPAT 
+	SET STATUS_AKTIVASI=1 WHERE ID_RAPAT='.$id_rapat ;
+		$this->db->query($sql);
+	return $this->db->affected_rows();
+	
+}
+function insert_absen($data){
+
+
+$result=$this->db->insert('absensi', $data);
+
+	return $this->db->affected_rows();
+}
+
+function get_id_absen($id_bulan){
+//jangan lupa parameternya bulan
+	$sql="SELECT DISTINCT ID_USER FROM absensi WHERE ID_BULAN=".$id_bulan;
+	$result=$this->db->query($sql);
+	foreach ($result->result() as $row) {
+			$data[] = $row;
+		}
+		return (array)@$data;
+		}
+
+function rekap_absen($id_user,$id_bulan){ //kasih parameter id_bulan
+	$sql="SELECT   pegawai.NAMA ,'".$id_user."' as ID_USER, COUNT(DISTINCT DAY(TANGGAL)) AS TOTAL_ABSEN FROM `absensi`,pegawai WHERE ID_BULAN=".$id_bulan." AND ID_USER_INPUT=".$this->session->userdata('id_user')." AND pegawai.NIP='".$id_user."' AND ID_USER='".$id_user."'";
+	$result=$this->db->query($sql);
+	foreach ($result->result() as $row) {
+			$data[] = $row;
+		}
+		return (array)@$data;
+		}
+
+function get_tanggal_absen($iduser,$id_bulan){
+$sql="SELECT distinct '".$iduser."' as ID_USER, DAY(TANGGAL) as TANGGAL FROM `absensi` WHERE ID_BULAN=".$id_bulan." AND ID_USER_INPUT=".$this->session->userdata('id_user')." AND ID_USER='".$iduser."'" ;
+
+$result=$this->db->query($sql);
+	foreach ($result->result() as $row) {
+			$data[] = $row;
+		}
+		return (array)@$data;
+}
+
+function rekap_lembur($iduser,$tanggal,$id_bulan){
+$sql="select HOUR(TANGGAL) AS JAM FROM absensi WHERE ID_USER='".$iduser."' AND ID_USER_INPUT=".$this->session->userdata('id_user')." AND DAY(TANGGAL)=".$tanggal." AND ID_BULAN=".$id_bulan." ORDER BY HOUR(TANGGAL) DESC LIMIT 1" ;
+
+$result=$this->db->query($sql);
+	foreach ($result->result() as $row) {
+			$data[] = $row;
+		}
+		return (array)@$data;
+}
+
+
+
+
+	
+
+
 
 	function update_status_rapat(){
 		$sql="UPDATE  rapat

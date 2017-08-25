@@ -4,7 +4,7 @@ $(document).ready(function() {
 			"dom": '<"toolbar">frtlp',
 		"ajax": {
 		
-			"url": BASE_URL+"c_admin/get_table_rapat",
+			"url": BASE_URL+"c_admin/get_table_rapat_verified",
 			"dataSrc": ""
 		},
 		"columns": [
@@ -14,14 +14,15 @@ $(document).ready(function() {
 		{ "data": "NAMA_RUANG" },
 		{ "data": "NAMA_USER" },
 		{ "data": "ID_RAPAT" },
+		{ "data": "ID_RAPAT" },
 		{ "data": "ID_RAPAT" }
 		],'columnDefs':[{
-			'targets': 6,
+			'targets': 7,
 			'searchable':false,
 			'orderable':false,
 			'className': 'dt-body-center',
 			'render': function (data){
-				return '<button type="button" class="editButton btn-xs btn-info pull-left" data-toggle="modal" data-target="#myModal" value="'+data+'"><span class="glyphicon glyphicon-edit" data-toggle="tooltip" data-placement="top" title="PICKLE RICK!"></span> Edit</button><br><br><a href="'+BASE_URL+'c_admin/lihatPeserta/'+data+'"><button type="button" class="lihatPesertaButton btn-xs btn-info pull-left" value="'+data+'">Lihat Peserta</button></a><br><br><a href="'+BASE_URL+'c_admin/peserta/'+data+'"><button type="button" class="pesertaButton btn-xs btn-info pull-left" value="'+data+'">Tambah Peserta</button></a>';
+				return '<button type="button" class="editButton btn btn-info" data-toggle="modal" data-target="#myModal" value="'+data+'"><span class="glyphicon glyphicon-edit"></span> Edit</button>';
 			}
 		},{
 			'targets': 0,
@@ -33,14 +34,24 @@ $(document).ready(function() {
 			}
 		}
 		,{
+			'targets': 6,
+			'searchable':false,
+			'orderable':false,
+			'className': 'dt-body-center',
+			'render': function (data){
+				return '<a href="'+BASE_URL+'c_admin/peserta/'+data+'"><button type="button" class="pesertaButton btn btn-info" value="'+data+'">Tambah Peserta</button></a>';
+			}
+		}
+		,{
 			'targets': 5,
 			'searchable':false,
 			'orderable':false,
 			'className': 'dt-body-center',
 			'render': function (data){
-				return '<button type="button" id="verif" class="btn btn-success" value="'+data+'"  data-toggle="modal" data-target="#myModal">Verifikasi</button>';
+				return '<a href="'+BASE_URL+'c_admin/lihatPeserta/'+data+'"><button type="button" class="lihatPesertaButton btn btn-info" value="'+data+'">Lihat Peserta</button></a>';
 			}
 		}
+		
 		],"order": [],
 		initComplete:function(){
 			$('div.toolbar').html('<div style="float:left;"><button id="tambah" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Tambah <span class="glyphicon glyphicon-plus"></span></button> <button id="hapus" type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal" disabled>Delete <span class="glyphicon glyphicon-remove"></span></button></div>');
@@ -193,3 +204,17 @@ $(document).on('click','#verif',function(event){
 	
 	
 
+
+$(document).on('change','#page',function(){
+		var x = $('#page').val();
+		console.log(x);
+		switch(parseInt(x)){
+			case 1:
+			window.location.href =  BASE_URL+'c_admin/rapat';
+			break;
+			case 2:	
+			window.location.href =  BASE_URL+'c_admin/all_rapat_ver';
+			break;
+			default:
+		}
+	});

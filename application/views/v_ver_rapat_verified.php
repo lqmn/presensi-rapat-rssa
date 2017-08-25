@@ -7,13 +7,13 @@
 					</div>
 					<div class="pull-right">
 						<select id="pageVer" class="selectpicker" name="tabel">
-							<option value="1" selected>Rapat Non Terverifikasi</option>
-							<option value="2" >Rapat Terverifikasi</option>
+							<option value="1" >Rapat Non Terverifikasi</option>
+							<option value="2" selected >Rapat Terverifikasi</option>
 							<option value="3">Semua Rapat</option>
 							
 						</select>
 					</div>
-					<h4>Rapat Belum Terverifikasi</h4>
+					<h4>Rapat Terverifikasi</h4>
 					<br>
 					<table id="tabel" class="table table-striped table-bordered" cellspacing="0" width="100%">
 						<thead>
@@ -22,9 +22,9 @@
 								<th>Waktu Rapat</th>
 								<th>Nama Ruang</th>
 								<th>User Pembuat</th>
-								
-								<th>Verifikasi</th>
-								<th>Aksi</th>
+								<th>Lihat Peserta</th>
+								<th>Tambah Peserta</th>
+								<th>Panel</th>
 								
 							</tr>
 						</thead>
@@ -51,7 +51,7 @@
 </body>
 	<!-- Custom CSS & JS -->
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/admin.css" type="text/css">
-	<script src="<?php echo base_url(); ?>assets/js/ver_rapat.js"></script>
+	<script src="<?php echo base_url(); ?>assets/js/ver_rapat_2.js"></script>
 	<script src="<?php echo base_url(); ?>assets/js/admin.js"></script>
 	<script type="text/javascript">
 		var BASE_URL = "<?php echo base_url();?>";

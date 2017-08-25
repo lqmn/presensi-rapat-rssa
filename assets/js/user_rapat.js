@@ -58,6 +58,7 @@ $(document).ready(function() {
 	// insert
 	$(document).on('click','#tambah',function(event){
 		var requrl = BASE_URL+'c_rapat/form_rapat';
+
 		$.ajax({
 			url:requrl,
 			success:function(data){
@@ -69,6 +70,7 @@ $(document).ready(function() {
 	$('#modalContent').on('submit','#insertForm', function(e){
 		$('#insert').button('loading');
 		var requrl = BASE_URL+'c_rapat/insert_rapat/';
+
 		var data = {};
 
 		$('#modalContent').find('[name]').each(function(index, value){
