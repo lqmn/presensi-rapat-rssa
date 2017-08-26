@@ -20,44 +20,8 @@ Class c_login extends CI_Controller {
 
 	// Show login page
 	function index() {
-		// echo 'KWADOKAWOD';
-		redirect('c_admin/landing','refresh');
-		
-	}
-	function welcome(){
 		$this->load->view('v_login');
 	}
-
-	// Show registration page
-	// public function user_registration_show() {
-	// 	$this->load->view('registration_form');
-	// }
-
-	// Validate and store registration data in database
-	// public function new_user_registration() {
-
-	// 	// Check validation for user input in SignUp form
-	// 	$this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean');
-	// 	$this->form_validation->set_rules('email_value', 'Email', 'trim|required|xss_clean');
-	// 	$this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');
-	// 	if ($this->form_validation->run() == FALSE) {
-	// 	$this->load->view('registration_form');
-	// 	} else {
-	// 	$data = array(
-	// 	'user_name' => $this->input->post('username'),
-	// 	'user_email' => $this->input->post('email_value'),
-	// 	'user_password' => $this->input->post('password')
-	// 	);
-	// 	$result = $this->login_database->registration_insert($data);
-	// 	if ($result == TRUE) {
-	// 	$data['message_display'] = 'Registration Successfully !';
-	// 	$this->load->view('v_login', $data);
-	// 	} else {
-	// 	$data['message_display'] = 'Username already exist!';
-	// 	$this->load->view('registration_form', $data);
-	// 	}
-	// 	}
-	// }
 
 	// Check for user login process
 	function user_login_process() {
@@ -111,23 +75,46 @@ Class c_login extends CI_Controller {
 
 	function loginsuccess(){
 		if ($this->session->userdata('otoritas')==1) {
-			// echo "admin";
-			redirect('c_admin', 'refresh');
+			$this->load->view('v_admin_home');
 		}elseif ($this->session->userdata('otoritas')==2) {
-			redirect('c_admin/rapat','refresh');
+			$this->load->view('v_ver_home');
 		}elseif ($this->session->userdata('otoritas')==3) {
-			redirect('c_admin/rapat','refresh');
+			$this->load->view('v_user_home');
 		}
 	}
 
 	// Logout from admin page
 	function logout() {
 		// Removing session data
-		$sess_array = array(
-			'username' => ''
-			);
-		$this->session->unset_userdata('authority', $sess_array);
-		$data['message_display'] = 'Successfully Logout';
-		$this->load->view('v_login', $data);
+		// $sess_array = array(
+		// 	'username' => ''
+		// 	);
+		// $this->session->unset_userdata('authority', $sess_array);
+		// $data['message_display'] = 'Successfully Logout';
+		// $this->load->view('v_login', $data);
+		$this->session->sess_destroy();
+		redirect('c_login','refresh');
+	}
+
+	function proses_login(){
+		$data = $this->input->post();
+		$res = $this->m_login->login($data);
+		if ($res==false) {
+			echo "0";
+			return;
+		}else{
+			$res = $this->m_login->read_user_information($res);
+			var_dump($res);
+			$session_data = array(
+				'id_user' => $res->ID_USER,
+				'id_pegawai' => $res->ID_PEGAWAI,
+				'username' => $res->USERNAME,
+				'otoritas' => $res->OTORITAS,
+				'nama' => $res->NAMA,
+				'nama_satker' => $res->NAMA_SATKER
+				);
+			$this->session->set_userdata($session_data);
+			echo "1";
+		}
 	}
 }
