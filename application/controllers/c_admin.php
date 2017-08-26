@@ -65,7 +65,7 @@ class c_admin extends CI_Controller{
 		if($this->session->userdata('otoritas')==1){
 			$this->load->view('v_admin_pegawai');
 		}else{
-			$this->error_authority();
+			redirect('c_login/error_authority/','refresh');
 		}
 	}
 
@@ -117,7 +117,7 @@ class c_admin extends CI_Controller{
 		if($this->session->userdata('otoritas')==1){
 			$this->load->view('v_admin_user');
 		}else{
-			$this->error_authority();
+			redirect('c_login/error_authority/','refresh');
 		}
 	}
 
@@ -125,7 +125,7 @@ class c_admin extends CI_Controller{
 		if($this->session->userdata('otoritas')==1){
 			$this->load->view('v_admin_non');
 		}else{
-			$this->error_authority();
+			redirect('c_login/error_authority/','refresh');
 		}
 	}
 
@@ -551,7 +551,7 @@ class c_admin extends CI_Controller{
 
 
 //perlu metode buat menamdapatkan ekstensi dari file yang diupload. variabel dibawah masih menerima ekstensi xlsx saja
-			$excelFile = "./uploads/".$config['file_name'].".xlsx";
+			$excelFile = "./uploads/".$config['file_name'].".xls";
 
 
 

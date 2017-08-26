@@ -18,7 +18,7 @@
 		</div>
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav">
-				<li id="presensi-nav"><a href="#">Presensi</a></li>
+				<li id="presensi-nav"><a href="<?php echo base_url("c_presensi/"); ?>">Presensi</a></li>
 				<li id="rapat-nav"><a href="<?php echo base_url("c_rapat/"); ?>">Rapat</a></li>
 			</ul>
 			<?php 
