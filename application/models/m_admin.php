@@ -414,7 +414,9 @@ function rekap_absen($id_user,$id_bulan){ //kasih parameter id_bulan
 
 function get_tanggal_absen($iduser,$id_bulan){
 
+
 $sql="SELECT distinct '".$iduser."' as ID_USER, DAY(TANGGAL) as TANGGAL FROM `absensi` WHERE ID_BULAN=".$id_bulan." AND ID_USER_INPUT=".$this->session->userdata('id_user')." AND ID_USER='".$iduser."' AND DAYNAME(TANGGAL)<>'SATURDAY' AND DAYNAME(TANGGAL)<>'SUNDAY'" ;
+
 
 
 
@@ -427,6 +429,7 @@ $sql="SELECT distinct '".$iduser."' as ID_USER, DAY(TANGGAL) as TANGGAL FROM `ab
 
 function rekap_lembur($iduser,$tanggal,$id_bulan){
 	$sql="select HOUR(TANGGAL) AS JAM FROM absensi WHERE ID_USER='".$iduser."' AND ID_USER_INPUT=".$this->session->userdata('id_user')." AND DAY(TANGGAL)=".$tanggal." AND ID_BULAN=".$id_bulan." ORDER BY HOUR(TANGGAL) DESC LIMIT 1" ;
+
 
 	$result=$this->db->query($sql);
 	foreach ($result->result() as $row) {
@@ -505,11 +508,12 @@ function reset_jam_kosong(){
 
 function get_jam_kosong(){
 	$sql="SELECT hari.NAMA_HARI,jam.nama_jam FROM JAM,hari WHERE jam.STATUS=1 and jam.id_hari=hari.id_hari AND RIGHT(jam.nama_jam,1)<>'9' AND jam.ID_HARI<>6 AND jam.ID_HARI<>7";
+
 	$result=$this->db->query($sql);
 	foreach ($result->result() as $row) {
-			$data[] = $row;
-		}
-		return (array)@$data;
+		$data[] = $row;
+	}
+	return (array)@$data;
 }
 
 
