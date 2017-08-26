@@ -566,7 +566,7 @@ class c_admin extends CI_Controller{
 
 
 			$tanggal=DateTime::createFromFormat('d/m/Y H:i', $value[1]);
-			$dataAbs['ID_USER']=$value[0];
+			$dataAbs['ID_PEGAWAI']=$value[0];
 			$dataAbs['TANGGAL']=$tanggal->format('Y-m-d H:i');
 			$dataAbs['ID_BULAN']=$id_bulan;
 			$dataAbs['ID_USER_INPUT']=$this->session->userdata('id_user');
@@ -595,10 +595,10 @@ class c_admin extends CI_Controller{
 
         	//PREPARE FOR INSANITY, 3 TIMES FOREACH, 3 TIMES THE ITERATION, 3 TIMES THE CRAZINESS
         	foreach($id_absents as $key =>$value){
-        		$tanggal_only=$this->m_admin->get_tanggal_absen($value->ID_USER,$id_bulan);
+        		$tanggal_only=$this->m_admin->get_tanggal_absen($value->ID_PEGAWAI,$id_bulan);
         		$counter_jam_lembur=0;
         		foreach($tanggal_only as $key2 =>$value2){
-        			$jamLembur=$this->m_admin->rekap_lembur($value2->ID_USER,$value2->TANGGAL,$id_bulan);
+        			$jamLembur=$this->m_admin->rekap_lembur($value2->ID_PEGAWAI,$value2->TANGGAL,$id_bulan);
         		// var_dump($jamLembur);
 
         			foreach($jamLembur as $key3 =>$value3){
@@ -615,7 +615,7 @@ class c_admin extends CI_Controller{
         		}
 
         		$data['lembur']=$counter_jam_lembur;
-        		$data['absen']=$this->m_admin->rekap_absen($value->ID_USER,$id_bulan);
+        		$data['absen']=$this->m_admin->rekap_absen($value->ID_PEGAWAI,$id_bulan);
         		$this->load->view('v_rekap',$data);
         	}
         	$this->load->view('v_footer_rekap');
@@ -635,10 +635,10 @@ class c_admin extends CI_Controller{
 
         	//PREPARE FOR INSANITY, 3 TIMES FOREACH, 3 TIMES THE ITERATION, 3 TIMES THE CRAZINESS
         	foreach($id_absents as $key =>$value){
-        		$tanggal_only=$this->m_admin->get_tanggal_absen($value->ID_USER,$id_bulan);
+        		$tanggal_only=$this->m_admin->get_tanggal_absen($value->ID_PEGAWAI,$id_bulan);
         		$counter_jam_lembur=0;
         		foreach($tanggal_only as $key2 =>$value2){
-        			$jamLembur=$this->m_admin->rekap_lembur($value2->ID_USER,$value2->TANGGAL,$id_bulan);
+        			$jamLembur=$this->m_admin->rekap_lembur($value2->ID_PEGAWAI,$value2->TANGGAL,$id_bulan);
         		// var_dump($jamLembur);
 
         			foreach($jamLembur as $key3 =>$value3){
@@ -655,7 +655,7 @@ class c_admin extends CI_Controller{
         		}
 
         		$data['lembur']=$counter_jam_lembur;
-        		$data['absen']=$this->m_admin->rekap_absen($value->ID_USER,$id_bulan);
+        		$data['absen']=$this->m_admin->rekap_absen($value->ID_PEGAWAI,$id_bulan);
         		$this->load->view('v_rekap_lembur',$data);
         	}
         	$this->load->view('v_footer_rekap');
@@ -778,7 +778,4 @@ $date = date('mdYhis', time());
         }
 
 }
-
-    }
-
 

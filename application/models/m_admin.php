@@ -388,15 +388,11 @@ class m_admin extends CI_Model{
 
 		$result=$this->db->insert('absensi', $data);
 
-
-		$result=$this->db->insert('absensi', $data);
-
 		return $this->db->affected_rows();
 	}
 
 	function get_id_absen($id_bulan){
-//jangan lupa parameternya bulan
-		$sql="SELECT DISTINCT ID_USER FROM absensi WHERE ID_BULAN=".$id_bulan;
+		$sql="SELECT DISTINCT ID_PEGAWAI FROM absensi WHERE ID_BULAN=".$id_bulan;
 		$result=$this->db->query($sql);
 		foreach ($result->result() as $row) {
 			$data[] = $row;
@@ -404,49 +400,49 @@ class m_admin extends CI_Model{
 		return (array)@$data;
 	}
 
-function rekap_absen($id_user,$id_bulan){ //kasih parameter id_bulan
-	$sql="SELECT   pegawai.NAMA ,'".$id_user."' as ID_USER, COUNT(DISTINCT DAY(TANGGAL)) AS TOTAL_ABSEN FROM `absensi`,pegawai,satuan_kerja
-	 WHERE ID_BULAN=".$id_bulan." AND ID_USER_INPUT=".$this->session->userdata('id_user')." AND pegawai.NIP='".$id_user." 'AND ID_USER='".$id_user."'";
-	$result=$this->db->query($sql);
-	foreach ($result->result() as $row) {
-		$data[] = $row;
+	function rekap_absen($id_user,$id_bulan){ //kasih parameter id_bulan
+		$sql="SELECT   pegawai.NAMA, '".$id_user."' as ID_PEGAWAI, COUNT(DISTINCT DAY(TANGGAL)) AS TOTAL_ABSEN FROM `absensi`,pegawai,satuan_kerja
+		WHERE ID_BULAN=".$id_bulan." AND ID_USER_INPUT=".$this->session->userdata('id_user')." AND absensi.NAMA_SATKER ='".$this->session->userdata('nama_satker')."' AND pegawai.NIP='".$id_user."'  AND absensi.ID_PEGAWAI='".$id_user."'";
+		$result=$this->db->query($sql);
+		foreach ($result->result() as $row) {
+			$data[] = $row;
+		}
+		return (array)@$data;
 	}
-	return (array)@$data;
-}
 
-function get_tanggal_absen($iduser,$id_bulan){
+	function get_tanggal_absen($iduser,$id_bulan){
 
-$sql="SELECT distinct '".$iduser."' as ID_USER, DAY(TANGGAL) as TANGGAL FROM `absensi` WHERE ID_BULAN=".$id_bulan." AND ID_USER_INPUT=".$this->session->userdata('id_user')." AND ID_USER='".$iduser."' AND DAYNAME(TANGGAL)<>'SATURDAY' AND DAYNAME(TANGGAL)<>'SUNDAY'" ;
+		$sql="SELECT distinct '".$iduser."' as ID_PEGAWAI, DAY(TANGGAL) as TANGGAL FROM `absensi` WHERE ID_BULAN=".$id_bulan." AND ID_USER_INPUT=".$this->session->userdata('id_user')." AND ID_PEGAWAI='".$iduser."' AND DAYNAME(TANGGAL)<>'SATURDAY' AND DAYNAME(TANGGAL)<>'SUNDAY'" ;
 
 
 
 
-	$result=$this->db->query($sql);
-	foreach ($result->result() as $row) {
-		$data[] = $row;
+		$result=$this->db->query($sql);
+		foreach ($result->result() as $row) {
+			$data[] = $row;
+		}
+		return (array)@$data;
 	}
-	return (array)@$data;
-}
 
-function rekap_lembur($iduser,$tanggal,$id_bulan){
-	$sql="select HOUR(TANGGAL) AS JAM FROM absensi WHERE ID_USER='".$iduser."' AND ID_USER_INPUT=".$this->session->userdata('id_user')." AND DAY(TANGGAL)=".$tanggal." AND ID_BULAN=".$id_bulan." ORDER BY HOUR(TANGGAL) DESC LIMIT 1" ;
+	function rekap_lembur($iduser,$tanggal,$id_bulan){
+		$sql="select HOUR(TANGGAL) AS JAM FROM absensi WHERE ID_PEGAWAI='".$iduser."' AND ID_USER_INPUT=".$this->session->userdata('id_user')." AND DAY(TANGGAL)=".$tanggal." AND ID_BULAN=".$id_bulan." ORDER BY HOUR(TANGGAL) DESC LIMIT 1" ;
 
-	$result=$this->db->query($sql);
-	foreach ($result->result() as $row) {
-		$data[] = $row;
+		$result=$this->db->query($sql);
+		foreach ($result->result() as $row) {
+			$data[] = $row;
+		}
+		return (array)@$data;
 	}
-	return (array)@$data;
-}
 
-function update_jam_kosong($secondjam,$angka,$id_hari){
-$sql="update  jam SET status=0 where nama_jam='".$secondjam."' AND id_hari=".$id_hari;
+	function update_jam_kosong($secondjam,$angka,$id_hari){
+		$sql="update  jam SET status=0 where nama_jam='".$secondjam."' AND id_hari=".$id_hari;
 
-$sks1="2007-09-01 00:49";
-$sks2="2007-09-01 00:50";
-$sks3="2007-09-01 00:01";
-$sksjam=strtotime($sks1);
-$sksjam2=strtotime($sks2);
-$sksjam3=strtotime($sks3);
+		$sks1="2007-09-01 00:49";
+		$sks2="2007-09-01 00:50";
+		$sks3="2007-09-01 00:01";
+		$sksjam=strtotime($sks1);
+		$sksjam2=strtotime($sks2);
+		$sksjam3=strtotime($sks3);
 
 $jam_backstep=(($secondjam-$sksjam)); //mengurangi jam input dengan 49 menit
 //var_dump($jam_backstep);
@@ -476,11 +472,11 @@ if($angka==3){
 	$result2=$this->db->query($sql2half);
 	$result2=$this->db->query($sql3);
 	$result2=$this->db->query($sql3half);
-		$result2=$this->db->query($sql4);
+	$result2=$this->db->query($sql4);
 }
 
 else if($angka==2){
-$sql="update  JAM SET STATUS=0 where nama_jam='".date("H.i", $secondjam)."' AND id_hari=".$id_hari;
+	$sql="update  JAM SET STATUS=0 where nama_jam='".date("H.i", $secondjam)."' AND id_hari=".$id_hari;
 	$sql2="update  JAM SET STATUS=0 where nama_jam='".$date."' AND id_hari=".$id_hari;
 	$sql2half="update  JAM SET STATUS=0 where nama_jam='".$datehalf."' AND id_hari=".$id_hari;
 	$sql3="update  JAM SET STATUS=0 where nama_jam='".$date2."' AND id_hari=".$id_hari;
@@ -517,21 +513,7 @@ function get_jam_kosong(){
 	return (array)@$data;
 }
 
-
-
-function update_status_rapat(){
-	$sql="UPDATE  rapat
-	SET rapat.STATUS=0
-	WHERE  DATE_SUB(NOW(), INTERVAL 1 HOUR) > WAKTU_RAPAT";
-	$this->db->query($sql);
-	return $this->db->affected_rows();
-}
-
-
-
-
-
-function update_status_rapat(){
+function update_status_rapat(){	
 	$sql="UPDATE  rapat
 	SET rapat.STATUS=0
 	WHERE  DATE_SUB(NOW(), INTERVAL 1 HOUR) > WAKTU_RAPAT";
