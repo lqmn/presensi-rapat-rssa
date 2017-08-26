@@ -525,6 +525,7 @@ class c_admin extends CI_Controller{
 		$config['max_size']             = 1500;
 		$config['file_name']           = $this->session->userdata('id_user').'_'.$date;
 
+
 		$this->load->library('Excelfile');
 
 
@@ -561,6 +562,7 @@ class c_admin extends CI_Controller{
 			// var_dump($value);
 				if(ltrim($value[0]) == '' || ltrim($value[1]) == '' ) continue;
 			// if(ltrim($value[1]) == '') continue;
+
 
 
 			$tanggal=DateTime::createFromFormat('d/m/Y H:i', $value[1]);
@@ -776,7 +778,6 @@ $date = date('mdYhis', time());
         }
 
 }
-
 
     }
 

@@ -386,6 +386,8 @@ class m_admin extends CI_Model{
 
 	function insert_absen($data){
 
+		$result=$this->db->insert('absensi', $data);
+
 
 		$result=$this->db->insert('absensi', $data);
 
@@ -414,7 +416,6 @@ function rekap_absen($id_user,$id_bulan){ //kasih parameter id_bulan
 
 function get_tanggal_absen($iduser,$id_bulan){
 
-
 $sql="SELECT distinct '".$iduser."' as ID_USER, DAY(TANGGAL) as TANGGAL FROM `absensi` WHERE ID_BULAN=".$id_bulan." AND ID_USER_INPUT=".$this->session->userdata('id_user')." AND ID_USER='".$iduser."' AND DAYNAME(TANGGAL)<>'SATURDAY' AND DAYNAME(TANGGAL)<>'SUNDAY'" ;
 
 
@@ -429,7 +430,6 @@ $sql="SELECT distinct '".$iduser."' as ID_USER, DAY(TANGGAL) as TANGGAL FROM `ab
 
 function rekap_lembur($iduser,$tanggal,$id_bulan){
 	$sql="select HOUR(TANGGAL) AS JAM FROM absensi WHERE ID_USER='".$iduser."' AND ID_USER_INPUT=".$this->session->userdata('id_user')." AND DAY(TANGGAL)=".$tanggal." AND ID_BULAN=".$id_bulan." ORDER BY HOUR(TANGGAL) DESC LIMIT 1" ;
-
 
 	$result=$this->db->query($sql);
 	foreach ($result->result() as $row) {
@@ -500,6 +500,7 @@ else if($angka==1){
 return $this->db->affected_rows();
 }
 
+
 function reset_jam_kosong(){
 	$sql="UPDATE JAM set STATUS=1 where STATUS=0";
 	$result=$this->db->query($sql);
@@ -518,6 +519,13 @@ function get_jam_kosong(){
 
 
 
+function update_status_rapat(){
+	$sql="UPDATE  rapat
+	SET rapat.STATUS=0
+	WHERE  DATE_SUB(NOW(), INTERVAL 1 HOUR) > WAKTU_RAPAT";
+	$this->db->query($sql);
+	return $this->db->affected_rows();
+}
 
 
 
