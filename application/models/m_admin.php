@@ -386,6 +386,8 @@ class m_admin extends CI_Model{
 
 	function insert_absen($data){
 
+		$result=$this->db->insert('absensi', $data);
+
 
 		$result=$this->db->insert('absensi', $data);
 
@@ -403,7 +405,8 @@ class m_admin extends CI_Model{
 	}
 
 function rekap_absen($id_user,$id_bulan){ //kasih parameter id_bulan
-	$sql="SELECT   pegawai.NAMA ,'".$id_user."' as ID_USER, COUNT(DISTINCT DAY(TANGGAL)) AS TOTAL_ABSEN FROM `absensi`,pegawai WHERE ID_BULAN=".$id_bulan." AND ID_USER_INPUT=".$this->session->userdata('id_user')." AND pegawai.NIP='".$id_user."' AND ID_USER='".$id_user."'";
+	$sql="SELECT   pegawai.NAMA ,'".$id_user."' as ID_USER, COUNT(DISTINCT DAY(TANGGAL)) AS TOTAL_ABSEN FROM `absensi`,pegawai,satuan_kerja
+	 WHERE ID_BULAN=".$id_bulan." AND ID_USER_INPUT=".$this->session->userdata('id_user')." AND pegawai.NIP='".$id_user." 'AND ID_USER='".$id_user."'";
 	$result=$this->db->query($sql);
 	foreach ($result->result() as $row) {
 		$data[] = $row;
@@ -414,6 +417,9 @@ function rekap_absen($id_user,$id_bulan){ //kasih parameter id_bulan
 function get_tanggal_absen($iduser,$id_bulan){
 
 $sql="SELECT distinct '".$iduser."' as ID_USER, DAY(TANGGAL) as TANGGAL FROM `absensi` WHERE ID_BULAN=".$id_bulan." AND ID_USER_INPUT=".$this->session->userdata('id_user')." AND ID_USER='".$iduser."' AND DAYNAME(TANGGAL)<>'SATURDAY' AND DAYNAME(TANGGAL)<>'SUNDAY'" ;
+
+
+
 
 	$result=$this->db->query($sql);
 	foreach ($result->result() as $row) {
@@ -432,8 +438,94 @@ function rekap_lembur($iduser,$tanggal,$id_bulan){
 	return (array)@$data;
 }
 
+function update_jam_kosong($secondjam,$angka,$id_hari){
+$sql="update  jam SET status=0 where nama_jam='".$secondjam."' AND id_hari=".$id_hari;
+
+$sks1="2007-09-01 00:49";
+$sks2="2007-09-01 00:50";
+$sks3="2007-09-01 00:01";
+$sksjam=strtotime($sks1);
+$sksjam2=strtotime($sks2);
+$sksjam3=strtotime($sks3);
+
+$jam_backstep=(($secondjam-$sksjam)); //mengurangi jam input dengan 49 menit
+//var_dump($jam_backstep);
+$date = date("H.i", $jam_backstep);
+$datehalf = date("H.i", $jam_backstep-$sksjam3);
+
+$jam_backstep2=(($jam_backstep-$sksjam2));//mengurangi lagi jam dengan 50 menit
+$date2 = date("H.i", $jam_backstep2);
+$date2half = date("H.i", $jam_backstep2-60);
+$date3 = date("H.i", $jam_backstep2-3000);
+
+$ceksecondjam=date("H.i", $secondjam);
+var_dump($jam_backstep2);
+var_dump(date("H.i", $jam_backstep2-$sksjam3));
+var_dump(date("H.i", $jam_backstep2-3000));
+
+;
+if($angka==3){
+	$sql="update  JAM SET STATUS=0 where nama_jam='".date("H.i", $secondjam)."' AND id_hari=".$id_hari;
+	$sql2="update  JAM SET STATUS=0 where nama_jam='".$date."' AND id_hari=".$id_hari;
+	$sql2half="update  JAM SET STATUS=0 where nama_jam='".$datehalf."' AND id_hari=".$id_hari;
+	$sql3="update  JAM SET STATUS=0 where nama_jam='".$date2."' AND id_hari=".$id_hari;
+	$sql3half="update  JAM SET STATUS=0 where nama_jam='".$date2half."' AND id_hari=".$id_hari;
+	$sql4="update  JAM SET STATUS=0 where nama_jam='".$date3."' AND id_hari=".$id_hari;
+	$result=$this->db->query($sql);
+	$result2=$this->db->query($sql2);
+	$result2=$this->db->query($sql2half);
+	$result2=$this->db->query($sql3);
+	$result2=$this->db->query($sql3half);
+		$result2=$this->db->query($sql4);
+}
+
+else if($angka==2){
+$sql="update  JAM SET STATUS=0 where nama_jam='".date("H.i", $secondjam)."' AND id_hari=".$id_hari;
+	$sql2="update  JAM SET STATUS=0 where nama_jam='".$date."' AND id_hari=".$id_hari;
+	$sql2half="update  JAM SET STATUS=0 where nama_jam='".$datehalf."' AND id_hari=".$id_hari;
+	$sql3="update  JAM SET STATUS=0 where nama_jam='".$date2."' AND id_hari=".$id_hari;
+	$result=$this->db->query($sql);
+	$result2=$this->db->query($sql2);
+	$result2=$this->db->query($sql2half);
+	$result2=$this->db->query($sql3);
+//mengupdate data status baris diatas
+}
+else if($angka==1){
+	$sql="update  JAM SET STATUS=0 where nama_jam='".date("H.i", $secondjam)."' AND id_hari=".$id_hari;
+	$sql2="update  JAM SET STATUS=0 where nama_jam='".$date."' AND id_hari=".$id_hari;
+	$result=$this->db->query($sql);
+	$result2=$this->db->query($sql2);
+}
+
+return $this->db->affected_rows();
+}
 
 
+function reset_jam_kosong(){
+	$sql="UPDATE JAM set STATUS=1 where STATUS=0";
+	$result=$this->db->query($sql);
+	return $this->db->affected_rows();
+}
+
+function get_jam_kosong(){
+	$sql="SELECT hari.NAMA_HARI,jam.nama_jam FROM JAM,hari WHERE jam.STATUS=1 and jam.id_hari=hari.id_hari AND RIGHT(jam.nama_jam,1)<>'9' AND jam.ID_HARI<>6 AND jam.ID_HARI<>7";
+
+	$result=$this->db->query($sql);
+	foreach ($result->result() as $row) {
+		$data[] = $row;
+	}
+	return (array)@$data;
+}
+
+
+
+function update_status_rapat(){
+	$sql="UPDATE  rapat
+	SET rapat.STATUS=0
+	WHERE  DATE_SUB(NOW(), INTERVAL 1 HOUR) > WAKTU_RAPAT";
+	$this->db->query($sql);
+	return $this->db->affected_rows();
+}
 
 
 

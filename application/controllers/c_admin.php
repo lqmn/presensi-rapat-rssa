@@ -478,6 +478,8 @@ class c_admin extends CI_Controller{
 
 	// 	$this->load->library('Excelfile');
 
+
+
 	// 	$excelFile = "./uploads/tes.xlsx";
 
 	// 	$objPHPExcel = PHPExcel_IOFactory::load($excelFile);
@@ -498,6 +500,7 @@ class c_admin extends CI_Controller{
 	// 		echo "
 	// 			<tr>
 	// 				<td>".$value[0]."</td>
+
 
 	// 				<td>".$tanggal->format('Y-m-d H:i')."</td>
 	
@@ -522,17 +525,15 @@ class c_admin extends CI_Controller{
 		$config['max_size']             = 1500;
 		$config['file_name']           = $this->session->userdata('id_user').'_'.$date;
 
-		$this->load->library('Excelfile');
 
 		$this->load->library('Excelfile');
 
 
 		$this->load->library('upload', $config);
 
-
-		$this->load->library('upload', $config);
 
 		$this->load->view('v_header_presensi');
+
 
 		if ( ! $this->upload->do_upload('userfile'))
 		{
@@ -561,19 +562,27 @@ class c_admin extends CI_Controller{
 			// var_dump($value);
 				if(ltrim($value[0]) == '' || ltrim($value[1]) == '' ) continue;
 			// if(ltrim($value[1]) == '') continue;
-				$tanggal=DateTime::createFromFormat('d/m/Y H:i', $value[1]);
-				$dataAbs['ID_USER']=$value[0];
-				$dataAbs['TANGGAL']=$tanggal->format('Y-m-d H:i');
-				$dataAbs['ID_BULAN']=$id_bulan;
-				$dataAbs['ID_USER_INPUT']=$this->session->userdata('id_user');
-				$this->m_admin->insert_absen($dataAbs);
-			}
-			
+
+
+
+			$tanggal=DateTime::createFromFormat('d/m/Y H:i', $value[1]);
+			$dataAbs['ID_USER']=$value[0];
+			$dataAbs['TANGGAL']=$tanggal->format('Y-m-d H:i');
+			$dataAbs['ID_BULAN']=$id_bulan;
+			$dataAbs['ID_USER_INPUT']=$this->session->userdata('id_user');
+			$dataAbs['NAMA_SATKER']=$this->session->userdata('nama_satker');
+			$this->m_admin->insert_absen($dataAbs);
+		}
+		
+
+
+
 
 			$this->load->view('v_upload_sukses');
 			
 		}
 	}
+
 
 	function rekap_absen(){
         	//parametrnya id_bulan untuk metod ini d
@@ -653,7 +662,122 @@ class c_admin extends CI_Controller{
 
         }
 
-    }
+
+        function jam_kosong(){
+        	$this->load->view('v_header_presensi');
+        	$data['jam_kosong']=$this->m_admin->get_jam_kosong();
+        	$data['pesan']="";
+        	$this->load->view('v_jam_kosong',$data);
+        }
+
+         public function do_jam_kosong()
+        {
+	
+
+        	date_default_timezone_set('Africa/Abidjan');
+$date = date('mdYhis', time());
+
+                $config['upload_path']          = './uploads/';
+                $config['allowed_types']        = 'xls|xlsx';
+                $config['max_size']             = 1500;
+                $config['file_name']           = 'jadwal'.'_'.$date;
+
+                $this->load->library('Excelfile');
+
+
+                $this->load->library('upload', $config);
+
+
+                $this->load->view('v_header_presensi');
+
+                if ( ! $this->upload->do_upload('userfile'))
+                {
+                        $error = array('error' => $this->upload->display_errors());
+
+                        $this->load->view('v_upload_gagal');
+                }
+                else
+                {
+                        $data = array('upload_data' => $this->upload->data());
+
+
+
+		$excelFile = "./uploads/".$config['file_name'].".xlsx";
+
+
+
+		$objPHPExcel = PHPExcel_IOFactory::load($excelFile);
+		
+
+		foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
+			$arrayData = $worksheet->toArray();
+		}
+
+		foreach ($arrayData as $key => $value) {
+			// var_dump($value);
+			if(ltrim($value[0]) == '' || ltrim($value[1]) == '' ) continue;
+			// if(ltrim($value[1]) == '') continue;
+			 $dummydate="2007-09-01";
+ 			 $str = $value[1];
+			//8940=3 sks , 5940=2 sks
+			$data=explode(" ",$str);
+			$firstjam=strtotime($dummydate." ".$data[0]);
+			$secondjam=strtotime($dummydate." ".$data[2]);
+			$hasil=abs(($secondjam-$firstjam));
+			//var_dump($hasil);
+			$hari=0;
+			if($value[0]=="Senin"){
+				$hari=1;
+			}
+			else if($value[0]=="Selasa"){
+				$hari=2;
+			}
+			else if($value[0]=="Rabu"){
+				$hari=3;
+			}
+			else if($value[0]=="Kamis"){
+				$hari=4;
+			}
+			else if($value[0]=="Jumat"){
+				$hari=5;
+			}
+			else if($value[0]=="Sabtu"){
+				$hari=6;
+			}
+			else if($value[0]=="Minggu"){
+				$hari=7;
+			}
+
+
+			if($hasil==8940){
+				$this->m_admin->update_jam_kosong($secondjam,3,$hari);
+			}
+
+			else if($hasil==5940){
+				$this->m_admin->update_jam_kosong($secondjam,2,$hari);
+			}
+			else if($hasil==2940){
+				$this->m_admin->update_jam_kosong($secondjam,1,$hari);
+			}
+			//scrap bottom of this line
+			
+		}
+		
+
+                        $this->load->view('v_upload_sukses');
+                       
+                }
+        }
+
+        function reset_jam_kosong(){
+        	$this->load->view('v_header_presensi');
+        	$this->m_admin->reset_jam_kosong();
+        	$data['pesan']="Data telah direset";
+        	$data['jam_kosong']=$this->m_admin->get_jam_kosong();
+        	$this->load->view('v_jam_kosong',$data);
+        }
+
+}
 
     }
 
