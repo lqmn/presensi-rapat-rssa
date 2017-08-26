@@ -412,7 +412,9 @@ function rekap_absen($id_user,$id_bulan){ //kasih parameter id_bulan
 }
 
 function get_tanggal_absen($iduser,$id_bulan){
-	$sql="SELECT distinct '".$iduser."' as ID_USER, DAY(TANGGAL) as TANGGAL FROM `absensi` WHERE ID_BULAN=".$id_bulan." AND ID_USER_INPUT=".$this->session->userdata('id_user')." AND ID_USER='".$iduser."'" ;
+
+$sql="SELECT distinct '".$iduser."' as ID_USER, DAY(TANGGAL) as TANGGAL FROM `absensi` WHERE ID_BULAN=".$id_bulan." AND ID_USER_INPUT=".$this->session->userdata('id_user')." AND ID_USER='".$iduser."' AND DAYNAME(TANGGAL)<>'SATURDAY' AND DAYNAME(TANGGAL)<>'SUNDAY'" ;
+
 
 	$result=$this->db->query($sql);
 	foreach ($result->result() as $row) {
