@@ -14,7 +14,7 @@ class c_presensi extends CI_Controller{
 		$this->load->view('v_presensi_admin');
 	}
 
-	function upload(){
+	function openFile(){
 		$id_satker = $_POST['satker'];
 
 		$tmp = $_FILES['excel']['tmp_name'];
@@ -34,9 +34,10 @@ class c_presensi extends CI_Controller{
 
 
 		echo '
-		<table class="table">
+		<table id="tableConfirm" class="table">
 			<thead>
 				<tr>
+					<th class="hidden"></th>
 					<th>Nama</th>
 					<th>NIP</th>
 					<th>Tanggal</th>
@@ -70,10 +71,11 @@ class c_presensi extends CI_Controller{
 
 				echo '
 				<tr>
+					<td class="hidden">'.$id_pegawai.'</td>
 					<td>'.$value[0].'</td>
 					<td>'.$value[1].'</td>
 					<td>'.$value[2].'</td>
-					<td>'.$value[3].'</td>
+					<td><input class="hitung" type="checkbox" value="1"></input></td>
 				</tr>
 				';
 			}
@@ -82,6 +84,7 @@ class c_presensi extends CI_Controller{
 			</tbody>
 		</table>
 		";
+
 		unlink($target);
 	}
 
@@ -92,5 +95,28 @@ class c_presensi extends CI_Controller{
 	function form_upload(){
 		$data['satker'] = $this->m_presensi->get_satker();
 		$this->load->view('v_form_upload', $data); 
+	}
+
+	function upload(){
+		$data = $this->input->post('data');
+
+		foreach ($data as $key => $value) {
+			$tmp['ID_PEGAWAI']=$value[0];
+			$tmp['TANGGAL']=$value[3];
+			if ($value[4]=='true') {
+				$tmp['HITUNG']=1;
+			}else{
+				$tmp['HITUNG']=0;
+			}
+			$tmp['ID_USER_INPUT']= $this->session->userdata('id_user');
+			$insertData[]=$tmp;
+		}
+		$count=0;
+		foreach ($insertData as $key => $value) {
+			$res = $this->m_presensi->insert_presensi($value);
+			$count = $count + $res;
+		}
+		var_dump($count);
+
 	}
 }

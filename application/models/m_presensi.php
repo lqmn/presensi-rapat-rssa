@@ -31,4 +31,9 @@ class m_presensi extends CI_Model{
 		return $this->db->affected_rows();
 	}
 
+	function insert_presensi($data){
+		$result = $this->db->insert('presensi',$data);
+		return $this->db->affected_rows();
+	}
+
 }
