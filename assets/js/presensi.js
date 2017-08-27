@@ -67,4 +67,55 @@ $(document).ready(function() {
 		});
 	});
 
+	$(document).on('click','#hariLibur',function(event){
+		$('#hariLibur').button('loading');
+		$('#hariLibur').button('reset');
+		var requrl = BASE_URL+'c_presensi/hari_libur';
+		$.ajax({
+			url:requrl,
+			success:function(data){
+				$('#bigModalContent').html(data);
+				
+			}
+		});
+	})
+
+	$('#bigModalContent').on('click','#tambahLibur',function(event){
+		$('#tambahLibur').button('loading');
+
+		var requrl = BASE_URL+'c_presensi/form_libur';
+		$.ajax({
+			url:requrl,
+			success:function(data){
+				$('#bigModalContent').html(data);
+			
+			}
+		});
+	})
+
+	$('#bigModalContent').on('click','#insertLibur', function(e){
+		$('#insertLibur').button('loading');
+		var requrl = BASE_URL+'c_presensi/insert_libur/';
+		var data = {};
+
+		$('#bigModalContent').find('[name]').each(function(index, value){
+			var name = $(this).attr('name');
+			var value = $(this).val();
+			data[name] = value;
+		});
+		console.log(data);
+		
+		$.ajax({
+			url:requrl,
+			type:'post',
+			data:data,
+			success: function(data){
+				$('#bigModalContent').html(data);
+			}
+		});
+		return false;
+	});
+
+
 });
+

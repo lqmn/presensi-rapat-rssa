@@ -7,6 +7,8 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url("assets/DataTables/datatables.min.css"); ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url("assets/css/bootstrap-select.min.css"); ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url("assets/css/style.css"); ?>">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 </head>
 <body>
 
@@ -26,6 +28,15 @@
 			<div class="col-sm-12 text-left">
 				<h4>Presensi</h4>
 				<button class="btn btn-info btn-lg" id="upload" type="button" data-toggle="modal" data-target="#bigModal">Upload</button>
+				
+<button style="margin-right:10px;"class="btn btn-primary btn-lg pull-right" id="hariLibur" type="button" data-toggle="modal" data-target="#bigModal">Hari Libur</button>
+				
+				<button class="btn btn-info btn-lg pull-right" style="margin-right:10px;"id="rekapAbsen" type="button" data-toggle="modal" data-target="#bigModal">Rekap Absen</button>
+				
+				
+				<button style="margin-right:10px;"class="btn btn-info btn-lg pull-right" id="rekapLembur" type="button" data-toggle="modal" data-target="#bigModal">Rekap Lembur</button>
+
+
 				<br>
 				<table id="tabel" class="table table-striped" cellspacing="0" width="100%">
 					<thead>
@@ -51,5 +62,9 @@
 	<script type="text/javascript">
 		var BASE_URL = "<?php echo base_url();?>";
 	</script>
+	<!-- bootstrap-datetimepicker -->
+<script type="text/javascript" src="<?php echo base_url();?>assets/js/moment.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-datetimepicker.min.js"></script>
+<link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-datetimepicker.css" />
 </body>
 </html>
