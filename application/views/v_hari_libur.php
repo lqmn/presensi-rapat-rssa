@@ -18,11 +18,14 @@
 </thead>
 
 <tbody>
+	<div id="contentConfirm">
+
+	</div>
 
 <?php echo "<br><h4>".@$pesan."</h4>";?>
 	<?php foreach($libur as $key =>$value){?>
 	<tr>
-	<td><input class="hitung" type="checkbox" value="1" checked="checked"></input></td>
+	<td><input class="hitung" type="checkbox" value=<?php echo $value->ID_HARI_LIBUR;?> checked="checked"></input></td>
 <td><?php $date = date_create_from_format('Y-m-d',$value->TANGGAL );
 $bulan=" ";
 if($date->format('m')=='01'){

@@ -137,4 +137,22 @@ class c_presensi extends CI_Controller{
 		$data['pesan']="Data Berhasil Dimasukkan";
 		$this->load->view('v_hari_libur',$data); 
 	}
+
+	function delete_hari_libur(){
+		$array_del = $this->input->post('array_del');
+		$res = $this->m_presensi->delete_hari_libur($array_del);
+
+		if ($res>0) {
+			$data['pesan']="Data berhasil dihapus";
+			$data['libur']=$this->m_presensi->get_hari_libur();
+		
+			$this->load->view('v_hari_libur',$data); 
+		}else{
+			echo "Error";
+		}
+	}
+
+	function form_delete_hari_libur(){
+		$this->load->view('v_form_delete_hari_libur');
+	}
 }

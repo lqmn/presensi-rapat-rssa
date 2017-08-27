@@ -70,12 +70,18 @@ $(document).ready(function() {
 	$(document).on('click','#hariLibur',function(event){
 		$('#hariLibur').button('loading');
 		$('#hariLibur').button('reset');
+
 		var requrl = BASE_URL+'c_presensi/hari_libur';
 		$.ajax({
 			url:requrl,
 			success:function(data){
+
 				$('#bigModalContent').html(data);
-				
+				var tabel2 = $('#tableLibur').DataTable({
+
+	"dom": '<"toolbar">f',
+		
+});
 			}
 		});
 	})
@@ -95,6 +101,7 @@ $(document).ready(function() {
 
 	$('#bigModalContent').on('click','#insertLibur', function(e){
 		$('#insertLibur').button('loading');
+	
 		var requrl = BASE_URL+'c_presensi/insert_libur/';
 		var data = {};
 
@@ -110,11 +117,61 @@ $(document).ready(function() {
 			type:'post',
 			data:data,
 			success: function(data){
+
 				$('#bigModalContent').html(data);
+				var tabel2 = $('#tableLibur').DataTable({
+
+	"dom": '<"toolbar">f'
+		
+});
 			}
 		});
 		return false;
 	});
+
+	
+
+	$('#bigModalContent').on('click','#hapus',function(event){
+		$('#hapus').button('loading');
+	
+		var requrl = BASE_URL+'c_presensi/form_delete_hari_libur';
+		$.ajax({
+			url:requrl,
+			success:function(data){
+				$('#contentConfirm').html(data);
+			
+			}
+		});
+	})
+
+
+
+	$('#bigModalContent').on('click','#confirmDelete', function(){
+		$('#confirmDelete').button('loading');
+		
+var checked = [];
+var tabel2 = $('#tableLibur').DataTable();
+		$("input:checked", tabel2.rows().nodes()).each(function(){
+			checked.push($(this).val());
+		});
+
+		var requrl = BASE_URL+'c_presensi/delete_hari_libur';
+
+		$.ajax({
+			url:requrl,
+			type:'post',
+			data: {"array_del": checked} ,
+			success:function(data){
+				$('#bigModalContent').html(data);
+				var tabel2 = $('#tableLibur').DataTable({
+
+	"dom": '<"toolbar">f'
+		
+});
+			}
+		});
+	});
+
 
 
 });
