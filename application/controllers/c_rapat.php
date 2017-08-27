@@ -17,7 +17,7 @@ class c_rapat extends CI_Controller{
 		}elseif ($this->session->userdata('otoritas')==3) {
 			$this->load->view('v_user_rapat');
 		}else{
-			$this->load->view('v_guest');
+			redirect('c_login/error_authority/','refresh');
 		}
 	}
 

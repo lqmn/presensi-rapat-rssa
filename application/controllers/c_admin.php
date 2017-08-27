@@ -47,12 +47,13 @@ class c_admin extends CI_Controller{
 		$this->load->model('m_admin');
 	}
 
-	function error_authority(){
-		$this->load->view('v_error_access');
-	}
 
 	function index() {
-		$this->load->view('v_admin_home');
+		if($this->session->userdata('otoritas')==1){
+			$this->load->view('v_admin_pegawai');
+		}else{
+			redirect('c_login/error_authority/','refresh');
+		}
 	}
 
 	function logout(){
@@ -61,7 +62,11 @@ class c_admin extends CI_Controller{
 	}
 
 	function pegawai(){
-		$this->load->view('v_admin_pegawai');
+		if($this->session->userdata('otoritas')==1){
+			$this->load->view('v_admin_pegawai');
+		}else{
+			redirect('c_login/error_authority/','refresh');
+		}
 	}
 
 
@@ -71,8 +76,7 @@ class c_admin extends CI_Controller{
 		if($this->session->userdata('otoritas')==2){
 			$this->load->view('v_ver_rapat');
 		}
-		else if($this->session->userdata('otoritas')==1){ 
-
+		else if($this->session->userdata('otoritas')==1){
 			$this->load->view('v_admin_rapat');
 		}
 
@@ -94,30 +98,35 @@ class c_admin extends CI_Controller{
 	}
 	function presensi(){
 		$this->load->view('v_header_presensi');
-		
+
 		if($this->session->userdata('otoritas')==2){
 			$this->load->view('v_ver_presensi');
 		}
 		else if($this->session->userdata('otoritas')==1){ 
-			
+
 			$this->load->view('v_admin_presensi');
 		}
 		else if($this->session->userdata('otoritas')==3){ 
-			
+
 			$this->load->view('v_user_presensi');
 		}
 	}
 
 
 	function user(){
-		// $data1['dataPegawai']= $this->m_admin->get_pegawai();
-		// $data2['v_table_pegawai'] = $this->load->view('v_table_pegawai', $data1, true);
-		// var_dump($dataPegawai);
-		$this->load->view('v_admin_user');
+		if($this->session->userdata('otoritas')==1){
+			$this->load->view('v_admin_user');
+		}else{
+			redirect('c_login/error_authority/','refresh');
+		}
 	}
 
 	function non_pegawai(){
-		$this->load->view('v_admin_non');
+		if($this->session->userdata('otoritas')==1){
+			$this->load->view('v_admin_non');
+		}else{
+			redirect('c_login/error_authority/','refresh');
+		}
 	}
 
 
@@ -503,7 +512,7 @@ class c_admin extends CI_Controller{
 
 
 	// 				<td>".$tanggal->format('Y-m-d H:i')."</td>
-	
+
 	// 			</tr>
 	// 		";
 	// 	}
@@ -515,7 +524,7 @@ class c_admin extends CI_Controller{
 	public function do_upload()
 	{
 		$id_bulan=$this->input->post('id_bulan');
-		
+
 
 		date_default_timezone_set('Asia/Jakarta');
 		$date = date('mdYhis', time());
@@ -547,7 +556,7 @@ class c_admin extends CI_Controller{
 
 
 //perlu metode buat menamdapatkan ekstensi dari file yang diupload. variabel dibawah masih menerima ekstensi xlsx saja
-			$excelFile = "./uploads/".$config['file_name'].".xlsx";
+			$excelFile = "./uploads/".$config['file_name'].".xls";
 
 
 
@@ -564,7 +573,6 @@ class c_admin extends CI_Controller{
 			// if(ltrim($value[1]) == '') continue;
 
 
-
 			$tanggal=DateTime::createFromFormat('d/m/Y H:i', $value[1]);
 			$dataAbs['ID_PEGAWAI']=$value[0];
 			$dataAbs['TANGGAL']=$tanggal->format('Y-m-d H:i');
@@ -579,7 +587,7 @@ class c_admin extends CI_Controller{
 
 
 			$this->load->view('v_upload_sukses');
-			
+
 		}
 	}
 
@@ -611,7 +619,7 @@ class c_admin extends CI_Controller{
         				}
         				$counter_jam_lembur=$counter_jam_lembur-15+$jam;
         			}
-        			
+
         		}
 
         		$data['lembur']=$counter_jam_lembur;

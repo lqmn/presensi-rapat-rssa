@@ -8,12 +8,11 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url("assets/DataTables/datatables.min.css"); ?>">
 </head>
 <body>
-	<?php $this->load->view('navbar_guest'); ?>
+	<?php $this->load->view('navbar_guest'); ?><br>
 
 	<div class="container-fluid text-center">
 		<div class="row content">
 			<div class="col-sm-12 text-left">
-
 				<table id="tabelGuest" class="table">
 					<thead>
 						<tr>

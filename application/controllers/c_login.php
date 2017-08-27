@@ -18,9 +18,12 @@ Class c_login extends CI_Controller {
 		$this->load->model('m_login');
 	}
 
-	// Show login page
 	function index() {
-		$this->load->view('v_login');
+		if($this->session->userdata('username')){
+			$this->loginsuccess();
+		}else{
+			$this->load->view('v_guest');
+		}
 	}
 
 	// Check for user login process
@@ -77,7 +80,7 @@ Class c_login extends CI_Controller {
 		if ($this->session->userdata('otoritas')==1) {
 			$this->load->view('v_admin_home');
 		}elseif ($this->session->userdata('otoritas')==2) {
-			$this->load->view('v_ver_home');
+			$this->load->view('v_verifikator_home');
 		}elseif ($this->session->userdata('otoritas')==3) {
 			$this->load->view('v_user_home');
 		}
@@ -116,5 +119,13 @@ Class c_login extends CI_Controller {
 			$this->session->set_userdata($session_data);
 			echo "1";
 		}
+	}
+
+	function error_authority(){
+		$this->load->view('v_error_access');
+	}
+
+	function login_form(){
+		$this->load->view('v_login');
 	}
 }

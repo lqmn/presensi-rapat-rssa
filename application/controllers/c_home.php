@@ -6,7 +6,7 @@ Class c_home extends CI_Controller {
 		if ($this->session->userdata('otoritas')==1) {
 			$this->load->view('v_admin_home');
 		}elseif ($this->session->userdata('otoritas')==2) {
-			$this->load->view('v_ver_home');
+			$this->load->view('v_verifikator_home');
 
 		}elseif ($this->session->userdata('otoritas')==3) {
 			$this->load->view('v_user_home');

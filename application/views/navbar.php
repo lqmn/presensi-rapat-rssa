@@ -12,30 +12,32 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">
+			<a class="navbar-brand" href="<?php echo base_url(); ?>">
 				<img src="<?php echo base_url("assets/img/logo.png");?>" width="25px"></img>
 			</a>
 		</div>
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav">
-				<li id="presensi-nav"><a href="#">Presensi</a></li>
+				<li id="presensi-nav"><a href="<?php echo base_url("c_presensi/"); ?>">Presensi</a></li>
 				<li id="rapat-nav"><a href="<?php echo base_url("c_rapat/"); ?>">Rapat</a></li>
 			</ul>
-			<ul class="nav navbar-nav navbar-right">
-				<?php 
-				$namaOtoritas;
-				switch ($this->session->userdata('otoritas')) {
-					case 1: $namaOtoritas='Administrator';
-					break;
-					case 2: $namaOtoritas='Verifikator';
-					break;
-					case 3: $namaOtoritas='User';
-					break;
-				}
-				?>
+			<?php 
+			$namaOtoritas;
+			switch ($this->session->userdata('otoritas')) {
+				case 1: $namaOtoritas='Administrator';
+				break;
+				case 2: $namaOtoritas='Verifikator';
+				break;
+				case 3: $namaOtoritas='User';
+				break;
+			}
+			?>
+			<div class="navbar-right">
 				<p class="navbar-text">Signed as <?php echo $this->session->userdata('username').', '.$this->session->userdata('nama').', '.$namaOtoritas; ?></p>
-				<li id="logout-nav"><a href="<?php echo base_url("c_login/logout"); ?>">Logout</a></li>
-			</ul>
+				<ul class="nav navbar-nav">
+					<li id="logout-nav"><a href="<?php echo base_url("c_login/logout"); ?>">Logout</a></li>
+				</ul>
+			</div>
 		</div>
 	</div>
 </nav>
