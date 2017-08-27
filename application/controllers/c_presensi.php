@@ -26,12 +26,14 @@ class c_presensi extends CI_Controller{
 		move_uploaded_file($tmp,$target);
 
 		$objPHPExcel = PHPExcel_IOFactory::load($target);
-		$sheet = $objPHPExcel->getActiveSheet();
+		$sheet = $objPHPExcel->getAllSheets();
 
-		$lastrow = $sheet->getHighestRow();
-		$sheet->getStyle('B1:B'.$lastrow)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER);
-		$arrayData = $sheet->toArray();
-
+		$arrayData = array();
+		foreach ($sheet as $key => $value) {
+			$lastrow = $value->getHighestRow();
+			$sheet[$key]->getStyle('B1:B'.$lastrow)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER);
+			$arrayData = array_merge($arrayData, $sheet[$key]->toArray());
+		}
 
 		echo '
 		<table id="tableConfirm" class="table">
@@ -67,7 +69,6 @@ class c_presensi extends CI_Controller{
 					$this->m_presensi->insert_pegawai($data);
 					$id_pegawai = $this->m_presensi->get_id_pegawai($value[0],$value[1]);
 				}
-				$value[3]=$id_pegawai;
 
 				echo '
 				<tr>
@@ -98,8 +99,9 @@ class c_presensi extends CI_Controller{
 	}
 
 	function upload(){
+		// echo "awdawdawdawd";
+		// $data = $_POST['data'];
 		$data = $this->input->post('data');
-
 		foreach ($data as $key => $value) {
 			$tmp['ID_PEGAWAI']=$value[0];
 			$tmp['TANGGAL']=$value[3];
@@ -111,12 +113,12 @@ class c_presensi extends CI_Controller{
 			$tmp['ID_USER_INPUT']= $this->session->userdata('id_user');
 			$insertData[]=$tmp;
 		}
+		
 		$count=0;
 		foreach ($insertData as $key => $value) {
 			$res = $this->m_presensi->insert_presensi($value);
 			$count = $count + $res;
 		}
 		var_dump($count);
-
 	}
 }
