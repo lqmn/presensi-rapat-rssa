@@ -1,3 +1,4 @@
+var tabelLibur;
 $(document).ready(function() {
 	$('#presensi-nav').addClass("active");
 
@@ -66,5 +67,118 @@ $(document).ready(function() {
 			}
 		});
 	});
+
+	$(document).on('click','#libur',function(event){
+		var requrl = BASE_URL+'c_presensi/form_libur';
+		$.ajax({
+			url:requrl,
+			success:function(data){
+				$('#modalContent').html(data);
+
+				tabelLibur = $('#tabelLibur').DataTable({
+					"dom": '<"liburBar">frtlp',
+					"ajax": {
+						"url": BASE_URL+"c_presensi/get_tabel_libur",
+						type : 'POST',
+						"dataSrc": ""
+					},
+					"columns": [
+					{ "data": "ID_HARI_LIBUR" },
+					{ "data": "TANGGAL" },
+					{ "data": "KETERANGAN" }
+					],'columnDefs':[{
+						'targets': 0,
+						'searchable':false,
+						'orderable':false,
+						'className': 'dt-body-center',
+						'render': function (data){
+							return '<input type="checkbox" class="select-libur" value="' + data + '">';
+						}
+					}],"order": [],
+					initComplete:function(){
+						$('div.liburBar').html('<div style="float:left;"><button id="hapusLibur" type="button" class="btn btn-danger" disabled>Delete <span class="glyphicon glyphicon-remove"></span></button></div>');
+					}
+				});
+			}
+		});
+	})
+
+	$(document).on('submit','#liburForm',function(){
+		var form = $('#liburForm')[0];
+		// console.log(form);
+		var formData = new FormData(form);
+		var requrl = BASE_URL+'c_presensi/insert_libur';
+		$.ajax({
+			url:requrl,
+			type:'post',
+			data: formData,
+			contentType: false,
+			processData: false,
+			success:function(data){
+				$('#modalContent').html(data);
+			}
+		});
+
+
+		return false;
+	})
+
+	$(document).on('click','#hapusLibur', function(){
+		$('#hapusLibur').button('loading');
+
+		var checked = [];
+		$(".select-libur:checked", tabelLibur.rows().nodes()).each(function(){
+			checked.push($(this).val());
+		});
+		console.log(checked);
+		var requrl = BASE_URL+'c_presensi/delete_libur';
+
+		$.ajax({
+			url:requrl,
+			type:'post',
+			data: {"array_del": checked} ,
+			success:function(data){
+				tabelLibur.ajax.reload();
+				$('#hapusLibur').button('reset');
+				setTimeout(function () {
+					$('#hapusLibur').prop("disabled", true);
+				}, 0);
+			}
+		});
+	});
+
+	// handle check box each page
+	$(document).on( 'draw.dt','#tabelLibur',  function () {
+		if ($('.select-libur:checked').length == $('.select-libur').length) {
+			$('#all-libur').prop('checked', true);
+		}else{
+			$('#all-libur').prop('checked', false);
+		}
+	})
+
+	$(document).on('change','#tabelLibur input:checkbox',function(){
+		if ($('.select-libur:checked').length == $('.select-libur').length) {
+			$('#all-libur').prop('checked', true);
+		}else{
+			$('#all-libur').prop('checked', false);
+		}
+
+		var hitung = 0;
+		$(".select-libur:checked", tabelLibur.rows().nodes()).each(function(){
+			hitung++;
+		});
+
+		if (hitung>0) {
+			$('#hapusLibur').prop('disabled',false);
+		}else{
+			$('#hapusLibur').prop('disabled',true);
+		}
+	});
+
+	$(document).on('click','#all-libur', function(){
+		var rows = tabelLibur.rows({ page: 'current' }).nodes();
+		$('input[type="checkbox"]', rows).prop('checked', this.checked);
+	});
+
 
 });

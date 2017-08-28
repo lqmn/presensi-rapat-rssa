@@ -36,4 +36,23 @@ class m_presensi extends CI_Model{
 		return $this->db->affected_rows();
 	}
 
+	function insert_libur($data){
+		$result = $this->db->insert('hari_libur',$data);
+		return $this->db->affected_rows();
+	}
+
+	function get_libur(){
+		$sql = 'SELECT ID_HARI_LIBUR, TANGGAL, KETERANGAN FROM hari_libur';
+		$result = $this->db->query($sql);
+		foreach ($result->result() as $row) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	function delete_libur($data){
+		$sql='DELETE FROM hari_libur WHERE ID_HARI_LIBUR='.$data;
+		$this->db->query($sql);
+		return $this->db->affected_rows();
+	}
 }

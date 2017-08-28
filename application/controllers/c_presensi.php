@@ -47,50 +47,46 @@ class c_presensi extends CI_Controller{
 				</tr>
 			</thead>
 			<tbody>
-		';
-		foreach ($arrayData as $key => $value) {
-			if ($value[0]!='Nama' AND $value[0]!=null) {
-				if (strlen(explode(' ',$value[2])[0])<10) {
-
-					$date = date_create_from_format('n/j/y H:i', $value[2]);
-					$date = date_format($date,'Y-m-d H:i:s');
-					$value[2] = $date;
-				}else{
-					$date = date_create_from_format('d/m/Y H:i', $value[2]);
-					$date = date_format($date,'Y-m-d H:i:s');
-					$value[2] = $date;
-				}
-				$id_pegawai = $this->m_presensi->get_id_pegawai($value[0],$value[1]);
-				// echo "aokwdokao";
-				if (!$id_pegawai) {
-					$data['NAMA']=$value[0];
-					$data['NIP']=$value[1];
-					$data['ID_SATKER']=$id_satker;
-					$this->m_presensi->insert_pegawai($data);
-					$id_pegawai = $this->m_presensi->get_id_pegawai($value[0],$value[1]);
-				}
-
-				echo '
-				<tr>
-					<td class="hidden">'.$id_pegawai.'</td>
-					<td>'.$value[0].'</td>
-					<td>'.$value[1].'</td>
-					<td>'.$value[2].'</td>
-					<td><input class="hitung" type="checkbox" value="1"></input></td>
-				</tr>
 				';
-			}
-		}
-		echo "
+				foreach ($arrayData as $key => $value) {
+					if ($value[0]!='Nama' AND $value[0]!=null) {
+						if (strlen(explode(' ',$value[2])[0])<10) {
+
+							$date = date_create_from_format('n/j/y H:i', $value[2]);
+							$date = date_format($date,'Y-m-d H:i:s');
+							$value[2] = $date;
+						}else{
+							$date = date_create_from_format('d/m/Y H:i', $value[2]);
+							$date = date_format($date,'Y-m-d H:i:s');
+							$value[2] = $date;
+						}
+						$id_pegawai = $this->m_presensi->get_id_pegawai($value[0],$value[1]);
+				// echo "aokwdokao";
+						if (!$id_pegawai) {
+							$data['NAMA']=$value[0];
+							$data['NIP']=$value[1];
+							$data['ID_SATKER']=$id_satker;
+							$this->m_presensi->insert_pegawai($data);
+							$id_pegawai = $this->m_presensi->get_id_pegawai($value[0],$value[1]);
+						}
+
+						echo '
+						<tr>
+							<td class="hidden">'.$id_pegawai.'</td>
+							<td>'.$value[0].'</td>
+							<td>'.$value[1].'</td>
+							<td>'.$value[2].'</td>
+							<td><input class="hitung" type="checkbox" value="1"></input></td>
+						</tr>
+						';
+					}
+				}
+				echo "
 			</tbody>
 		</table>
 		";
 
 		unlink($target);
-	}
-
-	function delete($target){
-
 	}
 
 	function form_upload(){
@@ -99,8 +95,6 @@ class c_presensi extends CI_Controller{
 	}
 
 	function upload(){
-		// echo "awdawdawdawd";
-		// $data = $_POST['data'];
 		$data = $this->input->post('data');
 		foreach ($data as $key => $value) {
 			$tmp['ID_PEGAWAI']=$value[0];
@@ -120,5 +114,34 @@ class c_presensi extends CI_Controller{
 			$count = $count + $res;
 		}
 		var_dump($count);
+	}
+
+	function form_libur(){
+		$this->load->view('v_form_libur');
+	}
+
+	function insert_libur(){
+		$tanggal = $this->input->post('tanggal');
+		$tanggal = date_create_from_format('d/m/Y', $tanggal);
+		$tanggal = date_format($tanggal,'Y-m-d');
+
+		$data['TANGGAL'] = $tanggal;
+		$data['KETERANGAN'] = $this->input->post('ket');
+		$data['ID_USER_INPUT'] = $this->session->userdata('id_user');
+		$result = $this->m_presensi->insert_libur($data);
+		var_dump($result);
+
+	}
+
+	function get_tabel_libur(){
+		$data = $this->m_presensi->get_libur();
+		echo json_encode($data);
+	}
+
+	function delete_libur(){
+		$id_delete = $this->input->post('array_del');
+		foreach ($id_delete as $key => $value) {
+			$res= $this->m_presensi->delete_libur($value);
+		}
 	}
 }
