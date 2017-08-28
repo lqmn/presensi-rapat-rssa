@@ -104,6 +104,7 @@ $(document).ready(function() {
 	})
 
 	$(document).on('submit','#liburForm',function(){
+		$('#insert').button('loading');
 		var form = $('#liburForm')[0];
 		// console.log(form);
 		var formData = new FormData(form);
@@ -115,7 +116,9 @@ $(document).ready(function() {
 			contentType: false,
 			processData: false,
 			success:function(data){
-				$('#modalContent').html(data);
+				tabelLibur.ajax.reload();
+				$('#insert').button('reset');
+				$('#liburForm')[0].reset();
 			}
 		});
 
