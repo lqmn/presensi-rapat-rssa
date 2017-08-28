@@ -26,6 +26,16 @@ class m_presensi extends CI_Model{
 		}
 	}
 
+	function get_hari_libur(){
+		$sql = 'SELECT * FROM hari_libur ORDER BY TANGGAL ASC';
+		$result = $this->db->query($sql);
+		foreach ($result->result() as $row) {
+			$data[] = $row;
+		}
+		return @(array)$data;
+		
+	}
+
 	function insert_pegawai($data){
 		$result = $this->db->insert('pegawai',$data);
 		return $this->db->affected_rows();
@@ -33,6 +43,23 @@ class m_presensi extends CI_Model{
 
 	function insert_presensi($data){
 		$result = $this->db->insert('presensi',$data);
+		return $this->db->affected_rows();
+	}
+	function insert_libur($tanggal){
+		$sql="INSERT INTO hari_libur (TANGGAL,ID_USER_INPUT) VALUES ('".$tanggal."','".$this->session->userdata('id_user')."')";
+		$this->db->query($sql);
+		return $this->db->affected_rows();
+	}
+
+	function delete_hari_libur($data){
+		// var_dump($data);	
+		foreach ($data as $key => $value) {
+			$sql = "delete from hari_libur
+			
+			WHERE ID_HARI_LIBUR=".$value;
+			// $sql = "DELETE FROM pegawai WHERE ID_PEGAWAI=".$value;
+			$this->db->query($sql);
+		}
 		return $this->db->affected_rows();
 	}
 

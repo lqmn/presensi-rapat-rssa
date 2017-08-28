@@ -98,6 +98,11 @@ class c_presensi extends CI_Controller{
 		$this->load->view('v_form_upload', $data); 
 	}
 
+	function hari_libur(){
+		$data['libur']=$this->m_presensi->get_hari_libur();
+		$this->load->view('v_hari_libur',$data); 
+	}
+
 	function upload(){
 		// echo "awdawdawdawd";
 		// $data = $_POST['data'];
@@ -120,5 +125,34 @@ class c_presensi extends CI_Controller{
 			$count = $count + $res;
 		}
 		var_dump($count);
+	}
+	function form_libur(){
+		$this->load->view('v_form_libur');
+	}
+
+		function insert_libur(){
+		$tanggal=$this->input->post('tanggal');
+		$this->m_presensi->insert_libur($tanggal);
+		$data['libur']=$this->m_presensi->get_hari_libur();
+		$data['pesan']="Data Berhasil Dimasukkan";
+		$this->load->view('v_hari_libur',$data); 
+	}
+
+	function delete_hari_libur(){
+		$array_del = $this->input->post('array_del');
+		$res = $this->m_presensi->delete_hari_libur($array_del);
+
+		if ($res>0) {
+			$data['pesan']="Data berhasil dihapus";
+			$data['libur']=$this->m_presensi->get_hari_libur();
+		
+			$this->load->view('v_hari_libur',$data); 
+		}else{
+			echo "Error";
+		}
+	}
+
+	function form_delete_hari_libur(){
+		$this->load->view('v_form_delete_hari_libur');
 	}
 }
