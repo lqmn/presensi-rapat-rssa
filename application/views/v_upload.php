@@ -32,24 +32,33 @@
 	<div class="container text-center">
 		<div class="row content">
 			<div class="col-sm-12 text-left">
-				<h4>Presensi</h4>
-				<!-- <button class="btn btn-primary" id="upload" type="button" data-toggle="modal" data-target="#bigModal">Upload</button> -->
-				<a href="<?php echo base_url("c_presensi/upload_page/"); ?>">
-					<button class="btn btn-primary" id="uploadPage" type="button">Upload</button>
-				</a>
-				<button class="btn btn-primary" id="libur" type="button" data-toggle="modal" data-target="#myModal">Hari libur</button>
-				<br><br>
-				<table id="tabelPresensi" class="table table-striped" cellspacing="0" width="100%">
-					<thead>
-						<tr>
-							<th>NIP</th>
-							<th>NAMA</th>
-							<th>Satker</th>
-							<th>Bulan</th>
-							<th>Panel</th>
-						</tr>
-					</thead>
-				</table>
+				<form id="fileForm" class="form-inline" action="" enctype="multipart/form-data">
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="form-group text-center">
+								<input class="btn" type="file" accept=".xls,.xlsx" name="excel" id="inputExcel" required>
+							</div>
+
+							<div class="pull-right">
+								<div class="form-group text-center">
+									<select class="selectpicker" data-live-search="true" name="satker" required>
+										<option disabled selected value="" style="display:none"> -- Pilih satuan kerja -- </option>
+										<?php foreach ($satker as $key => $value): ?>
+											<option value="<?php echo $value->ID_SATKER?>" data-tokens="<?php echo $value->NAMA_SATKER?>"><?php echo $value->NAMA_SATKER?></option>
+										<?php endforeach ?>
+									</select>
+								</div>
+								<div class="form-group ">
+									<button id="openFile" type="submit" class="btn btn-primary">Open</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form><br>
+				<div id="contentConfirm">
+
+				</div>
+				<button id="save" type="button" class="btn btn-primary" disabled>Save</button>
 
 			</div>
 		</div>

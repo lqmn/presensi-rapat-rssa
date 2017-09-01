@@ -14,6 +14,25 @@ class c_presensi extends CI_Controller{
 		$this->load->view('v_presensi_admin');
 	}
 
+	function isValidCell($cell){
+		if ($cell[0]!='Nama' AND $cell[0]!=null AND $cell[1]!='NIP / NBI' AND $cell[1]!=null AND $cell[2]!='Waktu' AND $cell[2]!=null) {
+			return true;
+		}else{
+			false;
+		}
+	}
+
+	function cariAbsenPegawai($data,$date){
+		$result = array();
+		foreach ($data as $key => $value) {
+			if (explode(' ',$value[2])[0]==$date) {
+				$result[] =$value;
+			}
+		}
+		return $result;
+
+	}
+
 	function openFile(){
 		$id_satker = $_POST['satker'];
 
@@ -35,53 +54,56 @@ class c_presensi extends CI_Controller{
 			$arrayData = array_merge($arrayData, $sheet[$key]->toArray());
 		}
 
+		// proses array
+		$dataExcel = array();
+		foreach ($arrayData as $key => $value) {
+			if ($this->isValidCell($value)) {
+				if (strlen(explode(' ',$value[2])[0])<10) {
+
+					$date = date_create_from_format('n/j/y H:i', $value[2]);
+					$date = date_format($date,'Y-m-d H:i:s');
+					$value[2] = $date;
+				}else{
+					$date = date_create_from_format('d/m/Y H:i', $value[2]);
+					$date = date_format($date,'Y-m-d H:i:s');
+					$value[2] = $date;
+				}
+				$row['NAMA']=$value[0];
+				$row['NIP']=$value[1];
+				$row['TANGGAL']=$value[2];
+				$dataExcel[] = $row;
+			}
+		}
+		$data = $this->m_presensi->get_presensi_perhari($dataExcel);
+
 		echo '
 		<table id="tableConfirm" class="table">
 			<thead>
 				<tr>
-					<th class="hidden"></th>
 					<th>Nama</th>
 					<th>NIP</th>
 					<th>Tanggal</th>
-					<th>Hitung</th>
+					<th>Lembur</th>
+					<th>Hitung Lembur?</th>
 				</tr>
 			</thead>
 			<tbody>
-				';
-				foreach ($arrayData as $key => $value) {
-					if ($value[0]!='Nama' AND $value[0]!=null) {
-						if (strlen(explode(' ',$value[2])[0])<10) {
-
-							$date = date_create_from_format('n/j/y H:i', $value[2]);
-							$date = date_format($date,'Y-m-d H:i:s');
-							$value[2] = $date;
-						}else{
-							$date = date_create_from_format('d/m/Y H:i', $value[2]);
-							$date = date_format($date,'Y-m-d H:i:s');
-							$value[2] = $date;
-						}
-						$id_pegawai = $this->m_presensi->get_id_pegawai($value[0],$value[1]);
-				// echo "aokwdokao";
-						if (!$id_pegawai) {
-							$data['NAMA']=$value[0];
-							$data['NIP']=$value[1];
-							$data['ID_SATKER']=$id_satker;
-							$this->m_presensi->insert_pegawai($data);
-							$id_pegawai = $this->m_presensi->get_id_pegawai($value[0],$value[1]);
-						}
-
-						echo '
-						<tr>
-							<td class="hidden">'.$id_pegawai.'</td>
-							<td>'.$value[0].'</td>
-							<td>'.$value[1].'</td>
-							<td>'.$value[2].'</td>
-							<td><input class="hitung" type="checkbox" value="1"></input></td>
-						</tr>
-						';
-					}
-				}
-				echo "
+		';
+		foreach ($data as $key => $value) {
+			echo '
+			<tbody>
+				<tr>
+					<td>'.$value->NAMA.'</td>
+					<td>'.$value->NIP.'</td>
+					<td>'.$value->TANGGAL.'</td>
+					<td>'.$value->LEMBUR.'</td>
+					<td><input type="checkbox" class="hitung"></td>
+				</tr>
+			</tbody>
+			';
+		}
+		
+		echo "
 			</tbody>
 		</table>
 		";
@@ -143,5 +165,36 @@ class c_presensi extends CI_Controller{
 		foreach ($id_delete as $key => $value) {
 			$res= $this->m_presensi->delete_libur($value);
 		}
+	}
+
+	// function get_presensi_rekap(){
+	// 	$data = $this->m_presensi->get_presensi_for_rekap();
+	// 	return $data
+	// }
+
+	function insert_update_rekap(){
+		$data= $this->input->post('data');
+	}
+
+	function get_tabel_rekap(){
+		$dataPresensi = $this->m_presensi->get_presensi_for_rekap();
+		foreach ($dataPresensi as $key => $value) {
+			$this->m_presensi->insert_update_rekap($value);
+		}
+		
+
+		// $data = $this->m_presensi->get_rekap();
+		// echo json_encode($data);
+
+	}
+
+	function upload_page(){
+		$data['satker'] = $this->m_presensi->get_satker();
+		$this->load->view('v_upload',$data);
+	}
+
+	function test(){
+		$this->m_presensi->test();
+
 	}
 }

@@ -1,7 +1,34 @@
-var tabelLibur;
 $(document).ready(function() {
-	$('#presensi-nav').addClass("active");
 
+	$('#presensi-nav').addClass("active");
+	var tabelLibur;
+	var tabelLibur = $('#tabelLibur').DataTable({
+		"dom": '<"liburBar">frtlp',
+		"ajax": {
+			"url": BASE_URL+"c_presensi/get_tabel_rekap",
+			type : 'POST',
+			"dataSrc": ""
+		},
+		"columns": [
+		{ "data": "ID_TOTAL" },
+		{ "data": "BULAN" },
+		{ "data": "TAHUN" },
+		{ "data": "PEGAWAI" },
+		{ "data": "PRESENSI" },
+		{ "data": "LEMBUR" }
+		],'columnDefs':[{
+			'targets': 0,
+			'searchable':false,
+			'orderable':false,
+			'className': 'dt-body-center',
+			'render': function (data){
+				return '<input type="checkbox" class="select-libur" value="' + data + '">';
+			}
+		}],"order": [],
+		initComplete:function(){
+			$('div.liburBar').html('<div style="float:left;"><button id="hapusLibur" type="button" class="btn btn-danger" disabled>Delete <span class="glyphicon glyphicon-remove"></span></button></div>');
+		}
+	});
 
 	$(document).on('click','#upload',function(event){
 		var requrl = BASE_URL+'c_presensi/form_upload';
