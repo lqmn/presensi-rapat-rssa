@@ -24,7 +24,7 @@
 	<?php $this->load->view('navbar_admin'); ?><br>
 
 	<div class="container text-center">
-		<div class="row content">
+		<div class="row content" id="mainContent">
 			<div class="col-sm-12 text-left">
 				<h4>Presensi</h4>
 				<button class="btn btn-info btn-lg" id="upload" type="button" data-toggle="modal" data-target="#bigModal">Upload</button>
