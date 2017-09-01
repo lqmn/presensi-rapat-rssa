@@ -91,15 +91,13 @@ class c_presensi extends CI_Controller{
 		';
 		foreach ($data as $key => $value) {
 			echo '
-			<tbody>
 				<tr>
 					<td>'.$value->NAMA.'</td>
 					<td>'.$value->NIP.'</td>
 					<td>'.$value->TANGGAL.'</td>
 					<td>'.$value->LEMBUR.'</td>
-					<td><input type="checkbox" class="hitung"></td>
+					<td><input class="hitung" type="checkbox"></td>
 				</tr>
-			</tbody>
 			';
 		}
 		
@@ -119,23 +117,24 @@ class c_presensi extends CI_Controller{
 	function upload(){
 		$data = $this->input->post('data');
 		foreach ($data as $key => $value) {
-			$tmp['ID_PEGAWAI']=$value[0];
-			$tmp['TANGGAL']=$value[3];
-			if ($value[4]=='true') {
-				$tmp['HITUNG']=1;
-			}else{
-				$tmp['HITUNG']=0;
-			}
-			$tmp['ID_USER_INPUT']= $this->session->userdata('id_user');
-			$insertData[]=$tmp;
+			// $tmp['ID_PEGAWAI']=$value[0];
+			// $tmp['TANGGAL']=$value[3];
+			// if ($value[4]=='true') {
+			// 	$tmp['HITUNG']=1;
+			// }else{
+			// 	$tmp['HITUNG']=0;
+			// }
+			// $tmp['ID_USER_INPUT']= $this->session->userdata('id_user');
+			// $insertData[]=$tmp;
+			var_dump($value);
 		}
 		
-		$count=0;
-		foreach ($insertData as $key => $value) {
-			$res = $this->m_presensi->insert_presensi($value);
-			$count = $count + $res;
-		}
-		var_dump($count);
+		// $count=0;
+		// foreach ($insertData as $key => $value) {
+		// 	$res = $this->m_presensi->insert_presensi($value);
+		// 	$count = $count + $res;
+		// }
+		// var_dump($count);
 	}
 
 	function form_libur(){

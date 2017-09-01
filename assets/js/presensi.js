@@ -65,7 +65,7 @@ $(document).ready(function() {
 		return false;
 	});
 
-	$('#bigModalContent').on('click','#save', function(){
+	$(document).on('click','#save', function(){
 		$('#save').button('loading');
 		var tabel = $('#tableConfirm').DataTable();
 		
