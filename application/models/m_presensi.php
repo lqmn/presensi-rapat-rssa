@@ -15,10 +15,9 @@ class m_presensi extends CI_Model{
 		return $data;
 	}
 
-	function get_id_pegawai($nama, $nip){
-		$sql = 'SELECT ID_PEGAWAI FROM pegawai WHERE NIP="'.$nip.'" AND NAMA="'.$nama.'"';
-		$result = $this->db->query($sql);
-		$data = $result->row();
+	function get_id_pegawai($data){
+		$res = $this->db->select('*')->from('pegawai')->where($data)->get();
+		$data = $res->row();
 		if ($data) {
 			return $data->ID_PEGAWAI;
 		}else{
@@ -129,5 +128,21 @@ class m_presensi extends CI_Model{
 		return $data;
 		// return $this->db->affected_rows();
 
+	}
+
+	function get_id_presensi($data){
+		$res = $this->db->select('*')->from('presensi')->where($data)->get();
+		$data = $res->row();
+		if ($data) {
+			return $data->ID_PRESENSI;
+		}else{
+			return null;
+		}
+	}
+
+	function update_presensi($id,$data){
+		var_dump($data);
+		$res = $this->db->set($data)->where('ID_PRESENSI',$id)->update('presensi');
+		return $this->db->affected_rows();
 	}
 }

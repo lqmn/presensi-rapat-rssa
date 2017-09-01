@@ -80,6 +80,7 @@ class c_presensi extends CI_Controller{
 		<table id="tableConfirm" class="table">
 			<thead>
 				<tr>
+					<th class="hidden"></th>
 					<th>Nama</th>
 					<th>NIP</th>
 					<th>Tanggal</th>
@@ -88,20 +89,21 @@ class c_presensi extends CI_Controller{
 				</tr>
 			</thead>
 			<tbody>
-		';
-		foreach ($data as $key => $value) {
-			echo '
-				<tr>
-					<td>'.$value->NAMA.'</td>
-					<td>'.$value->NIP.'</td>
-					<td>'.$value->TANGGAL.'</td>
-					<td>'.$value->LEMBUR.'</td>
-					<td><input class="hitung" type="checkbox"></td>
-				</tr>
-			';
-		}
-		
-		echo "
+				';
+				foreach ($data as $key => $value) {
+					echo '
+					<tr>
+						<td class="hidden">'.$id_satker.'</td>
+						<td>'.$value->NAMA.'</td>
+						<td>'.$value->NIP.'</td>
+						<td>'.$value->TANGGAL.'</td>
+						<td>'.$value->LEMBUR.'</td>
+						<td><input class="hitung" type="checkbox"></td>
+					</tr>
+					';
+				}
+
+				echo "
 			</tbody>
 		</table>
 		";
@@ -116,25 +118,50 @@ class c_presensi extends CI_Controller{
 
 	function upload(){
 		$data = $this->input->post('data');
+
 		foreach ($data as $key => $value) {
-			// $tmp['ID_PEGAWAI']=$value[0];
-			// $tmp['TANGGAL']=$value[3];
-			// if ($value[4]=='true') {
-			// 	$tmp['HITUNG']=1;
-			// }else{
-			// 	$tmp['HITUNG']=0;
-			// }
-			// $tmp['ID_USER_INPUT']= $this->session->userdata('id_user');
-			// $insertData[]=$tmp;
-			var_dump($value);
+			$dataPegawai['NAMA']=$value[1];
+			$dataPegawai['NIP']=$value[2];
+			$dataPegawai['ID_SATKER']=$value[0];
+
+			$id_pegawai = $this->m_presensi->get_id_pegawai($dataPegawai);
+			if (!$id_pegawai) {
+				$this->m_presensi->insert_pegawai($dataPegawai);
+				$id_pegawai = $this->m_presensi->get_id_pegawai($dataPegawai);
+			}
+			$tmp['ID_PEGAWAI']=$id_pegawai;
+
+			$tmp['TANGGAL']=$value[3];
+			$tmp['LEMBUR']=$value[4];
+			if ($value[5]=='true') {
+				$tmp['HITUNG']=1;
+			}else{
+				$tmp['HITUNG']=0;
+			}
+			$tmp['ID_USER_INPUT']= $this->session->userdata('id_user');
+			$insertData[]=$tmp;
 		}
 		
-		// $count=0;
-		// foreach ($insertData as $key => $value) {
-		// 	$res = $this->m_presensi->insert_presensi($value);
-		// 	$count = $count + $res;
-		// }
-		// var_dump($count);
+		$count=0;
+		foreach ($insertData as $key => $value) {
+			$dataPresensi['ID_PEGAWAI'] = $value['ID_PEGAWAI'];
+			$dataPresensi['TANGGAL'] = $value['TANGGAL'];
+
+			$id_presensi = $this->m_presensi->get_id_presensi($dataPresensi);
+			if (!$id_presensi) {
+				$this->m_presensi->insert_presensi($value);
+				$count++;
+			}else{
+				$updateData['LEMBUR'] = $value['LEMBUR'];
+				$updateData['HITUNG'] = $value['HITUNG'];
+				var_dump($id_presensi);
+				$res = $this->m_presensi->update_presensi($id_presensi, $updateData);
+				if ($res>0) {
+					$count++;
+				}
+			}
+		}
+		echo '<p>'.$count.' data telah dimasukkan</p>';
 	}
 
 	function form_libur(){
