@@ -18,14 +18,6 @@
 			</div>
 		</div>
 	</div>
-	<div id="bigModal" class="modal fade" role="dialog">
-		<div class="modal-dialog modal-lg">
-			<div id="bigModalContent" class="modal-content">
-				//content from ajax loaded here
-
-			</div>
-		</div>
-	</div>
 
 	<?php $this->load->view('navbar_admin'); ?><br>
 
@@ -33,19 +25,20 @@
 		<div class="row content">
 			<div class="col-sm-12 text-left">
 				<h4>Presensi</h4>
-				<!-- <button class="btn btn-primary" id="upload" type="button" data-toggle="modal" data-target="#bigModal">Upload</button> -->
 				<a href="<?php echo base_url("c_presensi/upload_page/"); ?>">
 					<button class="btn btn-primary" id="uploadPage" type="button">Upload</button>
 				</a>
 				<button class="btn btn-primary" id="libur" type="button" data-toggle="modal" data-target="#myModal">Hari libur</button>
 				<br><br>
-				<table id="tabelPresensi" class="table table-striped" cellspacing="0" width="100%">
+				<table id="tabelRekap" class="table table-striped" cellspacing="0" width="100%">
 					<thead>
 						<tr>
-							<th>NIP</th>
 							<th>NAMA</th>
-							<th>Satker</th>
-							<th>Bulan</th>
+							<th>SATKER</th>
+							<th>TAHUN</th>
+							<th>BULAN</th>
+							<th>PRESENSI</th>
+							<th>LEMBUR</th>
 							<th>Panel</th>
 						</tr>
 					</thead>

@@ -56,47 +56,17 @@ class m_presensi extends CI_Model{
 	}
 
 	function get_presensi_for_rekap(){
-		$sql='SELECT MONTH(TANGGAL) AS BULAN, YEAR(TANGGAL) AS TAHUN, ID_PEGAWAI,  COUNT(TANGGAL) AS PRESENSI, SUM(SELISIH) AS LEMBUR
-		FROM(
-		SELECT ID_PEGAWAI, MAX(TANGGAL) AS TANGGAL, HOUR(MAX(TIME(TANGGAL))) AS MAX_JAM,
-		(CASE 
-		WHEN HOUR(MAX(TIME(TANGGAL)))>15 THEN HOUR(MAX(TIME(TANGGAL)))-15
-		ELSE 0
-		END) AS SELISIH
-		FROM presensi
-		WHERE HITUNG=1
-		GROUP BY ID_PEGAWAI, DATE(TANGGAL)
-		) AS A
-		GROUP BY ID_PEGAWAI,YEAR(TANGGAL),MONTH(TANGGAL)';
+		$sql='SELECT BULAN, TAHUN, ID_PEGAWAI, COUNT(ID_PRESENSI) AS PRESENSI, SUM(LEMBUR) AS LEMBUR
+			FROM
+			(SELECT pr.ID_PRESENSI, pr.ID_PEGAWAI, p.NAMA, YEAR(TANGGAL) AS TAHUN, MONTH(TANGGAL) AS BULAN, pr.LEMBUR
+			FROM presensi pr JOIN pegawai p ON pr.ID_PEGAWAI=p.ID_PEGAWAI
+			WHERE HITUNG=1) AS S
+			GROUP BY ID_PEGAWAI, TAHUN, BULAN';
 		$result = $this->db->query($sql);
 		foreach ($result->result() as $row) {
 			$data[] = $row;
 		}
 		return $data;
-	}
-
-	function get_rekap(){
-		$sql = 'SELECT * FROM total';
-		$result = $this->db->query($sql);
-		foreach ($result->result() as $row) {
-			$data[] = $row;
-		}
-		return $data;
-	}
-
-	function insert_update_rekap($data){
-		$conditionData['BULAN']=$data->BULAN;
-		$conditionData['TAHUN']=$data->TAHUN;
-		$conditionData['ID_PEGAWAI']=$data->ID_PEGAWAI;
-		$this->db->where($conditionData);
-		$q = $this->db->get('total');
-		var_dump($conditionData);
-		if ($q->num_rows()>0) {
-			$this->db->where($conditionData);
-			$this->db->set($data);
-		}else{
-			$this->db->insert('total',$data);
-		}
 	}
 
 	function get_presensi_perhari($dataExcel){
@@ -141,8 +111,39 @@ class m_presensi extends CI_Model{
 	}
 
 	function update_presensi($id,$data){
-		var_dump($data);
 		$res = $this->db->set($data)->where('ID_PRESENSI',$id)->update('presensi');
 		return $this->db->affected_rows();
+	}
+
+	function get_id_rekap($data){
+		$res = $this->db->select('*')->from('rekap')->where($data)->get();
+		$data = $res->row();
+		if ($data) {
+			return $data->ID_REKAP;
+		}else{
+			return null;
+		}
+
+	}
+
+	function insert_rekap($data){
+		$result = $this->db->insert('rekap',$data);
+		return $this->db->affected_rows();
+	}
+
+	function update_rekap($id,$data){
+		$res = $this->db->set($data)->where('ID_REKAP',$id)->update('rekap');
+		return $this->db->affected_rows();
+	}
+
+	function get_rekap_tabel(){
+		$sql = 'SELECT ID_REKAP, CONCAT(p.NIP,", ",p.NAMA) AS NAMA, sk.NAMA_SATKER AS SATKER, r.TAHUN, r.BULAN, r.PRESENSI, r.LEMBUR
+		FROM rekap r JOIN pegawai p ON r.ID_PEGAWAI=p.ID_PEGAWAI
+		JOIN satuan_kerja sk ON sk.ID_SATKER=p.ID_SATKER';
+		$result = $this->db->query($sql);
+		foreach ($result->result() as $row) {
+			$data[] = $row;
+		}
+		return $data;
 	}
 }

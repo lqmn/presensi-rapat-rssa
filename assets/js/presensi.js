@@ -2,32 +2,32 @@ $(document).ready(function() {
 
 	$('#presensi-nav').addClass("active");
 	var tabelLibur;
-	var tabelLibur = $('#tabelLibur').DataTable({
-		"dom": '<"liburBar">frtlp',
+	var tabelRekap = $('#tabelRekap').DataTable({
+		"dom": "<'row'<'col-sm-9'><'col-sm-3'f>>" +
+			"<'row'<'col-sm-12'tr>>" +
+			"<'row'<'col-sm-5'l><'col-sm-7'p>>",
 		"ajax": {
 			"url": BASE_URL+"c_presensi/get_tabel_rekap",
-			type : 'POST',
 			"dataSrc": ""
 		},
 		"columns": [
-		{ "data": "ID_TOTAL" },
-		{ "data": "BULAN" },
+		{ "data": "NAMA" },
+		{ "data": "SATKER" },
 		{ "data": "TAHUN" },
-		{ "data": "PEGAWAI" },
+		{ "data": "BULAN" },
 		{ "data": "PRESENSI" },
-		{ "data": "LEMBUR" }
+		{ "data": "LEMBUR" },
+		{ "data": "ID_REKAP" }
 		],'columnDefs':[{
-			'targets': 0,
+			'targets': 6,
 			'searchable':false,
 			'orderable':false,
 			'className': 'dt-body-center',
 			'render': function (data){
-				return '<input type="checkbox" class="select-libur" value="' + data + '">';
+				return '<input type="button" class="detail-rekap" value="' + data + '">';
 			}
 		}],"order": [],
-		initComplete:function(){
-			$('div.liburBar').html('<div style="float:left;"><button id="hapusLibur" type="button" class="btn btn-danger" disabled>Delete <span class="glyphicon glyphicon-remove"></span></button></div>');
-		}
+		initComplete:function(){}
 	});
 
 	$(document).on('click','#upload',function(event){

@@ -154,7 +154,6 @@ class c_presensi extends CI_Controller{
 			}else{
 				$updateData['LEMBUR'] = $value['LEMBUR'];
 				$updateData['HITUNG'] = $value['HITUNG'];
-				var_dump($id_presensi);
 				$res = $this->m_presensi->update_presensi($id_presensi, $updateData);
 				if ($res>0) {
 					$count++;
@@ -199,19 +198,29 @@ class c_presensi extends CI_Controller{
 	// }
 
 	function insert_update_rekap(){
-		$data= $this->input->post('data');
+		$data = $this->m_presensi->get_presensi_for_rekap();
+		foreach ($data as $key => $value) {
+			// $this->m_presensi->insert_update_rekap($value);
+			// var_dump($value);
+			$dataRekap['BULAN'] = $value->BULAN;
+			$dataRekap['TAHUN'] = $value->TAHUN;
+			$dataRekap['ID_PEGAWAI'] = $value->ID_PEGAWAI;
+
+			$id_rekap = $this->m_presensi->get_id_rekap($dataRekap);
+			if (!$id_rekap) {
+				$this->m_presensi->insert_rekap($value);
+			}else{
+				$updateData['PRESENSI'] = $value->PRESENSI;
+				$updateData['LEMBUR'] = $value->LEMBUR;
+				$res = $this->m_presensi->update_rekap($id_rekap, $updateData);
+			}
+		}
 	}
 
 	function get_tabel_rekap(){
-		$dataPresensi = $this->m_presensi->get_presensi_for_rekap();
-		foreach ($dataPresensi as $key => $value) {
-			$this->m_presensi->insert_update_rekap($value);
-		}
-		
-
-		// $data = $this->m_presensi->get_rekap();
-		// echo json_encode($data);
-
+		$this->insert_update_rekap();
+		$data = $this->m_presensi->get_rekap_tabel();
+		echo json_encode($data);
 	}
 
 	function upload_page(){
