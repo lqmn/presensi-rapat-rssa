@@ -144,7 +144,7 @@ class c_admin extends CI_Controller{
 	}
 
 	function form_user(){
-		$data['pegawai']= $this->m_admin->get_pegawai();
+		$data['pegawai']= $this->m_admin->get_pegawai_not_user();
 		// var_dump($data);
 		$this->load->view('v_form_user', $data);
 	}

@@ -527,4 +527,18 @@ function verifikasi_rapat($id_rapat){
 	$this->db->query($sql);
 	return $this->db->affected_rows();
 }
+function get_pegawai_not_user(){
+	$sql="SELECT ID_PEGAWAI,NIP,NAMA,NAMA_SATKER
+		FROM pegawai p JOIN satuan_kerja s ON p.id_satker = s.id_satker
+		WHERE p.status=1 AND ID_PEGAWAI NOT IN (SELECT ID_PEGAWAI FROM user)
+		ORDER BY p.date_modified DESC ";
+
+	$result=$this->db->query($sql);
+	foreach ($result->result() as $row) {
+		$data[] = $row;
+	}
+	return (array)@$data;
+
+}
+
 }
