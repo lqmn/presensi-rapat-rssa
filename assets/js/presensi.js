@@ -3,7 +3,7 @@ $(document).ready(function() {
 	$('#presensi-nav').addClass("active");
 	var tabelLibur;
 	var tabelRekap = $('#tabelRekap').DataTable({
-		"dom": "<'row'<'col-sm-9'><'col-sm-3'f>>" +
+		"dom": "<'toolbar'>f" +
 			"<'row'<'col-sm-12'tr>>" +
 			"<'row'<'col-sm-5'l><'col-sm-7'p>>",
 		"ajax": {
@@ -27,7 +27,21 @@ $(document).ready(function() {
 				return '<input type="button" class="detail-rekap" value="' + data + '">';
 			}
 		}],"order": [],
-		initComplete:function(){}
+		initComplete:function(){
+			$('div.toolbar').html('<div class="wow pull-right">&nbsp;</div>');
+
+			var column = this.api().column(3);
+			var select = $('<select class="form-control"><option value=""></option></select>')
+			.appendTo( $('.wow')).on('change', function(){
+				var val = $.fn.dataTable.util.escapeRegex($(this).val());
+				console.log(val);
+				column.search( val ? '^'+val+'$' : '', true, false ).draw();
+			});
+
+			column.data().unique().sort().each( function ( d, j ) {
+				select.append( '<option value="'+d+'">'+d+'</option>' )
+			});
+		}
 	});
 
 	$(document).on('click','#upload',function(event){
