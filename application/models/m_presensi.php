@@ -57,10 +57,10 @@ class m_presensi extends CI_Model{
 
 	function get_presensi_for_rekap(){
 		$sql='SELECT BULAN, TAHUN, ID_PEGAWAI, COUNT(ID_PRESENSI) AS PRESENSI, SUM(LEMBUR) AS LEMBUR
-			FROM
-			(SELECT pr.ID_PRESENSI, pr.ID_PEGAWAI, p.NAMA, YEAR(TANGGAL) AS TAHUN, MONTH(TANGGAL) AS BULAN, pr.LEMBUR
-			FROM presensi pr JOIN pegawai p ON pr.ID_PEGAWAI=p.ID_PEGAWAI
-			WHERE HITUNG=1) AS S
+			FROM(
+				SELECT pr.ID_PRESENSI, pr.ID_PEGAWAI, p.NAMA, YEAR(TANGGAL) AS TAHUN, MONTH(TANGGAL) AS BULAN, pr.LEMBUR
+				FROM presensi pr JOIN pegawai p ON pr.ID_PEGAWAI=p.ID_PEGAWAI
+				WHERE HITUNG=1 AND TANGGAL NOT IN (SELECT TANGGAL FROM hari_libur) AND DAYNAME(TANGGAL)<>"Saturday" AND DAYNAME(TANGGAL)<>"Sunday") AS S
 			GROUP BY ID_PEGAWAI, TAHUN, BULAN';
 		$result = $this->db->query($sql);
 		foreach ($result->result() as $row) {
