@@ -210,5 +210,30 @@ $(document).ready(function() {
 		$('input[type="checkbox"]', rows).prop('checked', this.checked);
 	});
 
+	$(document).on('click','#libur', function(){
+		presensi = tabelRekap.column(4);
+		lembur = tabelRekap.column(5);
+		column.visible(false);
+		console.log(column);
+	});
 
+	$(document).on('change','#rekapDropdown',function(){
+		presensi = tabelRekap.column(4);
+		lembur = tabelRekap.column(5);
+		var x = $('#rekapDropdown').val();
+
+		switch(parseInt(x)){
+			case 0:
+			presensi.visible(true);
+			lembur.visible(true);
+			case 1:
+			presensi.visible(true);
+			lembur.visible(false);
+			break;
+			case 2:
+			presensi.visible(false);
+			lembur.visible(true);
+			break;
+		}
+	});
 });

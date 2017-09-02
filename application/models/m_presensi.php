@@ -62,6 +62,7 @@ class m_presensi extends CI_Model{
 				FROM presensi pr JOIN pegawai p ON pr.ID_PEGAWAI=p.ID_PEGAWAI
 				WHERE HITUNG=1 AND TANGGAL NOT IN (SELECT TANGGAL FROM hari_libur) AND DAYNAME(TANGGAL)<>"Saturday" AND DAYNAME(TANGGAL)<>"Sunday") AS S
 			GROUP BY ID_PEGAWAI, TAHUN, BULAN';
+
 		$result = $this->db->query($sql);
 		foreach ($result->result() as $row) {
 			$data[] = $row;
@@ -123,7 +124,6 @@ class m_presensi extends CI_Model{
 		}else{
 			return null;
 		}
-
 	}
 
 	function insert_rekap($data){

@@ -29,6 +29,13 @@
 					<button class="btn btn-primary" id="uploadPage" type="button">Upload</button>
 				</a>
 				<button class="btn btn-primary" id="libur" type="button" data-toggle="modal" data-target="#myModal">Hari libur</button>
+				<div class="pull-right">
+					<select id="rekapDropdown" class="selectpicker" name="tabel">
+						<option value="0" selected>Presensi dan Lembur</option>
+						<option value="1">Presensi</option>
+						<option value="2">Lembur</option>
+					</select>
+				</div>
 				<br><br>
 				<table id="tabelRekap" class="table table-striped" cellspacing="0" width="100%">
 					<thead>
