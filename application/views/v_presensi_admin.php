@@ -24,17 +24,17 @@
 	<?php $this->load->view('navbar_admin'); ?><br>
 
 	<div class="container text-center">
-		<div class="row content">
-			<div class="col-sm-12 text-left">
+		<div class="row content" id="mainContent">
+			<div class="col-sm-12 text-left" id="mainDiv">
 				<h4>Presensi</h4>
 				<button class="btn btn-info btn-lg" id="upload" type="button" data-toggle="modal" data-target="#bigModal">Upload</button>
 				
 <button style="margin-right:10px;"class="btn btn-primary btn-lg pull-right" id="hariLibur" type="button" data-toggle="modal" data-target="#bigModal">Hari Libur</button>
 				
-				<button class="btn btn-info btn-lg pull-right" style="margin-right:10px;"id="rekapAbsen" type="button" data-toggle="modal" data-target="#bigModal">Rekap Absen</button>
+				<a href="<?php echo base_url(); ?>c_presensi/go_rekap_absen"><button class="btn btn-info btn-lg pull-right" style="margin-right:10px;"id="rekapAbsen" type="button" action="">Rekap Absen</button></a>
 				
 				
-				<button style="margin-right:10px;"class="btn btn-info btn-lg pull-right" id="rekapLembur" type="button" data-toggle="modal" data-target="#bigModal">Rekap Lembur</button>
+					<a href="<?php echo base_url(); ?>c_presensi/go_rekap_lembur"><button class="btn btn-info btn-lg pull-right" style="margin-right:10px;"id="rekapAbsen" type="button" action="">Rekap Lembur</button></a>
 
 
 				<br>

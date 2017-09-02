@@ -176,3 +176,10 @@ var tabel2 = $('#tableLibur').DataTable();
 
 });
 
+
+
+	
+	
+	
+
+
