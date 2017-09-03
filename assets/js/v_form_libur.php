@@ -38,7 +38,7 @@
 	
 		<div class="form-group">
 			<div class="col-sm-offset-3 col-sm-9">
-				<button id="insertLibur" type="button" class="btn btn-primary">Submit</button>
+				<button id="insertRapat" type="button" class="btn btn-primary">Submit</button>
 			</div>
 		</div>
 	</form>
