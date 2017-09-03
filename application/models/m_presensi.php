@@ -25,16 +25,6 @@ class m_presensi extends CI_Model{
 		}
 	}
 
-	function get_hari_libur(){
-		$sql = 'SELECT * FROM hari_libur ORDER BY TANGGAL ASC';
-		$result = $this->db->query($sql);
-		foreach ($result->result() as $row) {
-			$data[] = $row;
-		}
-		return @(array)$data;
-		
-	}
-
 	function insert_pegawai($data){
 		$result = $this->db->insert('pegawai',$data);
 		return $this->db->affected_rows();
@@ -44,41 +34,25 @@ class m_presensi extends CI_Model{
 		$result = $this->db->insert('presensi',$data);
 		return $this->db->affected_rows();
 	}
-	function insert_libur($tanggal){
-		$sql="INSERT INTO hari_libur (TANGGAL,ID_USER_INPUT) VALUES ('".$tanggal."','".$this->session->userdata('id_user')."')";
+
+	function insert_libur($data){
+		$result = $this->db->insert('hari_libur',$data);
+		return $this->db->affected_rows();
+	}
+
+	function get_libur(){
+		$sql = 'SELECT ID_HARI_LIBUR, TANGGAL, KETERANGAN FROM hari_libur';
+		$result = $this->db->query($sql);
+		foreach ($result->result() as $row) {
+			$data[] = $row;
+		}
+		return (array)@$data;
+	}
+
+	function delete_libur($data){
+		$sql='DELETE FROM hari_libur WHERE ID_HARI_LIBUR='.$data;
 		$this->db->query($sql);
 		return $this->db->affected_rows();
-	}
-
-	function delete_hari_libur($data){
-		// var_dump($data);	
-		foreach ($data as $key => $value) {
-			$sql = "delete from hari_libur
-			
-			WHERE ID_HARI_LIBUR=".$value;
-			// $sql = "DELETE FROM pegawai WHERE ID_PEGAWAI=".$value;
-			$this->db->query($sql);
-		}
-		return $this->db->affected_rows();
-	}
-
-	function get_id_absen($id_bulan){
-		$sql="SELECT DISTINCT ID_PEGAWAI FROM absensi WHERE ID_BULAN=".$id_bulan;
-		$result=$this->db->query($sql);
-		foreach ($result->result() as $row) {
-			$data[] = $row;
-		}
-		return (array)@$data;
-	}
-
-	function rekap_absen($id_user,$id_bulan){ //kasih parameter id_bulan
-		$sql="SELECT   pegawai.NAMA, '".$id_user."' as ID_PEGAWAI, COUNT(DISTINCT DAY(TANGGAL)) AS TOTAL_ABSEN FROM `absensi`,pegawai,satuan_kerja
-		WHERE ID_BULAN=".$id_bulan./*" .*/" AND absensi.NAMA_SATKER ='".$this->session->userdata('nama_satker')."' AND pegawai.NIP='".$id_user."'  AND absensi.ID_PEGAWAI='".$id_user."'";
-		$result=$this->db->query($sql);
-		foreach ($result->result() as $row) {
-			$data[] = $row;
-		}
-		return (array)@$data;
 	}
 
 	function get_presensi_for_rekap(){
