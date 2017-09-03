@@ -111,12 +111,23 @@ class c_presensi extends CI_Controller{
 		unlink($target);
 	}
 
+	function delete($target){
+
+	}
+
 	function form_upload(){
 		$data['satker'] = $this->m_presensi->get_satker();
 		$this->load->view('v_form_upload', $data); 
 	}
 
+	function hari_libur(){
+		$data['libur']=$this->m_presensi->get_hari_libur();
+		$this->load->view('v_hari_libur',$data); 
+	}
+
 	function upload(){
+		// echo "awdawdawdawd";
+		// $data = $_POST['data'];
 		$data = $this->input->post('data');
 
 		foreach ($data as $key => $value) {
@@ -162,34 +173,38 @@ class c_presensi extends CI_Controller{
 		}
 		echo '<p>'.$count.' data telah dimasukkan</p>';
 	}
-
 	function form_libur(){
 		$this->load->view('v_form_libur');
 	}
 
-	function insert_libur(){
-		$tanggal = $this->input->post('tanggal');
-		$tanggal = date_create_from_format('d/m/Y', $tanggal);
-		$tanggal = date_format($tanggal,'Y-m-d');
-
-		$data['TANGGAL'] = $tanggal;
-		$data['KETERANGAN'] = $this->input->post('ket');
-		$data['ID_USER_INPUT'] = $this->session->userdata('id_user');
-		$result = $this->m_presensi->insert_libur($data);
-		var_dump($result);
-
+		function insert_libur(){
+		$tanggal=$this->input->post('tanggal');
+		$this->m_presensi->insert_libur($tanggal);
+		$data['libur']=$this->m_presensi->get_hari_libur();
+		$data['pesan']="Data Berhasil Dimasukkan";
+		$this->load->view('v_hari_libur',$data); 
 	}
 
-	function get_tabel_libur(){
-		$data = $this->m_presensi->get_libur();
-		echo json_encode($data);
-	}
+	function delete_hari_libur(){
+		$array_del = $this->input->post('array_del');
+		$res = $this->m_presensi->delete_hari_libur($array_del);
 
-	function delete_libur(){
-		$id_delete = $this->input->post('array_del');
-		foreach ($id_delete as $key => $value) {
-			$res= $this->m_presensi->delete_libur($value);
+		if ($res>0) {
+			$data['pesan']="Data berhasil dihapus";
+			$data['libur']=$this->m_presensi->get_hari_libur();
+		
+			$this->load->view('v_hari_libur',$data); 
+		}else{
+			echo "Error";
 		}
+	}
+
+	function form_delete_hari_libur(){
+		$this->load->view('v_form_delete_hari_libur');
+	}
+
+	function go_rekap_absen(){
+		$this->load->view('v_rekap_absen');
 	}
 
 	// function get_presensi_rekap(){

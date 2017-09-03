@@ -27,7 +27,7 @@
 		<div class="row content" id="mainContent">
 			<div class="col-sm-12 text-left" id="mainDiv">
 				<h4>Rekap Absen</h4>
-				<form class="form=horizontal" action="<?php echo base_url();?>c_presensi/rekap_lembur/" method="post">
+				<form class="form=horizontal" action="<?php echo base_url();?>c_presensi/rekap_absen/" method="post">
 	<div class="form-group">
 			<label class="control-label col-sm-1" for="pwd">Bulan:</label>
 			<div class="col-sm-11">
@@ -58,7 +58,7 @@
 		
 
 				<br>
-<input type="submit" id="rekapAbsen" class="btn btn-primary"value="Lihat Rekap Lembur" />
+<input type="submit" id="rekapAbsen" class="btn btn-primary"value="Lihat Rekap Absen" />
 <br>
 <hr>
 </form>
@@ -68,12 +68,33 @@
 
 
 				<br>
-				<table id="tabel" class="table table-striped" cellspacing="0" width="100%">
+			<!--	<table id="tabel" class="table table-striped" cellspacing="0" width="100%">
 					<thead>
 						<tr>
 							<th>NIP</th>
 							<th>NAMA</th>
-							<th>Total Lembur</th>
+							<th>Total Absen</th>
 						
 						</tr>
 					</thead>
+					
+				</table>-->
+
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="<?php echo base_url("assets/js/jquery-3.2.1.min.js"); ?>"></script>
+	<script type="text/javascript" src="<?php echo base_url("assets/js/bootstrap.js"); ?>"></script>
+	<script type="text/javascript" src="<?php echo base_url("assets/DataTables/datatables.min.js"); ?>"></script>
+	<script type="text/javascript" src="<?php echo base_url("assets/js/bootstrap-select.min.js"); ?>"></script>
+	<script type="text/javascript" src="<?php echo base_url("assets/js/presensi.js"); ?>"></script>
+	<script type="text/javascript">
+		var BASE_URL = "<?php echo base_url();?>";
+	</script>
+	<!-- bootstrap-datetimepicker -->
+<script type="text/javascript" src="<?php echo base_url();?>assets/js/moment.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-datetimepicker.min.js"></script>
+<link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-datetimepicker.css" />
+</body>
+</html>
