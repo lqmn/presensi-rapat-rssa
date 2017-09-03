@@ -29,6 +29,7 @@ $(document).ready(function() {
 		}],"order": [],
 		initComplete:function(){
 			$('div.toolbar').html('<div class="wow pull-right">&nbsp;</div>');
+			this.api().column(5).visible(false);
 
 			var column = this.api().column(3);
 			var select = $('<select class="form-control"><option value=""></option></select>')
@@ -237,9 +238,6 @@ $(document).ready(function() {
 		var x = $('#rekapDropdown').val();
 
 		switch(parseInt(x)){
-			case 0:
-			presensi.visible(true);
-			lembur.visible(true);
 			case 1:
 			presensi.visible(true);
 			lembur.visible(false);

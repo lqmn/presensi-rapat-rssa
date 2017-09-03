@@ -19,7 +19,13 @@
 		</div>
 	</div>
 
-	<?php $this->load->view('navbar_admin'); ?><br>
+	<?php 
+	if ($this->session->userdata('otoritas')==1) {
+		$this->load->view('navbar_admin');
+	}else{
+		$this->load->view('navbar');
+	}
+	?><br>
 
 	<div class="container text-center">
 		<div class="row content">
@@ -31,8 +37,7 @@
 				<button class="btn btn-primary" id="libur" type="button" data-toggle="modal" data-target="#myModal">Hari libur</button>
 				<div class="pull-right">
 					<select id="rekapDropdown" class="selectpicker" name="tabel">
-						<option value="0" selected>Presensi dan Lembur</option>
-						<option value="1">Presensi</option>
+						<option value="1" selected>Presensi</option>
 						<option value="2">Lembur</option>
 					</select>
 				</div>
