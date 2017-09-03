@@ -225,13 +225,6 @@ $(document).ready(function() {
 		$('input[type="checkbox"]', rows).prop('checked', this.checked);
 	});
 
-	$(document).on('click','#libur', function(){
-		presensi = tabelRekap.column(4);
-		lembur = tabelRekap.column(5);
-		column.visible(false);
-		console.log(column);
-	});
-
 	$(document).on('change','#rekapDropdown',function(){
 		presensi = tabelRekap.column(4);
 		lembur = tabelRekap.column(5);
