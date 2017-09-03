@@ -171,7 +171,10 @@ class c_rapat extends CI_Controller{
 		echo json_encode($res);
 	}
 
-	function guest(){
+	function jadwal(){
 		$this->load->view('v_guest');
+	}
+	function jadwal_detail(){
+		$this->load->view('v_guest_detail');
 	}
 }

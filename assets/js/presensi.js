@@ -28,19 +28,31 @@ $(document).ready(function() {
 			}
 		}],"order": [],
 		initComplete:function(){
-			$('div.toolbar').html('<div class="wow pull-right">&nbsp;</div>');
+			$('div.toolbar').html('<div id="option" class="pull-right">&nbsp;</div>');
 			this.api().column(5).visible(false);
 
-			var column = this.api().column(3);
-			var select = $('<select class="form-control"><option value=""></option></select>')
-			.appendTo( $('.wow')).on('change', function(){
+			var bulan = this.api().column(3);
+			var selectBulan = $('<select class="form-control"><option value="">Semua Bulan</option></select>')
+			.appendTo( $('#option')).on('change', function(){
 				var val = $.fn.dataTable.util.escapeRegex($(this).val());
 				console.log(val);
-				column.search( val ? '^'+val+'$' : '', true, false ).draw();
+				bulan.search( val ? '^'+val+'$' : '', true, false ).draw();
 			});
 
-			column.data().unique().sort().each( function ( d, j ) {
-				select.append( '<option value="'+d+'">'+d+'</option>' )
+			bulan.data().unique().sort().each( function ( d, j ) {
+				selectBulan.append( '<option value="'+d+'">'+d+'</option>' )
+			});
+
+			var tahun = this.api().column(2);
+			var selectTahun = $('<select class="form-control"><option value="">Semua Tahun</option></select>')
+			.appendTo( $('#option')).on('change', function(){
+				var val = $.fn.dataTable.util.escapeRegex($(this).val());
+				console.log(val);
+				tahun.search( val ? '^'+val+'$' : '', true, false ).draw();
+			});
+
+			tahun.data().unique().sort().each( function ( d, j ) {
+				selectTahun.append( '<option value="'+d+'">'+d+'</option>' )
 			});
 		}
 	});

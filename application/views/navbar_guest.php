@@ -18,7 +18,8 @@
 		</div>
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav"> 
-				<li id="jadwal-nav"><a href="<?php echo base_url(); ?>">Jadwal</a></li>
+				<li id="jadwal-nav"><a href="<?php echo base_url("c_rapat/jadwal"); ?>">Jadwal</a></li>
+				<li id="jadwal-detail-nav"><a href="<?php echo base_url("c_rapat/jadwal_detail"); ?>">Detail Jadwal</a></li>
 			</ul>
 
 			<div class="navbar-right">

@@ -22,7 +22,7 @@ Class c_login extends CI_Controller {
 		if($this->session->userdata('username')){
 			$this->loginsuccess();
 		}else{
-			$this->load->view('v_guest');
+			redirect('c_rapat/jadwal','refresh');
 		}
 	}
 
@@ -88,15 +88,8 @@ Class c_login extends CI_Controller {
 
 	// Logout from admin page
 	function logout() {
-		// Removing session data
-		// $sess_array = array(
-		// 	'username' => ''
-		// 	);
-		// $this->session->unset_userdata('authority', $sess_array);
-		// $data['message_display'] = 'Successfully Logout';
-		// $this->load->view('v_login', $data);
 		$this->session->sess_destroy();
-		redirect('c_login','refresh');
+		redirect('c_login/login_form','refresh');
 	}
 
 	function proses_login(){

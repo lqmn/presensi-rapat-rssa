@@ -60,9 +60,10 @@ class m_rapat extends CI_Model{
 			$test = new stdClass();
 
 			$test->ID = $row->ID_PESERTA_RAPAT;
-			$test->NAMA = $row->NIP.', '.$row->NAMA;
+			$test->NIP = $row->NIP;
+			$test->NAMA = $row->NAMA;
 			$test->INSTITUSI =$row->NAMA_SATKER.', RSSA Malang';
-			$test->PEGAWAI = 1;
+			// $test->PEGAWAI = 1;
 
 			$data[]=$test;
 		}
@@ -76,9 +77,10 @@ class m_rapat extends CI_Model{
 			$test = new stdClass();
 
 			$test->ID = $row->ID_PESERTA_RAPAT;
+			$test->NIP = '-';
 			$test->NAMA = $row->NAMA;
 			$test->INSTITUSI =$row->INSTITUSI;
-			$test->PEGAWAI = 0;
+			// $test->PEGAWAI = 0;
 
 			$data[]=$test;
 		}
