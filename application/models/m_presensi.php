@@ -163,7 +163,7 @@ class m_presensi extends CI_Model{
 	}
 
 	function get_rekap_tabel(){
-		$sql = 'SELECT ID_REKAP, CONCAT(p.NIP,", ",p.NAMA) AS NAMA, sk.NAMA_SATKER AS SATKER, r.TAHUN, MONTHNAME(CONCAT(TAHUN,"-",BULAN,"-1")) AS BULAN, r.PRESENSI, r.LEMBUR
+		$sql = 'SELECT ID_REKAP, CONCAT(p.NIP,", ",p.NAMA) AS NAMA, sk.NAMA_SATKER AS SATKER, r.TAHUN, r.BULAN, r.PRESENSI, r.LEMBUR
 		FROM rekap r JOIN pegawai p ON r.ID_PEGAWAI=p.ID_PEGAWAI
 		JOIN satuan_kerja sk ON sk.ID_SATKER=p.ID_SATKER';
 		$result = $this->db->query($sql);
