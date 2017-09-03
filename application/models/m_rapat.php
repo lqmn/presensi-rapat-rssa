@@ -228,7 +228,7 @@ class m_rapat extends CI_Model{
 		foreach ($result->result() as $row) {
 			$rapat[] = $row;
 		}
-		return $rapat;
+		return (array)@$rapat;
 
 	}
 }

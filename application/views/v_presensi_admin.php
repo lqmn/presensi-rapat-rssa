@@ -12,39 +12,46 @@
 </head>
 <body>
 
-	<div id="bigModal" class="modal fade" role="dialog">
-		<div class="modal-dialog modal-lg">
-			<div id="bigModalContent" class="modal-content">
+	<div id="myModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div id="modalContent" class="modal-content">
 				//content from ajax loaded here
-
 			</div>
 		</div>
 	</div>
 
-	<?php $this->load->view('navbar_admin'); ?><br>
+	<?php 
+	if ($this->session->userdata('otoritas')==1) {
+		$this->load->view('navbar_admin');
+	}else{
+		$this->load->view('navbar');
+	}
+	?><br>
 
 	<div class="container text-center">
 		<div class="row content" id="mainContent">
 			<div class="col-sm-12 text-left" id="mainDiv">
 				<h4>Presensi</h4>
-				<button class="btn btn-info btn-lg" id="upload" type="button" data-toggle="modal" data-target="#bigModal">Upload</button>
-				
-<button style="margin-right:10px;"class="btn btn-primary btn-lg pull-right" id="hariLibur" type="button" data-toggle="modal" data-target="#bigModal">Hari Libur</button>
-				
-				<a href="<?php echo base_url(); ?>c_presensi/go_rekap_absen"><button class="btn btn-info btn-lg pull-right" style="margin-right:10px;"id="rekapAbsen" type="button" action="">Rekap Absen</button></a>
-				
-				
-					<a href="<?php echo base_url(); ?>c_presensi/go_rekap_lembur"><button class="btn btn-info btn-lg pull-right" style="margin-right:10px;"id="rekapAbsen" type="button" action="">Rekap Lembur</button></a>
-
-
-				<br>
-				<table id="tabel" class="table table-striped" cellspacing="0" width="100%">
+				<a href="<?php echo base_url("c_presensi/upload_page/"); ?>">
+					<button class="btn btn-primary" id="uploadPage" type="button">Upload</button>
+				</a>
+				<button class="btn btn-primary" id="libur" type="button" data-toggle="modal" data-target="#myModal">Hari libur</button>
+				<div class="pull-right">
+					<select id="rekapDropdown" class="selectpicker" name="tabel">
+						<option value="1" selected>Presensi</option>
+						<option value="2">Lembur</option>
+					</select>
+				</div>
+				<br><br>
+				<table id="tabelRekap" class="table table-striped" cellspacing="0" width="100%">
 					<thead>
 						<tr>
-							<th>NIP</th>
 							<th>NAMA</th>
-							<th>Satker</th>
-							<th>Bulan</th>
+							<th>SATKER</th>
+							<th>TAHUN</th>
+							<th>BULAN</th>
+							<th>PRESENSI</th>
+							<th>LEMBUR</th>
 							<th>Panel</th>
 						</tr>
 					</thead>

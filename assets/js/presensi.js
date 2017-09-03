@@ -1,6 +1,49 @@
 $(document).ready(function() {
-	$('#presensi-nav').addClass("active");
 
+	$('#presensi-nav').addClass("active");
+	var tabelLibur;
+	var tabelRekap = $('#tabelRekap').DataTable({
+		"dom": "<'toolbar'>f" +
+			"<'row'<'col-sm-12'tr>>" +
+			"<'row'<'col-sm-5'l><'col-sm-7'p>>",
+		"ajax": {
+			"url": BASE_URL+"c_presensi/get_tabel_rekap",
+			"dataSrc": ""
+		},
+		"columns": [
+		{ "data": "NAMA" },
+		{ "data": "SATKER" },
+		{ "data": "TAHUN" },
+		{ "data": "BULAN" },
+		{ "data": "PRESENSI" },
+		{ "data": "LEMBUR" },
+		{ "data": "ID_REKAP" }
+		],'columnDefs':[{
+			'targets': 6,
+			'searchable':false,
+			'orderable':false,
+			'className': 'dt-body-center',
+			'render': function (data){
+				return '<input type="button" class="detail-rekap" value="' + data + '">';
+			}
+		}],"order": [],
+		initComplete:function(){
+			$('div.toolbar').html('<div class="wow pull-right">&nbsp;</div>');
+			this.api().column(5).visible(false);
+
+			var column = this.api().column(3);
+			var select = $('<select class="form-control"><option value=""></option></select>')
+			.appendTo( $('.wow')).on('change', function(){
+				var val = $.fn.dataTable.util.escapeRegex($(this).val());
+				console.log(val);
+				column.search( val ? '^'+val+'$' : '', true, false ).draw();
+			});
+
+			column.data().unique().sort().each( function ( d, j ) {
+				select.append( '<option value="'+d+'">'+d+'</option>' )
+			});
+		}
+	});
 
 	$(document).on('click','#upload',function(event){
 		var requrl = BASE_URL+'c_presensi/form_upload';
@@ -37,7 +80,7 @@ $(document).ready(function() {
 		return false;
 	});
 
-	$('#bigModalContent').on('click','#save', function(){
+	$(document).on('click','#save', function(){
 		$('#save').button('loading');
 		var tabel = $('#tableConfirm').DataTable();
 		
@@ -46,7 +89,7 @@ $(document).ready(function() {
 			var dataRow = $(this).children("td").map(function() {
 				return $(this).text();
 			}).get();
-			dataRow[4]=$(this).find('.hitung').is(":checked");
+			dataRow[5]=$(this).find('.hitung').is(":checked");
 			data.push(dataRow);
 		});
 
@@ -86,15 +129,18 @@ $(document).ready(function() {
 		});
 	})
 
-	$('#bigModalContent').on('click','#tambahLibur',function(event){
-		$('#tambahLibur').button('loading');
-
-		var requrl = BASE_URL+'c_presensi/form_libur';
+	$(document).on('submit','#liburForm',function(){
+		$('#insert').button('loading');
+		var form = $('#liburForm')[0];
+		// console.log(form);
+		var formData = new FormData(form);
+		var requrl = BASE_URL+'c_presensi/insert_libur';
 		$.ajax({
 			url:requrl,
 			success:function(data){
-				$('#bigModalContent').html(data);
-			
+				tabelLibur.ajax.reload();
+				$('#insert').button('reset');
+				$('#liburForm')[0].reset();
 			}
 		});
 	})
@@ -182,4 +228,27 @@ var tabel2 = $('#tableLibur').DataTable();
 	
 	
 
+	$(document).on('click','#libur', function(){
+		presensi = tabelRekap.column(4);
+		lembur = tabelRekap.column(5);
+		column.visible(false);
+		console.log(column);
+	});
 
+	$(document).on('change','#rekapDropdown',function(){
+		presensi = tabelRekap.column(4);
+		lembur = tabelRekap.column(5);
+		var x = $('#rekapDropdown').val();
+
+		switch(parseInt(x)){
+			case 1:
+			presensi.visible(true);
+			lembur.visible(false);
+			break;
+			case 2:
+			presensi.visible(false);
+			lembur.visible(true);
+			break;
+		}
+	});
+});

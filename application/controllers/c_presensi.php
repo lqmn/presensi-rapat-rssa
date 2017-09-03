@@ -14,6 +14,25 @@ class c_presensi extends CI_Controller{
 		$this->load->view('v_presensi_admin');
 	}
 
+	function isValidCell($cell){
+		if ($cell[0]!='Nama' AND $cell[0]!=null AND $cell[1]!='NIP / NBI' AND $cell[1]!=null AND $cell[2]!='Waktu' AND $cell[2]!=null) {
+			return true;
+		}else{
+			false;
+		}
+	}
+
+	function cariAbsenPegawai($data,$date){
+		$result = array();
+		foreach ($data as $key => $value) {
+			if (explode(' ',$value[2])[0]==$date) {
+				$result[] =$value;
+			}
+		}
+		return $result;
+
+	}
+
 	function openFile(){
 		$id_satker = $_POST['satker'];
 
@@ -35,21 +54,10 @@ class c_presensi extends CI_Controller{
 			$arrayData = array_merge($arrayData, $sheet[$key]->toArray());
 		}
 
-		echo '
-		<table id="tableConfirm" class="table">
-			<thead>
-				<tr>
-					<th class="hidden"></th>
-					<th>Nama</th>
-					<th>NIP</th>
-					<th>Tanggal</th>
-					<th>Hitung</th>
-				</tr>
-			</thead>
-			<tbody>
-		';
+		// proses array
+		$dataExcel = array();
 		foreach ($arrayData as $key => $value) {
-			if ($value[0]!='Nama' AND $value[0]!=null) {
+			if ($this->isValidCell($value)) {
 				if (strlen(explode(' ',$value[2])[0])<10) {
 
 					$date = date_create_from_format('n/j/y H:i', $value[2]);
@@ -60,28 +68,42 @@ class c_presensi extends CI_Controller{
 					$date = date_format($date,'Y-m-d H:i:s');
 					$value[2] = $date;
 				}
-				$id_pegawai = $this->m_presensi->get_id_pegawai($value[0],$value[1]);
-				// echo "aokwdokao";
-				if (!$id_pegawai) {
-					$data['NAMA']=$value[0];
-					$data['NIP']=$value[1];
-					$data['ID_SATKER']=$id_satker;
-					$this->m_presensi->insert_pegawai($data);
-					$id_pegawai = $this->m_presensi->get_id_pegawai($value[0],$value[1]);
-				}
-
-				echo '
-				<tr>
-					<td class="hidden">'.$id_pegawai.'</td>
-					<td>'.$value[0].'</td>
-					<td>'.$value[1].'</td>
-					<td>'.$value[2].'</td>
-					<td><input class="hitung" type="checkbox" value="1"></input></td>
-				</tr>
-				';
+				$row['NAMA']=$value[0];
+				$row['NIP']=$value[1];
+				$row['TANGGAL']=$value[2];
+				$dataExcel[] = $row;
 			}
 		}
-		echo "
+		$data = $this->m_presensi->get_presensi_perhari($dataExcel);
+
+		echo '
+		<table id="tableConfirm" class="table">
+			<thead>
+				<tr>
+					<th class="hidden"></th>
+					<th>Nama</th>
+					<th>NIP</th>
+					<th>Tanggal</th>
+					<th>Lembur</th>
+					<th>Hitung Lembur?</th>
+				</tr>
+			</thead>
+			<tbody>
+				';
+				foreach ($data as $key => $value) {
+					echo '
+					<tr>
+						<td class="hidden">'.$id_satker.'</td>
+						<td>'.$value->NAMA.'</td>
+						<td>'.$value->NIP.'</td>
+						<td>'.$value->TANGGAL.'</td>
+						<td>'.$value->LEMBUR.'</td>
+						<td><input class="hitung" type="checkbox"></td>
+					</tr>
+					';
+				}
+
+				echo "
 			</tbody>
 		</table>
 		";
@@ -107,10 +129,22 @@ class c_presensi extends CI_Controller{
 		// echo "awdawdawdawd";
 		// $data = $_POST['data'];
 		$data = $this->input->post('data');
+
 		foreach ($data as $key => $value) {
-			$tmp['ID_PEGAWAI']=$value[0];
+			$dataPegawai['NAMA']=$value[1];
+			$dataPegawai['NIP']=$value[2];
+			$dataPegawai['ID_SATKER']=$value[0];
+
+			$id_pegawai = $this->m_presensi->get_id_pegawai($dataPegawai);
+			if (!$id_pegawai) {
+				$this->m_presensi->insert_pegawai($dataPegawai);
+				$id_pegawai = $this->m_presensi->get_id_pegawai($dataPegawai);
+			}
+			$tmp['ID_PEGAWAI']=$id_pegawai;
+
 			$tmp['TANGGAL']=$value[3];
-			if ($value[4]=='true') {
+			$tmp['LEMBUR']=$value[4];
+			if ($value[5]=='true') {
 				$tmp['HITUNG']=1;
 			}else{
 				$tmp['HITUNG']=0;
@@ -121,10 +155,23 @@ class c_presensi extends CI_Controller{
 		
 		$count=0;
 		foreach ($insertData as $key => $value) {
-			$res = $this->m_presensi->insert_presensi($value);
-			$count = $count + $res;
+			$dataPresensi['ID_PEGAWAI'] = $value['ID_PEGAWAI'];
+			$dataPresensi['TANGGAL'] = $value['TANGGAL'];
+
+			$id_presensi = $this->m_presensi->get_id_presensi($dataPresensi);
+			if (!$id_presensi) {
+				$this->m_presensi->insert_presensi($value);
+				$count++;
+			}else{
+				$updateData['LEMBUR'] = $value['LEMBUR'];
+				$updateData['HITUNG'] = $value['HITUNG'];
+				$res = $this->m_presensi->update_presensi($id_presensi, $updateData);
+				if ($res>0) {
+					$count++;
+				}
+			}
 		}
-		var_dump($count);
+		echo '<p>'.$count.' data telah dimasukkan</p>';
 	}
 	function form_libur(){
 		$this->load->view('v_form_libur');
@@ -160,83 +207,44 @@ class c_presensi extends CI_Controller{
 		$this->load->view('v_rekap_absen');
 	}
 
-	function go_rekap_lembur(){
-		$this->load->view('v_rekap_lembur_show');
+	// function get_presensi_rekap(){
+	// 	$data = $this->m_presensi->get_presensi_for_rekap();
+	// 	return $data
+	// }
+
+	function insert_update_rekap(){
+		$data = $this->m_presensi->get_presensi_for_rekap();
+		foreach ($data as $key => $value) {
+			// $this->m_presensi->insert_update_rekap($value);
+			// var_dump($value);
+			$dataRekap['BULAN'] = $value->BULAN;
+			$dataRekap['TAHUN'] = $value->TAHUN;
+			$dataRekap['ID_PEGAWAI'] = $value->ID_PEGAWAI;
+
+			$id_rekap = $this->m_presensi->get_id_rekap($dataRekap);
+			if (!$id_rekap) {
+				$this->m_presensi->insert_rekap($value);
+			}else{
+				$updateData['PRESENSI'] = $value->PRESENSI;
+				$updateData['LEMBUR'] = $value->LEMBUR;
+				$res = $this->m_presensi->update_rekap($id_rekap, $updateData);
+			}
+		}
 	}
 
-	function rekap_absen(){
-		$id_bulan=$this->input->post('id_bulan2');
-	
-		$this->load->view('v_header_rekap');
-        	$id_absents=$this->m_presensi->get_id_absen($id_bulan);//harus ada parameter bulan
+	function get_tabel_rekap(){
+		$this->insert_update_rekap();
+		$data = $this->m_presensi->get_rekap_tabel();
+		echo json_encode($data);
+	}
 
+	function upload_page(){
+		$data['satker'] = $this->m_presensi->get_satker();
+		$this->load->view('v_upload',$data);
+	}
 
+	function test(){
+		$this->m_presensi->test();
 
-        	//PREPARE FOR INSANITY, 3 TIMES FOREACH, 3 TIMES THE ITERATION, 3 TIMES THE CRAZINESS
-        	foreach($id_absents as $key =>$value){
-        		$tanggal_only=$this->m_presensi->get_tanggal_absen($value->ID_PEGAWAI,$id_bulan);
-        		$counter_jam_lembur=0;
-        		foreach($tanggal_only as $key2 =>$value2){
-        			$jamLembur=$this->m_presensi->rekap_lembur($value2->ID_PEGAWAI,$value2->TANGGAL,$id_bulan);
-        		// var_dump($jamLembur);
-
-        			foreach($jamLembur as $key3 =>$value3){
-        				$jam=0;
-        				if(($value3->JAM)<15){
-        					$jam=15;
-        				}
-        				else { 
-        					$jam=$value3->JAM;
-        				}
-        				$counter_jam_lembur=$counter_jam_lembur-15+$jam;
-        			}
-
-        		}
-
-        		$data['lembur']=$counter_jam_lembur;
-        		$data['absen']=$this->m_presensi->rekap_absen($value->ID_PEGAWAI,$id_bulan);
-        		$this->load->view('v_rekap',$data);
-        	}
-        	$this->load->view('v_footer_rekap');
-
-		}
-
-		 function rekap_lembur(){
-        	//parametrnya id_bulan untuk metod ini d
-        	$id_bulan=$this->input->post('id_bulan2');
-        	$this->load->view('v_header_rekap_lembur');
-
-        	$id_absents=$this->m_presensi->get_id_absen($id_bulan);//harus ada parameter bulan
-
-
-
-        	//PREPARE FOR INSANITY, 3 TIMES FOREACH, 3 TIMES THE ITERATION, 3 TIMES THE CRAZINESS
-        	foreach($id_absents as $key =>$value){
-        		$tanggal_only=$this->m_presensi->get_tanggal_absen($value->ID_PEGAWAI,$id_bulan);
-        		$counter_jam_lembur=0;
-        		foreach($tanggal_only as $key2 =>$value2){
-        			$jamLembur=$this->m_presensi->rekap_lembur($value2->ID_PEGAWAI,$value2->TANGGAL,$id_bulan);
-        		// var_dump($jamLembur);
-
-        			foreach($jamLembur as $key3 =>$value3){
-        				$jam=0;
-        				if(($value3->JAM)<15){
-        					$jam=15;
-        				}
-        				else { 
-        					$jam=$value3->JAM;
-        				}
-        				$counter_jam_lembur=$counter_jam_lembur-15+$jam;
-        			}
-        			
-        		}
-
-        		$data['lembur']=$counter_jam_lembur;
-        		$data['absen']=$this->m_presensi->rekap_absen($value->ID_PEGAWAI,$id_bulan);
-        		$this->load->view('v_rekap_lembur',$data);
-        	}
-        	$this->load->view('v_footer_rekap');
-
-        }
-	
+	}
 }
