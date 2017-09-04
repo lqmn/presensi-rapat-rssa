@@ -24,7 +24,7 @@ $(document).ready(function() {
 			'orderable':false,
 			'className': 'dt-body-center',
 			'render': function (data){
-				return '<input type="button" class="detail-rekap" value="' + data + '">';
+				return '<button type="button" class="editButton btn btn-default btn-xs" data-toggle="modal" data-target="#myModal" value="'+data+'"><span class="glyphicon glyphicon-edit"></span> Edit</button>';
 			}
 		}],"order": [],
 		initComplete:function(){

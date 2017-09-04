@@ -56,18 +56,24 @@ class m_presensi extends CI_Model{
 	}
 
 	function get_presensi_for_rekap(){
-		$sql='SELECT BULAN, TAHUN, ID_PEGAWAI, COUNT(ID_PRESENSI) AS PRESENSI, SUM(LEMBUR) AS LEMBUR
-			FROM(
-				SELECT pr.ID_PRESENSI, pr.ID_PEGAWAI, p.NAMA, YEAR(TANGGAL) AS TAHUN, MONTH(TANGGAL) AS BULAN, pr.LEMBUR
-				FROM presensi pr JOIN pegawai p ON pr.ID_PEGAWAI=p.ID_PEGAWAI
-				WHERE HITUNG=1 AND TANGGAL NOT IN (SELECT TANGGAL FROM hari_libur) AND DAYNAME(TANGGAL)<>"Saturday" AND DAYNAME(TANGGAL)<>"Sunday") AS S
-			GROUP BY ID_PEGAWAI, TAHUN, BULAN';
+		$sql='
+		SELECT BULAN, TAHUN, ID_PEGAWAI, COUNT(ID_PRESENSI) AS PRESENSI, SUM(LEMBUR) AS LEMBUR
+		FROM(
+			SELECT pr.ID_PRESENSI, pr.ID_PEGAWAI, p.NAMA, YEAR(TANGGAL) AS TAHUN, MONTH(TANGGAL) AS BULAN, (
+				CASE 
+					WHEN pr.HITUNG>0 THEN pr.LEMBUR 
+					ELSE 0
+				END
+		) AS LEMBUR
+		FROM presensi pr JOIN pegawai p ON pr.ID_PEGAWAI=p.ID_PEGAWAI
+		WHERE TANGGAL NOT IN (SELECT TANGGAL FROM hari_libur) AND DAYNAME(TANGGAL)<>"Saturday" AND DAYNAME(TANGGAL)<>"Sunday") AS S
+		GROUP BY ID_PEGAWAI, TAHUN, BULAN';
 
 		$result = $this->db->query($sql);
 		foreach ($result->result() as $row) {
 			$data[] = $row;
 		}
-		return $data;
+		return (array)@$data;
 	}
 
 	function get_presensi_perhari($dataExcel){
@@ -144,6 +150,6 @@ class m_presensi extends CI_Model{
 		foreach ($result->result() as $row) {
 			$data[] = $row;
 		}
-		return $data;
+		return (array)@$data;
 	}
 }
