@@ -23,7 +23,6 @@
 				<th class="center col-xs-1"><input id="all-peserta" type="checkbox"/></th>
 				<th>Nama</th>
 				<th>Institusi</th>
-				<th>Pegawai</th>
 			</tr>
 		</thead>
 	</table>

@@ -92,8 +92,7 @@ $(document).ready(function() {
 					"columns": [
 					{ "data": "ID" },
 					{ "data": "NAMA" },
-					{ "data": "INSTITUSI" },
-					{ "data": "PEGAWAI" }
+					{ "data": "INSTITUSI" }
 					],'columnDefs':[{
 						'targets': 0,
 						'searchable':false,
@@ -164,8 +163,7 @@ $(document).ready(function() {
 				"columns": [
 				{ "data": "ID" },
 				{ "data": "NAMA" },
-				{ "data": "INSTITUSI" },
-				{ "data": "PEGAWAI" }
+				{ "data": "INSTITUSI" }
 				],'columnDefs':[{
 					'targets': 0,
 					'searchable':false,
@@ -194,8 +192,7 @@ $(document).ready(function() {
 				"columns": [
 				{ "data": "ID" },
 				{ "data": "NAMA" },
-				{ "data": "INSTITUSI" },
-				{ "data": "PEGAWAI" }
+				{ "data": "INSTITUSI" }
 				],'columnDefs':[{
 					'targets': 0,
 					'searchable':false,
@@ -224,8 +221,7 @@ $(document).ready(function() {
 				"columns": [
 				{ "data": "ID" },
 				{ "data": "NAMA" },
-				{ "data": "INSTITUSI" },
-				{ "data": "PEGAWAI" }
+				{ "data": "INSTITUSI" }
 				],'columnDefs':[{
 					'targets': 0,
 					'searchable':false,
