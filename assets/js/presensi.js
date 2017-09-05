@@ -176,9 +176,9 @@ $(document).ready(function() {
 			}
 		});
 
-
 		return false;
 	})
+
 
 	$(document).on('click','#hapusLibur', function(){
 		$('#hapusLibur').button('loading');

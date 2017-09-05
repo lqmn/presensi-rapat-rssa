@@ -26,6 +26,30 @@
 			</tr>
 		</thead>
 	</table>
+	<div id="form">
+		<h4>Non Pegawai Baru</h4>
+		<form id="nonForm" class="form-horizontal" action="">
+			<div class="form-group">
+				<label class="control-label col-sm-3" for="tanggal">Nama:</label>
+				<div class="col-sm-9">
+					<input type='text' class="form-control" name="nama" required>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="control-label col-sm-3" for="ket">Institusi:</label>
+				<div class="col-sm-9">
+					<input type='text' class="form-control" name="institusi">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-offset-3 col-sm-9">
+					<button id="insertNon" type="submit" class="btn btn-primary">Tambah</button>
+				</div>
+			</div>
+		</form>
+	</div>
 </div>
 
 <!-- <div class="modal-footer">
