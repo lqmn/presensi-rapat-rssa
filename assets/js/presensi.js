@@ -253,4 +253,9 @@ $(document).ready(function() {
 			break;
 		}
 	});
+
+
+	$('#myModal').on('hidden.bs.modal', function() {
+		tabelRekap.ajax.reload();
+	});
 });

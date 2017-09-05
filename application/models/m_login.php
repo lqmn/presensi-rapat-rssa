@@ -15,31 +15,23 @@ Class m_login extends CI_Model {
 
 	// Read data from database to show data in admin page
 	public function read_user_information($data) {
-		$sql ='SELECT ID_USER,pegawai.ID_PEGAWAI AS ID_PEGAWAI,USERNAME,OTORITAS,NAMA,NAMA_SATKER
-		FROM user JOIN pegawai ON user.ID_PEGAWAI=pegawai.ID_PEGAWAI
-		JOIN satuan_kerja ON pegawai.ID_SATKER = satuan_kerja.ID_SATKER
+		$sql ='SELECT ID_USER, p.ID_PEGAWAI AS ID_PEGAWAI, USERNAME, OTORITAS, NAMA, NAMA_SATKER, p.ID_SATKER
+		FROM user u JOIN pegawai p ON u.ID_PEGAWAI=p.ID_PEGAWAI
+		JOIN satuan_kerja sk ON p.ID_SATKER = sk.ID_SATKER
 		WHERE ID_USER ='.$data;
 
 		$result = $this->db->query($sql);
-		// var_dump($result->num_rows);
-		if ($result->num_rows()==1) {
-			return $result->row();
-		}else{
-			foreach ($result->result() as $row) {
-				$data[] = $row;
-			}
-			return $data;
-		}
+		// if ($result->num_rows()==1) {
+		// 	return $result->row();
+		// }else{
+		// 	foreach ($result->result() as $row) {
+		// 		$data[] = $row;
+		// 	}
+		// 	return $data;
+		// }
 
-		// $condition = "USERNAME =" . "'" . $username . "'";
-		// $this->db->select('*');
-		// $this->db->from('user');
-		// $this->db->where($condition);
-		// $this->db->limit(1);
-		// $query = $this->db->get();
-
-		if ($query->num_rows() == 1) {
-			return $query->result();
+		if ($result->num_rows() == 1) {
+			return $result->result()[0];
 		} else {
 			return false;
 		}

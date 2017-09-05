@@ -233,4 +233,15 @@ class m_rapat extends CI_Model{
 		return (array)@$rapat;
 
 	}
+
+	function get_rapat_status_by_id($id){
+		$res = $this->db->select('STATUS_AKTIVASI')->from('rapat')->where('ID_RAPAT',$id)->get();
+		$data = $res->row();
+		if ($data) {
+			return $data->STATUS_AKTIVASI;
+		}else{
+			return null;
+		}
+
+	}
 }

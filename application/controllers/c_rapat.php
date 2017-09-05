@@ -142,14 +142,19 @@ class c_rapat extends CI_Controller{
 
 	function form_verif(){
 		$id_rapat = $this->input->post('id_rapat');
-		$waktu_rapat =$this->m_rapat->get_waktu_by_id_rapat($id_rapat);
-		$tanggal_rapat = explode(' ',$waktu_rapat)[0];
+		$status = (int)$this->m_rapat->get_rapat_status_by_id($id_rapat);
+		if ($status==1) {
+			echo "Rapat telah terverifikasi";
+		}else{
+			$waktu_rapat = $this->m_rapat->get_waktu_by_id_rapat($id_rapat);
+			$tanggal_rapat = explode(' ',$waktu_rapat)[0];
 
-		$data['waktu'] = $this->m_rapat->get_rapat_by_waktu($tanggal_rapat);
-		$data['tanggal']=$tanggal_rapat;
-		$data['tanggal_lengkap']=$waktu_rapat;
-		$data['id']=$id_rapat;
-		$this->load->view('v_form_verif',$data);
+			$data['waktu'] = $this->m_rapat->get_rapat_by_waktu($tanggal_rapat);
+			$data['tanggal']=$tanggal_rapat;
+			$data['tanggal_lengkap']=$waktu_rapat;
+			$data['id']=$id_rapat;
+			$this->load->view('v_form_verif',$data);
+		}
 	}
 
 	function verifikasi_rapat($id_rapat){

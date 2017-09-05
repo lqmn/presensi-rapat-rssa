@@ -27,7 +27,9 @@
 		</div>
 	</div>
 
-	<?php $this->load->view('navbar_admin'); ?><br>
+	<?php $this->load->view('navbar_admin');
+		var_dump($this->session->userdata('id_satker'));
+	?><br>
 
 	<div class="container text-center">
 		<div class="row content">
@@ -42,9 +44,14 @@
 							<div class="pull-right">
 								<div class="form-group text-center">
 									<select class="selectpicker" data-live-search="true" name="satker" required>
-										<option disabled selected value="" style="display:none"> -- Pilih satuan kerja -- </option>
+										<!-- <option disabled selected value="" style="display:none"> -- Pilih satuan kerja -- </option> -->
 										<?php foreach ($satker as $key => $value): ?>
-											<option value="<?php echo $value->ID_SATKER?>" data-tokens="<?php echo $value->NAMA_SATKER?>"><?php echo $value->NAMA_SATKER?></option>
+											<option value="<?php echo $value->ID_SATKER?>" data-tokens="<?php echo $value->NAMA_SATKER?>" 
+											<?php
+												if ($this->session->userdata('id_satker')==$value->ID_SATKER) {
+													echo 'selected';
+												}
+											?>><?php echo $value->NAMA_SATKER?></option>
 										<?php endforeach ?>
 									</select>
 								</div>
