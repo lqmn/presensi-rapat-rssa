@@ -80,6 +80,7 @@ $(document).ready(function() {
 			data:{'id_edit':id_rapat},
 			success:function(data){
 				$('#bigModalContent').html(data);
+				$('#form').hide();
 
 				tabelPeserta = $('#listPeserta').DataTable({
 					"dom": '<"pesertaBar">frtlp',
@@ -177,6 +178,7 @@ $(document).ready(function() {
 					$('div.pesertaBar').html('<div style="float:left;"><button id="hapusPeserta" type="button" class="btn btn-danger buttonPeserta" disabled>Delete <span class="glyphicon glyphicon-remove"></span></button></div>');
 				}
 			});
+			$('#form').hide();
 
 		}else if ($('#addPegawai').is(':checked')) {
 
@@ -206,6 +208,7 @@ $(document).ready(function() {
 					$('div.pesertaBar').html('<div style="float:left;"><button id="tambahPesertaPegawai" type="button" class="btn btn-primary buttonPeserta" disabled>Tambah <span class="glyphicon glyphicon-plus"></span></button></div>');
 				}
 			});
+			$('#form').hide();
 
 		}else if ($('#addNon').is(':checked')) {
 
@@ -235,6 +238,7 @@ $(document).ready(function() {
 					$('div.pesertaBar').html('<div style="float:left;"><button id="tambahPesertaNon" type="button" class="btn btn-primary buttonPeserta" disabled>Tambah <span class="glyphicon glyphicon-plus"></span></button></div>');
 				}
 			});
+			$('#form').show();
 
 		}
 	})
@@ -310,4 +314,26 @@ $(document).ready(function() {
 			}
 		});
 	});
+
+	$(document).on('submit','#nonForm',function(){
+		$('#insertNon').button('loading');
+		var form = $('#nonForm')[0];
+		// console.log(form);
+		var formData = new FormData(form);
+		var requrl = BASE_URL+'c_admin/insert_non/';
+		$.ajax({
+			url:requrl,
+			type:'post',
+			data: formData,
+			contentType: false,
+			processData: false,
+			success:function(data){
+				tabelPeserta.ajax.reload();
+				$('#insertNon').button('reset');
+				$('#nonForm')[0].reset();
+			}
+		});
+
+		return false;
+	})
 });
