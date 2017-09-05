@@ -96,27 +96,17 @@ class m_rapat extends CI_Model{
 	}
 
 	function get_all_pegawai($id){
-		$sql='SELECT ID_PEGAWAI AS ID, CONCAT(p.NIP, ", " ,p.NAMA) AS NAMA,  CONCAT(s.NAMA_SATKER," RSSA Malang") AS INSTITUSI,"PEGAWAI" AS STATUS
+		$sql='SELECT ID_PEGAWAI, p.NIP, p.NAMA, s.NAMA_SATKER 
 		FROM pegawai p JOIN satuan_kerja s ON p.ID_SATKER=s.ID_SATKER 
-		WHERE ID_PEGAWAI NOT IN
-		(SELECT ID_REF 
-		from peserta_rapat 
-		WHERE PEGAWAI=1 AND ID_RAPAT = '.$id.' )
-
-
-		UNION 
-		SELECT ID, NAMA, INSTITUSI ,"NON PEGAWAI" as STATUS
-		FROM non_pegawai 
-		WHERE ID NOT IN (SELECT ID_REF FROM peserta_rapat WHERE PEGAWAI=0 AND ID_RAPAT='.$id.')';
+		WHERE ID_PEGAWAI NOT IN (SELECT ID_REF FROM peserta_rapat WHERE PEGAWAI=1 AND ID_RAPAT='.$id.')';
 
 		$pegawai = $this->db->query($sql);
 		foreach ($pegawai->result() as $row) {
 			$test = new stdClass();
 
-			$test->ID = $row->ID;
-			$test->NAMA = $row->NAMA;
-			$test->INSTITUSI =$row->INSTITUSI;
-			$test->STATUS =$row->STATUS;
+			$test->ID = $row->ID_PEGAWAI;
+			$test->NAMA = $row->NIP.', '.$row->NAMA;
+			$test->INSTITUSI =$row->NAMA_SATKER.', RSSA Malang';
 			$test->PEGAWAI = 1;
 
 			$data[]=$test;
