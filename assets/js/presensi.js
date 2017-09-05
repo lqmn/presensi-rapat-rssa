@@ -4,8 +4,8 @@ $(document).ready(function() {
 	var tabelLibur;
 	var tabelRekap = $('#tabelRekap').DataTable({
 		"dom": "<'toolbar'>f" +
-			"<'row'<'col-sm-12'tr>>" +
-			"<'row'<'col-sm-5'l><'col-sm-7'p>>",
+		"<'row'<'col-sm-12'tr>>" +
+		"<'row'<'col-sm-5'l><'col-sm-7'p>>",
 		"ajax": {
 			"url": BASE_URL+"c_presensi/get_tabel_rekap",
 			"dataSrc": ""
@@ -24,7 +24,7 @@ $(document).ready(function() {
 			'orderable':false,
 			'className': 'dt-body-center',
 			'render': function (data){
-				return '<button type="button" class="editButton btn btn-default btn-xs" data-toggle="modal" data-target="#myModal" value="'+data+'"><span class="glyphicon glyphicon-edit"></span> Edit</button>';
+				return '<button type="button" class="detailPresensi btn btn-default btn-xs" data-toggle="modal" data-target="#myModal" value="'+data+'"><span class="glyphicon glyphicon-edit"></span> Edit</button>';
 			}
 		}],"order": [],
 		initComplete:function(){
@@ -254,8 +254,61 @@ $(document).ready(function() {
 		}
 	});
 
-
 	$('#myModal').on('hidden.bs.modal', function() {
 		tabelRekap.ajax.reload();
+	});
+
+	// edit
+	$(document).on('click','.detailPresensi',function(event){
+		var data = $(this).val();
+		// console.log(data);
+		var requrl = BASE_URL+'c_presensi/detail_rekap/'+data;
+		// console.log(requrl);
+		
+		$.ajax({
+			url:requrl,
+			success:function(data){
+				$('#modalContent').html(data);
+				var tabel = $('#listPresensi').DataTable();
+				$(tabel.rows().nodes()).each(function(){
+					if ($('.hitungVal',this).text()==1) {
+						$('.hitung',this).prop('checked',true);
+					}
+				});
+			}
+		});
+	})
+
+	$(document).on('click','#saveDetail', function(){
+		$('#saveDetail').button('loading');
+		var tabel = $('#listPresensi').DataTable();
+		
+		var data =[]
+		$(tabel.rows().nodes()).each(function(){
+			var dataRow = $(this).children("td").map(function() {
+				return $(this).text();
+			}).get();
+			// console.log(dataRow);
+			var checked=$(this).find('.hitung').is(":checked");
+			var d = [dataRow[0],checked];
+			console.log(d);
+			data.push(d);
+		});
+
+		console.log(data);
+		var requrl = BASE_URL+'c_presensi/update_presensi_detail';
+
+		$.ajax({
+			url:requrl,
+			type:'post',
+			data: {"data": data},
+			success:function(data){
+				$('#result').html(data);
+				$('#saveDetail').button('reset');
+				// setTimeout(function () {
+				// 	$('#saveDetail').prop("disabled", true);
+				// }, 0);
+			}
+		});
 	});
 });

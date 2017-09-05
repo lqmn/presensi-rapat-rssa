@@ -232,4 +232,32 @@ class c_presensi extends CI_Controller{
 		$this->m_presensi->test();
 
 	}
+
+	function detail_rekap($id){
+		$data['presensi'] = $this->m_presensi->get_presensi_by_id_rekap($id);
+		$this->load->view('v_detail_rekap',$data);
+	}
+
+	function update_presensi_detail(){
+		$data = $this->input->post('data');
+		// var_dump($data);
+		$count=0;
+		foreach ($data as $key => $value) {
+			// var_dump($value);
+			$id_presensi = $value[0];
+			if ($value[1]=='true') {
+				$updateData['HITUNG']=1;
+			}else{
+				$updateData['HITUNG']=0;
+			}
+			// $updateData['LEMBUR'] = $value['LEMBUR'];
+			// $updateData['HITUNG'] = $value['HITUNG'];
+			$res = $this->m_presensi->update_presensi($id_presensi, $updateData);
+			if ($res>0) {
+				$count++;
+			}
+		}
+		echo '<p>'.$count.' data telah diupdate</p>';
+
+	}
 }

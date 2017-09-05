@@ -152,4 +152,16 @@ class m_presensi extends CI_Model{
 		}
 		return (array)@$data;
 	}
+	function get_presensi_by_id_rekap($id){
+		$sql ='SELECT ID_PRESENSI, p.ID_PEGAWAI,TANGGAL, p.LEMBUR, HITUNG 
+			FROM presensi p, rekap r
+			WHERE p.ID_PEGAWAI=r.ID_PEGAWAI AND YEAR(p.TANGGAL)=r.TAHUN AND MONTH(p.TANGGAL)=r.BULAN
+			AND r.ID_REKAP ='.$id;
+		$result = $this->db->query($sql);
+		foreach ($result->result() as $row) {
+			$data[] = $row;
+		}
+		return (array)@$data;
+
+	}
 }
