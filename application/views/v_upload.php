@@ -27,8 +27,12 @@
 		</div>
 	</div>
 
-	<?php $this->load->view('navbar_admin');
-		var_dump($this->session->userdata('id_satker'));
+	<?php 
+	if ($this->session->userdata('otoritas')==1) {
+		$this->load->view('navbar_admin');
+	}else{
+		$this->load->view('navbar');
+	}
 	?><br>
 
 	<div class="container text-center">
