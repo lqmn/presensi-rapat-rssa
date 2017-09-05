@@ -10,11 +10,9 @@
 			<input type="radio" name="options" id="list" autocomplete="off" checked> List peserta
 		</label>
 		<label class="btn btn-default">
-			<input type="radio" name="options" id="addPegawai" autocomplete="off"> Tambah pegawai
+			<input type="radio" name="options" id="addPegawai" autocomplete="off"> Tambah Peserta
 		</label>
-		<label class="btn btn-default">
-			<input type="radio" name="options" id="addNon" autocomplete="off"> Tambah non pegawai
-		</label>
+		
 	</div><br>
 
 	<table id="listPeserta" class="table" cellspacing="0" width="100%">
@@ -23,6 +21,7 @@
 				<th class="center col-xs-1"><input id="all-peserta" type="checkbox"/></th>
 				<th>Nama</th>
 				<th>Institusi</th>
+				<th>Status</th>
 			</tr>
 		</thead>
 	</table>
