@@ -193,6 +193,7 @@ $(document).ready(function() {
 				{ "data": "ID" },
 				{ "data": "NAMA" },
 				{ "data": "INSTITUSI" }
+				],'columnDefs':[{
 					'targets': 0,
 					'searchable':false,
 					'orderable':false,
