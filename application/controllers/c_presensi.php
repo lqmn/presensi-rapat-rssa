@@ -119,7 +119,7 @@ class c_presensi extends CI_Controller{
 
 	function upload(){
 		$data = $this->input->post('data');
-		var_dump($data);
+		// var_dump($data);
 
 		foreach ($data as $key => $value) {
 			$dataPegawai['NAMA']=$value[1];
