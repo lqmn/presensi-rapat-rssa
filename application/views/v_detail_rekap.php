@@ -11,6 +11,7 @@
 				<th class="hidden">ID</th>
 				<th class="hidden">Hitung</th>
 				<th>Tanggal</th>
+				<th>Terakhir Presensi</th>
 				<th>Lembur</th>
 				<th>Hitung Lembur?</th>
 			</tr>
@@ -21,6 +22,7 @@
 					<td class="hidden"><?php echo $value->ID_PRESENSI; ?></td>
 					<td class="hidden hitungVal"><?php echo $value->HITUNG; ?></td>
 					<td><?php echo $value->TANGGAL; ?></td>
+					<td><?php echo $value->TERAKHIR_PRESENSI; ?></td>
 					<td><?php echo $value->LEMBUR; ?></td>
 					<td><input class="hitung" type="checkbox"></td>
 				</tr>
