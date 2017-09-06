@@ -101,7 +101,7 @@ $(document).ready(function() {
 			var dataRow = $(this).children("td").map(function() {
 				return $(this).text();
 			}).get();
-			dataRow[5]=$(this).find('.hitung').is(":checked");
+			dataRow[6]=$(this).find('.hitung').is(":checked");
 			data.push(dataRow);
 		});
 

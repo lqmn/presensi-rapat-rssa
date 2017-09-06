@@ -84,6 +84,7 @@ class c_presensi extends CI_Controller{
 					<th>Nama</th>
 					<th>NIP</th>
 					<th>Tanggal</th>
+					<th>Terakhir Presensi</th>
 					<th>Lembur</th>
 					<th>Hitung Lembur?</th>
 				</tr>
@@ -97,12 +98,12 @@ class c_presensi extends CI_Controller{
 						<td>'.$value->NAMA.'</td>
 						<td>'.$value->NIP.'</td>
 						<td>'.$value->TANGGAL.'</td>
+						<td>'.$value->TERAKHIR_PRESENSI.'</td>
 						<td>'.$value->LEMBUR.'</td>
 						<td><input class="hitung" type="checkbox"></td>
 					</tr>
 					';
 				}
-
 				echo "
 			</tbody>
 		</table>
@@ -118,6 +119,7 @@ class c_presensi extends CI_Controller{
 
 	function upload(){
 		$data = $this->input->post('data');
+		var_dump($data);
 
 		foreach ($data as $key => $value) {
 			$dataPegawai['NAMA']=$value[1];
@@ -132,8 +134,9 @@ class c_presensi extends CI_Controller{
 			$tmp['ID_PEGAWAI']=$id_pegawai;
 
 			$tmp['TANGGAL']=$value[3];
-			$tmp['LEMBUR']=$value[4];
-			if ($value[5]=='true') {
+			$tmp['TERAKHIR_PRESENSI']=$value[4];
+			$tmp['LEMBUR']=$value[5];
+			if ($value[6]=='true') {
 				$tmp['HITUNG']=1;
 			}else{
 				$tmp['HITUNG']=0;
@@ -146,6 +149,7 @@ class c_presensi extends CI_Controller{
 		foreach ($insertData as $key => $value) {
 			$dataPresensi['ID_PEGAWAI'] = $value['ID_PEGAWAI'];
 			$dataPresensi['TANGGAL'] = $value['TANGGAL'];
+			$dataPresensi['TERAKHIR_PRESENSI'] = $value['TERAKHIR_PRESENSI'];
 
 			$id_presensi = $this->m_presensi->get_id_presensi($dataPresensi);
 			if (!$id_presensi) {
@@ -154,6 +158,7 @@ class c_presensi extends CI_Controller{
 			}else{
 				$updateData['LEMBUR'] = $value['LEMBUR'];
 				$updateData['HITUNG'] = $value['HITUNG'];
+				$updateData['TERAKHIR_PRESENSI'] = $value['TERAKHIR_PRESENSI'];
 				$res = $this->m_presensi->update_presensi($id_presensi, $updateData);
 				if ($res>0) {
 					$count++;
