@@ -3,13 +3,24 @@ $(document).ready(function() {
 	$('#presensi-nav').addClass("active");
 	var tabelLibur;
 	var tabelRekap = $('#tabelRekap').DataTable({
-		"dom": "<'toolbar'>f" +
+		"dom": "B<'toolbar'>f" +
 		"<'row'<'col-sm-12'tr>>" +
 		"<'row'<'col-sm-5'l><'col-sm-7'p>>",
 		"ajax": {
 			"url": BASE_URL+"c_presensi/get_tabel_rekap",
 			"dataSrc": ""
 		},
+		buttons: [{
+			extend: 'print',
+			exportOptions: {
+				columns: ':visible:not(.checkbox)'
+			}
+		},{
+			extend: 'excel',
+			exportOptions: {
+				columns: ':visible:not(.checkbox)'
+			}
+		}],
 		"columns": [
 		{ "data": "NAMA" },
 		{ "data": "SATKER" },

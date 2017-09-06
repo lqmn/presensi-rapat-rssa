@@ -51,7 +51,7 @@
 							<th>BULAN</th>
 							<th>PRESENSI</th>
 							<th>LEMBUR</th>
-							<th>Panel</th>
+							<th class="checkbox">Panel</th>
 						</tr>
 					</thead>
 				</table>
