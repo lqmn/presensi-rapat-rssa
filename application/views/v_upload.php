@@ -47,7 +47,7 @@
 
 							<div class="pull-right">
 								<div class="form-group text-center">
-									<select class="selectpicker" data-live-search="true" name="satker" required>
+									<select class="selectpicker" data-live-search="true" name="satker" disabled required>
 										<!-- <option disabled selected value="" style="display:none"> -- Pilih satuan kerja -- </option> -->
 										<?php foreach ($satker as $key => $value): ?>
 											<option value="<?php echo $value->ID_SATKER?>" data-tokens="<?php echo $value->NAMA_SATKER?>" 

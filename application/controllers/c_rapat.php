@@ -144,7 +144,24 @@ class c_rapat extends CI_Controller{
 		$id_rapat = $this->input->post('id_rapat');
 		$status = (int)$this->m_rapat->get_rapat_status_by_id($id_rapat);
 		if ($status==1) {
-			echo "Rapat telah terverifikasi";
+			echo '<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal">&times;</button>
+	
+</div>
+
+<div class="modal-body">
+
+	<form id="formModalDelete"class="form-horizontal" action="">
+		
+		<h3> Rapat sudah diverifikasi</h3>
+		
+	</div>
+	<div class="modal-footer">
+		
+		<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+	</form>
+
+</div>';
 		}else{
 			$waktu_rapat = $this->m_rapat->get_waktu_by_id_rapat($id_rapat);
 			$tanggal_rapat = explode(' ',$waktu_rapat)[0];
@@ -173,6 +190,16 @@ class c_rapat extends CI_Controller{
 
 	function guest_data_rapat(){
 		$res = $this->m_rapat->get_rapat_guest();
+		// var_dump($res);
+		foreach ($res as $key => $value) {
+			$date = date_create_from_format('Y-m-d H:i:s', $value->WAKTU_RAPAT);
+			// $tanggal = date_format($date,'d');
+			// $bulan = date_format($date,'F');
+			// $tahun = date_format($date,'Y');
+			$tmp = date_format($date,'d F Y');
+			$tmp = $tmp.', pukul '.date_format($date,'H:i');
+			$res[$key]->WAKTU_RAPAT = $tmp;
+		}
 		echo json_encode($res);
 	}
 

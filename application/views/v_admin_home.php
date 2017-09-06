@@ -21,7 +21,7 @@
 	<div class="container text-center">
 		<div class="row content">
 			<div class="col-sm-12 text-left">
-				Halaman home admin
+				<h2>Selamat Datang</h2>
 			</div>
 		</div>
 	</div>
