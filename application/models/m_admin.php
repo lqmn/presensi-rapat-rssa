@@ -13,7 +13,7 @@ class m_admin extends CI_Model{
 		foreach ($result->result() as $row) {
 			$data[] = $row;
 		}
-		return $data;
+		return (array)@$data;
 		
 	}
 	
@@ -35,7 +35,7 @@ class m_admin extends CI_Model{
 		foreach ($result->result() as $row) {
 			$data[] = $row;
 		}
-		return $data;
+		return (array)@$data;
 		// }
 	}
 	function get_non($nip=null){
@@ -47,7 +47,7 @@ class m_admin extends CI_Model{
 		foreach ($result->result() as $row) {
 			$data[] = $row;
 		}
-		return $data;
+		return (array)@$data;
 		// }
 	}
 
@@ -219,7 +219,7 @@ class m_admin extends CI_Model{
 		foreach ($result->result() as $row) {
 			$data[] = $row;
 		}
-		return $data;
+		return (array)@$data;
 
 	}
 
@@ -263,7 +263,7 @@ class m_admin extends CI_Model{
 		foreach ($result->result() as $row) {
 			$data[] = $row;
 		}
-		return $data;
+		return (array)@$data;
 	}
 
 	function insert_rapat($data){
@@ -444,101 +444,99 @@ class m_admin extends CI_Model{
 		$sksjam2=strtotime($sks2);
 		$sksjam3=strtotime($sks3);
 
-$jam_backstep=(($secondjam-$sksjam)); //mengurangi jam input dengan 49 menit
-//var_dump($jam_backstep);
-$date = date("H.i", $jam_backstep);
-$datehalf = date("H.i", $jam_backstep-$sksjam3);
+		$jam_backstep=(($secondjam-$sksjam));
+		$date = date("H.i", $jam_backstep);
+		$datehalf = date("H.i", $jam_backstep-$sksjam3);
 
-$jam_backstep2=(($jam_backstep-$sksjam2));//mengurangi lagi jam dengan 50 menit
-$date2 = date("H.i", $jam_backstep2);
-$date2half = date("H.i", $jam_backstep2-60);
-$date3 = date("H.i", $jam_backstep2-3000);
+		$jam_backstep2=(($jam_backstep-$sksjam2));
+		$date2 = date("H.i", $jam_backstep2);
+		$date2half = date("H.i", $jam_backstep2-60);
+		$date3 = date("H.i", $jam_backstep2-3000);
 
-$ceksecondjam=date("H.i", $secondjam);
-var_dump($jam_backstep2);
-var_dump(date("H.i", $jam_backstep2-$sksjam3));
-var_dump(date("H.i", $jam_backstep2-3000));
+		$ceksecondjam=date("H.i", $secondjam);
+		var_dump($jam_backstep2);
+		var_dump(date("H.i", $jam_backstep2-$sksjam3));
+		var_dump(date("H.i", $jam_backstep2-3000));
 
-;
-if($angka==3){
-	$sql="update  JAM SET STATUS=0 where nama_jam='".date("H.i", $secondjam)."' AND id_hari=".$id_hari;
-	$sql2="update  JAM SET STATUS=0 where nama_jam='".$date."' AND id_hari=".$id_hari;
-	$sql2half="update  JAM SET STATUS=0 where nama_jam='".$datehalf."' AND id_hari=".$id_hari;
-	$sql3="update  JAM SET STATUS=0 where nama_jam='".$date2."' AND id_hari=".$id_hari;
-	$sql3half="update  JAM SET STATUS=0 where nama_jam='".$date2half."' AND id_hari=".$id_hari;
-	$sql4="update  JAM SET STATUS=0 where nama_jam='".$date3."' AND id_hari=".$id_hari;
-	$result=$this->db->query($sql);
-	$result2=$this->db->query($sql2);
-	$result2=$this->db->query($sql2half);
-	$result2=$this->db->query($sql3);
-	$result2=$this->db->query($sql3half);
-	$result2=$this->db->query($sql4);
-}
+		if($angka==3){
+			$sql="update  JAM SET STATUS=0 where nama_jam='".date("H.i", $secondjam)."' AND id_hari=".$id_hari;
+			$sql2="update  JAM SET STATUS=0 where nama_jam='".$date."' AND id_hari=".$id_hari;
+			$sql2half="update  JAM SET STATUS=0 where nama_jam='".$datehalf."' AND id_hari=".$id_hari;
+			$sql3="update  JAM SET STATUS=0 where nama_jam='".$date2."' AND id_hari=".$id_hari;
+			$sql3half="update  JAM SET STATUS=0 where nama_jam='".$date2half."' AND id_hari=".$id_hari;
+			$sql4="update  JAM SET STATUS=0 where nama_jam='".$date3."' AND id_hari=".$id_hari;
+			$result=$this->db->query($sql);
+			$result2=$this->db->query($sql2);
+			$result2=$this->db->query($sql2half);
+			$result2=$this->db->query($sql3);
+			$result2=$this->db->query($sql3half);
+			$result2=$this->db->query($sql4);
+		}
 
-else if($angka==2){
-	$sql="update  JAM SET STATUS=0 where nama_jam='".date("H.i", $secondjam)."' AND id_hari=".$id_hari;
-	$sql2="update  JAM SET STATUS=0 where nama_jam='".$date."' AND id_hari=".$id_hari;
-	$sql2half="update  JAM SET STATUS=0 where nama_jam='".$datehalf."' AND id_hari=".$id_hari;
-	$sql3="update  JAM SET STATUS=0 where nama_jam='".$date2."' AND id_hari=".$id_hari;
-	$result=$this->db->query($sql);
-	$result2=$this->db->query($sql2);
-	$result2=$this->db->query($sql2half);
-	$result2=$this->db->query($sql3);
-//mengupdate data status baris diatas
-}
-else if($angka==1){
-	$sql="update  JAM SET STATUS=0 where nama_jam='".date("H.i", $secondjam)."' AND id_hari=".$id_hari;
-	$sql2="update  JAM SET STATUS=0 where nama_jam='".$date."' AND id_hari=".$id_hari;
-	$result=$this->db->query($sql);
-	$result2=$this->db->query($sql2);
-}
+		else if($angka==2){
+			$sql="update  JAM SET STATUS=0 where nama_jam='".date("H.i", $secondjam)."' AND id_hari=".$id_hari;
+			$sql2="update  JAM SET STATUS=0 where nama_jam='".$date."' AND id_hari=".$id_hari;
+			$sql2half="update  JAM SET STATUS=0 where nama_jam='".$datehalf."' AND id_hari=".$id_hari;
+			$sql3="update  JAM SET STATUS=0 where nama_jam='".$date2."' AND id_hari=".$id_hari;
+			$result=$this->db->query($sql);
+			$result2=$this->db->query($sql2);
+			$result2=$this->db->query($sql2half);
+			$result2=$this->db->query($sql3);
+		//mengupdate data status baris diatas
+		}
+		else if($angka==1){
+			$sql="update  JAM SET STATUS=0 where nama_jam='".date("H.i", $secondjam)."' AND id_hari=".$id_hari;
+			$sql2="update  JAM SET STATUS=0 where nama_jam='".$date."' AND id_hari=".$id_hari;
+			$result=$this->db->query($sql);
+			$result2=$this->db->query($sql2);
+		}
 
-return $this->db->affected_rows();
-}
-
-
-function reset_jam_kosong(){
-	$sql="UPDATE JAM set STATUS=1 where STATUS=0";
-	$result=$this->db->query($sql);
-	return $this->db->affected_rows();
-}
-
-function get_jam_kosong(){
-	$sql="SELECT hari.NAMA_HARI,jam.nama_jam FROM JAM,hari WHERE jam.STATUS=1 and jam.id_hari=hari.id_hari AND RIGHT(jam.nama_jam,1)<>'9' AND jam.ID_HARI<>6 AND jam.ID_HARI<>7";
-
-	$result=$this->db->query($sql);
-	foreach ($result->result() as $row) {
-		$data[] = $row;
+		return $this->db->affected_rows();
 	}
-	return (array)@$data;
-}
 
-function update_status_rapat(){	
-	$sql="UPDATE  rapat
-	SET rapat.STATUS=0
-	WHERE  DATE_SUB(NOW(), INTERVAL 1 HOUR) > WAKTU_RAPAT";
-	$this->db->query($sql);
-	return $this->db->affected_rows();
-}
 
-function verifikasi_rapat($id_rapat){
-	$sql='UPDATE RAPAT 
-	SET STATUS_AKTIVASI=1 WHERE ID_RAPAT='.$id_rapat ;
-	$this->db->query($sql);
-	return $this->db->affected_rows();
-}
-function get_pegawai_not_user(){
-	$sql="SELECT ID_PEGAWAI,NIP,NAMA,NAMA_SATKER
+	function reset_jam_kosong(){
+		$sql="UPDATE JAM set STATUS=1 where STATUS=0";
+		$result=$this->db->query($sql);
+		return $this->db->affected_rows();
+	}
+
+	function get_jam_kosong(){
+		$sql="SELECT hari.NAMA_HARI,jam.nama_jam FROM JAM,hari WHERE jam.STATUS=1 and jam.id_hari=hari.id_hari AND RIGHT(jam.nama_jam,1)<>'9' AND jam.ID_HARI<>6 AND jam.ID_HARI<>7";
+
+		$result=$this->db->query($sql);
+		foreach ($result->result() as $row) {
+			$data[] = $row;
+		}
+		return (array)@$data;
+	}
+
+	function update_status_rapat(){	
+		$sql="UPDATE  rapat
+		SET rapat.STATUS=0
+		WHERE  DATE_SUB(NOW(), INTERVAL 1 HOUR) > WAKTU_RAPAT";
+		$this->db->query($sql);
+		return $this->db->affected_rows();
+	}
+
+	function verifikasi_rapat($id_rapat){
+		$sql='UPDATE RAPAT 
+		SET STATUS_AKTIVASI=1 WHERE ID_RAPAT='.$id_rapat ;
+		$this->db->query($sql);
+		return $this->db->affected_rows();
+	}
+	function get_pegawai_not_user(){
+		$sql="SELECT ID_PEGAWAI,NIP,NAMA,NAMA_SATKER
 		FROM pegawai p JOIN satuan_kerja s ON p.id_satker = s.id_satker
 		WHERE p.status=1 AND ID_PEGAWAI NOT IN (SELECT ID_PEGAWAI FROM user WHERE STATUS=1)
 		ORDER BY p.date_modified DESC ";
 
-	$result=$this->db->query($sql);
-	foreach ($result->result() as $row) {
-		$data[] = $row;
-	}
-	return (array)@$data;
+		$result=$this->db->query($sql);
+		foreach ($result->result() as $row) {
+			$data[] = $row;
+		}
+		return (array)@$data;
 
-}
+	}
 
 }

@@ -12,7 +12,7 @@ class m_presensi extends CI_Model{
 		foreach ($result->result() as $row) {
 			$data[] = $row;
 		}
-		return $data;
+		return (array)@$data;
 	}
 
 	function get_id_pegawai($data){
