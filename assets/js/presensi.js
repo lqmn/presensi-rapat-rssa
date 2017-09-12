@@ -3,7 +3,7 @@ $(document).ready(function() {
 	$('#presensi-nav').addClass("active");
 	var tabelLibur;
 	var tabelRekap = $('#tabelRekap').DataTable({
-		"dom": "B<'toolbar'>f" +
+		"dom": "<'toolbar'>Bf" +
 		"<'row'<'col-sm-12'tr>>" +
 		"<'row'<'col-sm-5'l><'col-sm-7'p>>",
 		"ajax": {
@@ -22,6 +22,7 @@ $(document).ready(function() {
 			}
 		}],
 		"columns": [
+		{ "data": "NIP" },
 		{ "data": "NAMA" },
 		{ "data": "SATKER" },
 		{ "data": "TAHUN" },
@@ -30,7 +31,7 @@ $(document).ready(function() {
 		{ "data": "LEMBUR" },
 		{ "data": "ID_REKAP" }
 		],'columnDefs':[{
-			'targets': 6,
+			'targets': 7,
 			'searchable':false,
 			'orderable':false,
 			'className': 'dt-body-center',
@@ -40,9 +41,9 @@ $(document).ready(function() {
 		}],"order": [],
 		initComplete:function(){
 			$('div.toolbar').html('<div id="option" class="pull-right">&nbsp;</div>');
-			this.api().column(5).visible(false);
+			this.api().column(6).visible(false);
 
-			var bulan = this.api().column(3);
+			var bulan = this.api().column(4);
 			var selectBulan = $('<select class="form-control"><option value="">Semua Bulan</option></select>')
 			.appendTo( $('#option')).on('change', function(){
 				var val = $.fn.dataTable.util.escapeRegex($(this).val());
@@ -54,7 +55,7 @@ $(document).ready(function() {
 				selectBulan.append( '<option value="'+d+'">'+d+'</option>' )
 			});
 
-			var tahun = this.api().column(2);
+			var tahun = this.api().column(3);
 			var selectTahun = $('<select class="form-control"><option value="">Semua Tahun</option></select>')
 			.appendTo( $('#option')).on('change', function(){
 				var val = $.fn.dataTable.util.escapeRegex($(this).val());
@@ -249,8 +250,8 @@ $(document).ready(function() {
 	});
 
 	$(document).on('change','#rekapDropdown',function(){
-		presensi = tabelRekap.column(4);
-		lembur = tabelRekap.column(5);
+		presensi = tabelRekap.column(5);
+		lembur = tabelRekap.column(6);
 		var x = $('#rekapDropdown').val();
 
 		switch(parseInt(x)){
@@ -316,10 +317,17 @@ $(document).ready(function() {
 			success:function(data){
 				$('#result').html(data);
 				$('#saveDetail').button('reset');
-				// setTimeout(function () {
-				// 	$('#saveDetail').prop("disabled", true);
-				// }, 0);
 			}
 		});
 	});
+
+	$(document).on('change','#changeColumn', function(){
+		var test = [true,true,true,true,true];
+		$.each($('#changeColumn.selectpicker option:not(:selected)'),function(){
+			test[$(this).val()] = false;
+		});
+		$.each(test,function(index,value){
+			tabelRekap.column(index).visible(value);
+		})
+	})
 });
