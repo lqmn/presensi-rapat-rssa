@@ -104,7 +104,7 @@ class m_presensi extends CI_Model{
 		$sql = 'DELETE FROM data_excel';
 		$this->db->query($sql);
 
-		return $data;
+		return (array)@$data;
 		// return $this->db->affected_rows();
 
 	}
