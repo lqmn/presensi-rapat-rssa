@@ -3,7 +3,7 @@ $(document).ready(function() {
 	$('#presensi-nav').addClass("active");
 	var tabelLibur;
 	var tabelRekap = $('#tabelRekap').DataTable({
-		"dom": "<'toolbar'>Bf" +
+		"dom": "<'toolbar pull-right'f><'export pull-left'B><'pull-right'>" +
 		"<'row'<'col-sm-12'tr>>" +
 		"<'row'<'col-sm-5'l><'col-sm-7'p>>",
 		"ajax": {
@@ -12,11 +12,21 @@ $(document).ready(function() {
 		},
 		buttons: [{
 			extend: 'print',
+			title: function(){
+				return $('#judulExport').val();
+			},
 			exportOptions: {
 				columns: ':visible:not(.checkbox)'
 			}
 		},{
 			extend: 'excel',
+			title: function(){
+				if ($('#judulExport').val()=='') {
+					return 'Rekap Presensi';
+				}else{
+					return $('#judulExport').val();
+				}
+			},
 			exportOptions: {
 				columns: ':visible:not(.checkbox)'
 			}
@@ -40,7 +50,9 @@ $(document).ready(function() {
 			}
 		}],"order": [],
 		initComplete:function(){
-			$('div.toolbar').html('<div id="option" class="pull-right">&nbsp;</div>');
+			$('div.toolbar').append('<div id="option">&nbsp;</div>');
+			$('div.export').before('<div><h5>Export :</h5></div>');
+			$('div.export').prepend('<input class="form-control" id="judulExport" type="text" placeholder="Judul export">');
 			this.api().column(6).visible(false);
 
 			var bulan = this.api().column(4);
