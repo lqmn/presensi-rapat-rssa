@@ -15,7 +15,7 @@ class c_presensi extends CI_Controller{
 	}
 
 	function isValidCell($cell){
-		if ($cell[0]!='Nama' AND $cell[0]!=null AND $cell[1]!='NIP / NBI' AND $cell[1]!=null AND $cell[2]!='Waktu' AND $cell[2]!=null) {
+		if ($cell[0]!='Nama' AND $cell[0]!=null AND $cell[1]!='NIP / NBI' AND $cell[1]!=null AND $cell[2]!='Waktu' AND $cell[2]!=null AND (date_create_from_format('n/j/y H:i', $cell[2]) OR date_create_from_format('d/m/Y H:i', $cell[2]))) {
 			return true;
 		}else{
 			false;

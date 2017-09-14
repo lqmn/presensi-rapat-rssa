@@ -36,22 +36,32 @@
 				</a>
 				<button class="btn btn-primary" id="libur" type="button" data-toggle="modal" data-target="#myModal">Hari libur</button>
 				<div class="pull-right">
+					<select id="changeColumn" class="selectpicker" multiple>
+						<option value="0" selected>NIP</option>
+						<option value="1" selected>NAMA</option>
+						<option value="2" selected>SATKER</option>
+						<option value="3" selected>TAHUN</option>
+						<option value="4" selected>BULAN</option>
+					</select>
 					<select id="rekapDropdown" class="selectpicker" name="tabel">
 						<option value="1" selected>Presensi</option>
 						<option value="2">Lembur</option>
 					</select>
 				</div>
+				
+
 				<br><br>
 				<table id="tabelRekap" class="table table-striped" cellspacing="0" width="100%">
 					<thead>
 						<tr>
+							<th>NIP</th>
 							<th>NAMA</th>
 							<th>SATKER</th>
 							<th>TAHUN</th>
 							<th>BULAN</th>
 							<th>PRESENSI</th>
 							<th>LEMBUR</th>
-							<th>Panel</th>
+							<th class="checkbox">Panel</th>
 						</tr>
 					</thead>
 				</table>

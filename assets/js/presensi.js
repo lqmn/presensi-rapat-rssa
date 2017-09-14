@@ -3,14 +3,36 @@ $(document).ready(function() {
 	$('#presensi-nav').addClass("active");
 	var tabelLibur;
 	var tabelRekap = $('#tabelRekap').DataTable({
-		"dom": "<'toolbar'>f" +
+		"dom": "<'toolbar pull-right'f><'export pull-left'B><'pull-right'>" +
 		"<'row'<'col-sm-12'tr>>" +
 		"<'row'<'col-sm-5'l><'col-sm-7'p>>",
 		"ajax": {
 			"url": BASE_URL+"c_presensi/get_tabel_rekap",
 			"dataSrc": ""
 		},
+		buttons: [{
+			extend: 'print',
+			title: function(){
+				return $('#judulExport').val();
+			},
+			exportOptions: {
+				columns: ':visible:not(.checkbox)'
+			}
+		},{
+			extend: 'excel',
+			title: function(){
+				if ($('#judulExport').val()=='') {
+					return 'Rekap Presensi';
+				}else{
+					return $('#judulExport').val();
+				}
+			},
+			exportOptions: {
+				columns: ':visible:not(.checkbox)'
+			}
+		}],
 		"columns": [
+		{ "data": "NIP" },
 		{ "data": "NAMA" },
 		{ "data": "SATKER" },
 		{ "data": "TAHUN" },
@@ -19,7 +41,7 @@ $(document).ready(function() {
 		{ "data": "LEMBUR" },
 		{ "data": "ID_REKAP" }
 		],'columnDefs':[{
-			'targets': 6,
+			'targets': 7,
 			'searchable':false,
 			'orderable':false,
 			'className': 'dt-body-center',
@@ -28,10 +50,12 @@ $(document).ready(function() {
 			}
 		}],"order": [],
 		initComplete:function(){
-			$('div.toolbar').html('<div id="option" class="pull-right">&nbsp;</div>');
-			this.api().column(5).visible(false);
+			$('div.toolbar').append('<div id="option">&nbsp;</div>');
+			$('div.export').before('<div><h5>Export :</h5></div>');
+			$('div.export').prepend('<input class="form-control" id="judulExport" type="text" placeholder="Judul export">');
+			this.api().column(6).visible(false);
 
-			var bulan = this.api().column(3);
+			var bulan = this.api().column(4);
 			var selectBulan = $('<select class="form-control"><option value="">Semua Bulan</option></select>')
 			.appendTo( $('#option')).on('change', function(){
 				var val = $.fn.dataTable.util.escapeRegex($(this).val());
@@ -43,7 +67,7 @@ $(document).ready(function() {
 				selectBulan.append( '<option value="'+d+'">'+d+'</option>' )
 			});
 
-			var tahun = this.api().column(2);
+			var tahun = this.api().column(3);
 			var selectTahun = $('<select class="form-control"><option value="">Semua Tahun</option></select>')
 			.appendTo( $('#option')).on('change', function(){
 				var val = $.fn.dataTable.util.escapeRegex($(this).val());
@@ -238,8 +262,8 @@ $(document).ready(function() {
 	});
 
 	$(document).on('change','#rekapDropdown',function(){
-		presensi = tabelRekap.column(4);
-		lembur = tabelRekap.column(5);
+		presensi = tabelRekap.column(5);
+		lembur = tabelRekap.column(6);
 		var x = $('#rekapDropdown').val();
 
 		switch(parseInt(x)){
@@ -305,10 +329,17 @@ $(document).ready(function() {
 			success:function(data){
 				$('#result').html(data);
 				$('#saveDetail').button('reset');
-				// setTimeout(function () {
-				// 	$('#saveDetail').prop("disabled", true);
-				// }, 0);
 			}
 		});
 	});
+
+	$(document).on('change','#changeColumn', function(){
+		var test = [true,true,true,true,true];
+		$.each($('#changeColumn.selectpicker option:not(:selected)'),function(){
+			test[$(this).val()] = false;
+		});
+		$.each(test,function(index,value){
+			tabelRekap.column(index).visible(value);
+		})
+	})
 });

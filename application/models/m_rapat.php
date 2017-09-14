@@ -18,7 +18,7 @@ class m_rapat extends CI_Model{
 		foreach ($result->result() as $row) {
 			$data[] = $row;
 		}
-		return $data;
+		return (array)@$data;
 	}
 
 	function get_ruang(){
@@ -28,8 +28,7 @@ class m_rapat extends CI_Model{
 		foreach ($result->result() as $row) {
 			$data[] = $row;
 		}
-		return $data;
-		
+		return (array)@$data;
 	}
 
 	function insert_rapat($data){
@@ -217,7 +216,6 @@ class m_rapat extends CI_Model{
 			$peserta[]=$test;
 		}
 		return $peserta;
-
 	}
 
 	function get_rapat_guest(){

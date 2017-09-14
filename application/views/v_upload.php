@@ -47,15 +47,9 @@
 
 							<div class="pull-right">
 								<div class="form-group text-center">
-									<select class="selectpicker" data-live-search="true" name="satker" disabled required>
-										<!-- <option disabled selected value="" style="display:none"> -- Pilih satuan kerja -- </option> -->
+									<select class="selectpicker" data-live-search="true" name="satker" required>
 										<?php foreach ($satker as $key => $value): ?>
-											<option value="<?php echo $value->ID_SATKER?>" data-tokens="<?php echo $value->NAMA_SATKER?>" 
-											<?php
-												if ($this->session->userdata('id_satker')==$value->ID_SATKER) {
-													echo 'selected';
-												}
-											?>><?php echo $value->NAMA_SATKER?></option>
+											<option value="<?php echo $value->ID_SATKER?>" data-tokens="<?php echo $value->NAMA_SATKER?>" <?php if ($this->session->userdata('id_satker')==$value->ID_SATKER) { echo 'selected'; } ?>><?php echo $value->NAMA_SATKER?></option>
 										<?php endforeach ?>
 									</select>
 								</div>

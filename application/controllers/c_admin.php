@@ -230,7 +230,6 @@ class c_admin extends CI_Controller{
 		}else{
 			echo "Error";
 		}
-
 	}
 
 	function update_user(){
