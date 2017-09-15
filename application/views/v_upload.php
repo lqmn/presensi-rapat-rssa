@@ -54,7 +54,6 @@
 									</select>
 								</div>
 								<div class="form-group ">
-									<button id="openFile" type="submit" class="btn btn-primary">Open</button>
 								</div>
 							</div>
 						</div>
@@ -64,6 +63,7 @@
 
 				</div>
 				<button id="save" type="button" class="btn btn-primary" disabled>Save</button>
+				<button id="openFile" type="submit" class="btn btn-primary" form="fileForm">Open</button>
 
 			</div>
 		</div>

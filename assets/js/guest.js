@@ -16,7 +16,7 @@
 // }
 
 function updateClock (){
-	var currentTime = new Date ();
+	var currentTime = moment().locale('id').format('LLL, h:mm:ss a');
 	// console.log(currentTime);
 	$("#clock").html(currentTime);
 }
